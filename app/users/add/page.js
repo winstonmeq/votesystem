@@ -22,7 +22,7 @@ const Page = () => {
         address: address
       };
 
-      const response = await axios.post('http://localhost:3000/api/users', payload);
+      const response = await axios.post('https://vms-green.vercel.app/api/users', payload);
       setIsLoading(false);
       console.log(response);
 
