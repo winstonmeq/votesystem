@@ -30,7 +30,7 @@ const Page = () => {
     }, []);
 
     if (loading) {
-      return <div className="flex justify-center min-h-screen items-center">Loading...</div>;
+      return <div className="flex justify-center min-h-screen ">Loading...</div>;
     }
 
 
