@@ -38,13 +38,50 @@ export default function Home() {
   },[])
 
   const colors = ['red', 'blue', 'green', 'yellow', 'purple'];
+  const arr1 = [{pr:'1',red:'100',yellow:'300',green:'400'},{pr:'2',red:'200',yellow:'400',green:'5'}]
 
-  const p1 = () => {
-    return <div style={{margin:'5px' , width:'50px', height:'50px', backgroundColor:'red'}}>P1</div>
+  const p1 = (x,y,z) => {
+    
+    let colorx = 'blue';
+    
+    console.log(arr1[1]['red'],arr1[1]['yellow'],arr1[1]['green'])
+
+    if (x >= y && x >= z) {
+    
+      return <div style={{margin:'5px' , width:'50px', height:'50px', backgroundColor:'red'}}>P1</div>
+    } else if (y >= x && y >= z) {
+      return <div style={{margin:'5px' , width:'50px', height:'50px', backgroundColor:'yellow'}}>P1</div>
+
+    } else {
+      return <div style={{margin:'5px' , width:'50px', height:'50px', backgroundColor:'green'}}>P1</div>
+
+    } 
+
+ 
   }
-  const p2 = () => {
-    return <div style={{margin:'5px', width:'50px', height:'50px', backgroundColor:'yellow'}}>P2</div>
+
+  const p2 = (x,y,z) => {
+    
+    let colorx = 'blue';
+    
+    if (x >= y && x >= z) {
+    
+      return <div style={{margin:'5px' , width:'50px', height:'50px', backgroundColor:'red'}}>P2</div>
+
+    } else if (y >= x && y >= z) {
+
+      return <div style={{margin:'5px' , width:'50px', height:'50px', backgroundColor:'yellow'}}>P2</div>
+
+    } else {
+      
+      return <div style={{margin:'5px' , width:'50px', height:'50px', backgroundColor:'green'}}>P2</div>
+
+    } 
+
+ 
   }
+
+
   const p3 = () => {
     return <div style={{margin:'5px' ,width:'50px', height:'50px', backgroundColor:'green'}}>P3</div>
   }
@@ -120,7 +157,11 @@ export default function Home() {
       <div id="my-canvas" className='border-2 border-red-500  m-4 p-8'>
  
     
-    <div className='flex flex-row justify-center'>{p1()}{p2()}{p3()}{p4()}{p5()}</div>
+    <div className='flex flex-row justify-center'>
+    {p1(arr1[0]['red'],arr1[0]['yellow'],arr1[0]['green'])}
+    {p2(arr1[1]['red'],arr1[1]['yellow'], arr1[1]['green'])}
+    
+    {p3()}{p4()}{p5()}</div>
     <div className='flex flex-row justify-center'>{p6()}{p7()}{p8()}{p9()}</div>
     <div className='flex flex-row justify-center'>{p10()}{p11()}{p12()}{p13()}{p14()}</div>
     <div className='flex flex-row justify-center'>{p15()}{p16()}{p17()}{p18()}{p19()}{p20()}{p21()}{p22()} </div>
