@@ -39,22 +39,98 @@ export default function Home() {
 
   const colors = ['red', 'blue', 'green', 'yellow', 'purple'];
 
-  const renderSquares = () => {
-    const squares = [];
-    for (let i = 0; i < 20; i++) {
-      squares.push(<div key={i} className={'square'}></div>);
-    }
-    return squares;
-  };
+  const p1 = () => {
+    return <div style={{margin:'5px' , width:'50px', height:'50px', backgroundColor:'red'}}>P1</div>
+  }
+  const p2 = () => {
+    return <div style={{margin:'5px', width:'50px', height:'50px', backgroundColor:'yellow'}}>P2</div>
+  }
+  const p3 = () => {
+    return <div style={{margin:'5px' ,width:'50px', height:'50px', backgroundColor:'green'}}>P3</div>
+  }
+
+  const p4 = () => {
+    return <div style={{margin:'5px' , width:'50px', height:'50px', backgroundColor:'red'}}>P4</div>
+  }
+  const p5 = () => {
+    return <div style={{margin:'5px', width:'50px', height:'50px', backgroundColor:'yellow'}}>P5</div>
+  }
+  const p6 = () => {
+    return <div style={{margin:'5px' ,width:'50px', height:'50px', backgroundColor:'green'}}>P6</div>
+  }
+
+  const p7 = () => {
+    return <div style={{margin:'5px' , width:'50px', height:'50px', backgroundColor:'red'}}>P7</div>
+  }
+  const p8 = () => {
+    return <div style={{margin:'5px', width:'50px', height:'50px', backgroundColor:'yellow'}}>P8</div>
+  }
+  const p9 = () => {
+    return <div style={{margin:'5px' ,width:'50px', height:'50px', backgroundColor:'green'}}>P9</div>
+  }
+
+  const p10 = () => {
+    return <div style={{margin:'5px' , width:'50px', height:'50px', backgroundColor:'red'}}>P10</div>
+  }
+  const p11 = () => {
+    return <div style={{margin:'5px', width:'50px', height:'50px', backgroundColor:'yellow'}}>P11</div>
+  }
+  const p12 = () => {
+    return <div style={{margin:'5px' ,width:'50px', height:'50px', backgroundColor:'green'}}>P12</div>
+  }
+
+  const p13 = () => {
+    return <div style={{margin:'5px' , width:'50px', height:'50px', backgroundColor:'red'}}>P13</div>
+  }
+  const p14 = () => {
+    return <div style={{margin:'5px', width:'50px', height:'50px', backgroundColor:'yellow'}}>P14</div>
+  }
+  const p15 = () => {
+    return <div style={{margin:'5px' ,width:'50px', height:'50px', backgroundColor:'green'}}>P15</div>
+  }
+
+  const p16 = () => {
+    return <div style={{margin:'5px' , width:'50px', height:'50px', backgroundColor:'red'}}>P16</div>
+  }
+  const p17 = () => {
+    return <div style={{margin:'5px', width:'50px', height:'50px', backgroundColor:'yellow'}}>P17</div>
+  }
+  const p18 = () => {
+    return <div style={{margin:'5px' ,width:'50px', height:'50px', backgroundColor:'green'}}>P18</div>
+  }
+
+  const p19 = () => {
+    return <div style={{margin:'5px' , width:'50px', height:'50px', backgroundColor:'red'}}>P19</div>
+  }
+  const p20 = () => {
+    return <div style={{margin:'5px', width:'50px', height:'50px', backgroundColor:'yellow'}}>P20</div>
+  }
+  const p21 = () => {
+    return <div style={{margin:'5px' ,width:'50px', height:'50px', backgroundColor:'green'}}>P21</div>
+  }
+  const p22 = () => {
+    return <div style={{margin:'5px' ,width:'50px', height:'50px', backgroundColor:'green'}}>P22</div>
+  }
+
 
 
 
   return (
-    <main className="flex min-h-screen flex-col justify-between p-24">
-      <div id="my-canvas" className='border-2 border-red-500 m-4 p-8'>
+    <main className="flex min-h-screen flex-col justify-between p-4">
+      <div id="my-canvas" className='border-2 border-red-500  m-4 p-8'>
+ 
     
+    <div className='flex flex-row justify-center'>{p1()}{p2()}{p3()}{p4()}{p5()}</div>
+    <div className='flex flex-row justify-center'>{p6()}{p7()}{p8()}{p9()}</div>
+    <div className='flex flex-row justify-center'>{p10()}{p11()}{p12()}{p13()}{p14()}</div>
+    <div className='flex flex-row justify-center'>{p15()}{p16()}{p17()}{p18()}{p19()}{p20()}{p21()}{p22()} </div>
+      </div>
+      
+    </main>
+  )
+}
 
-      <div>
+  {/* <div>
       {colors.map((color, index) => (
         <div
           key={index}
@@ -67,9 +143,4 @@ export default function Home() {
         ></div>
       ))}
     </div>
-       
-      </div>
-      
-    </main>
-  )
-}
+        */}
