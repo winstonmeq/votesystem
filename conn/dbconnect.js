@@ -1,6 +1,8 @@
 
 import mongoose from 'mongoose';
 
+
+
 global.mongoose = {
     conn:null,
     promise:null
@@ -18,10 +20,11 @@ export default async function dbConnect(){
      }else {
      
 
-         const connString = 'mongodb+srv://admin:admin123@cluster0.bi6qm.mongodb.net/skvotedb?retryWrites=true&w=majority'
+        // const connString = 'mongodb+srv://admin:admin123@cluster0.bi6qm.mongodb.net/skvotedb?retryWrites=true&w=majority'
+         
          
      
-         const promise = mongoose.connect(connString,{
+         const promise = mongoose.connect(process.env.MONGODB_URI,{
      
              useNewUrlParser: true,
              useUnifiedTopology: true,
