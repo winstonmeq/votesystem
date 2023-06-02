@@ -16,7 +16,7 @@ const Page = () => {
 
     async function FetchData() {
       try {
-      const { data } = await axios.get(`http://localhost:3000/api/users`)
+      const { data } = await axios.get(`https://vms-green.vercel.app/api/users`)
       setdatalist(data);
       setLoading(false);
     } catch (error) {
