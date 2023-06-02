@@ -13,15 +13,26 @@ const VoterSchema = mongoose.Schema({
         type:String,
     
     },
+    age: {
+        type:Number,
+
+    },
 
     position: {
         type:String,
 
     },
-  
-    address:{
-        type:String, 
-       
+
+    Prec_Num: {
+        type: String
+    }, 
+
+    Purok:{
+        type:String,        
+    },
+    
+    Member:{
+        type:Number,
     }
 
 },{
