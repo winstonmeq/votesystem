@@ -54,7 +54,7 @@ const Page = () => {
    
     <div className="flex justify-center h-screen">
       <div className="w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6">Voter's Information</h1>
+        <h1 className="text-2xl font-bold mb-6">Voters Information</h1>
         <form onSubmit={addVoter} className="space-y-4">
           <div>
             <label className="block mb-1">First Name:</label>
