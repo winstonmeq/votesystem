@@ -15,7 +15,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col justify-between p-4">
-      <div className='flex border-2 justify-center border-red-500 m-4 p-8'>
+      <div className='flex border-2 justify-center border-red-500 m-4 p-8 rounded-2xl'>
  
     <Purok1 />
     <Purok2 />

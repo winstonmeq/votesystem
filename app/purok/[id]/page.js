@@ -32,7 +32,7 @@ function Purok1({ params: { id } }) {
   }
  
     FetchData();
-    }, []);
+    }, [id]);
 
 
     const p1 = (x,y,z) => {
