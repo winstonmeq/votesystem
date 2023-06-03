@@ -23,15 +23,15 @@ const VoterSchema = mongoose.Schema({
 
     },
 
-    Prec_Num: {
+    prec_num: {
         type: String
     }, 
 
-    Purok:{
+    purok:{
         type:String,        
     },
     
-    Member:{
+    member:{
         type:Number,
     }
 

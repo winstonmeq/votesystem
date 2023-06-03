@@ -1,6 +1,5 @@
 import dbConnect from "@/conn/dbconnect";
-import Voter from "@/models/Voter";
-import Log from "@/models/Log";
+import User from "@/models/User";
 
 export async function GET(request) {
 
@@ -8,7 +7,7 @@ export async function GET(request) {
 
     await dbConnect();
 
-    const getdata = await Voter.find({}).exec();
+    const getdata = await User.find({}).exec();
     
     return new Response(JSON.stringify(getdata))
      
@@ -31,7 +30,7 @@ export async function POST(request) {
 
     await dbConnect();
 
-    const addUser = new Voter({
+    const addUser = new User({
       fname:fname, 
       lname:lname, 
       position:position, 
@@ -40,9 +39,9 @@ export async function POST(request) {
     await addUser.save();
 
     
-    console.log('Voter save')
+    console.log('User save')
 
-    return new Response(JSON.stringify('add Voter successfully'))
+    return new Response(JSON.stringify('add User successfully'))
      
 
 
