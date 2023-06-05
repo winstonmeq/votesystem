@@ -18,7 +18,7 @@ function Purok1({ params: { id } }) {
 
      //const purokname = "Purok 3";
 
-      const { data } = await axios.get(`http://localhost:3000/api/purok/${id}`)
+      const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok/${id}`)
       setdatalist(data);
       setLoading(false);
 

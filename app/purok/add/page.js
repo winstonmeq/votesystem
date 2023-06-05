@@ -27,7 +27,7 @@ const Page = () => {
         GreenBox:greenBox
       };
 
-      const response = await axios.post('http://localhost:3000/api/purok', payload);
+      const response = await axios.post(process.env.LOCAL_URL + '/api/purok', payload);
       setIsLoading(false);
       console.log(response);
 

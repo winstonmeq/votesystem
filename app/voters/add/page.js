@@ -1,17 +1,47 @@
-'use client'
+"use client";
 import axios from "axios";
 import React, { useState } from "react";
+import { useEffect } from "react";
+
 
 const Page = () => {
-
   const [isLoading, setIsLoading] = useState(false);
-  const [fname, setfname] = useState('');
-  const [lname, setlname] = useState('');
-  const [age, setage] = useState('');
-  const [position, setposition] = useState('');
-  const [prec_num, setprec_num] = useState('');
-  const [purok, setpurok] = useState('');
+  const [fname, setfname] = useState("");
+  const [lname, setlname] = useState("");
+  const [age, setage] = useState("");
+  const [position, setposition] = useState("");
+  const [prec_num, setprec_num] = useState("");
+  const [purok, setpurok] = useState("");
   const [member, setmember] = useState(0);
+  const [datalist, setdatalist] = useState([]);
+
+
+
+
+  useEffect(() => {   
+
+    async function FetchData() {
+      try {
+      const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok`)
+      setdatalist(data);
+      setIsLoading(false);
+
+
+    } catch (error) {
+
+      console.error(error);
+      setIsLoading(false);
+
+    }
+           
+  }
+ 
+    FetchData();
+    }, []);
+
+
+
+
 
   const addVoter = async () => {
 
@@ -19,122 +49,175 @@ const Page = () => {
 
       setIsLoading(true); // Set isLoading to true when the request is initiated
 
-      const payload = {
-        fname: fname,
-        lname: lname,
-        age: age,
-        position: position,
-        prec_num:prec_num,
-        purok:purok,
-        member:member
-      };
+      const payload = {fname,lname, age, position, prec_num, purok, member, };
 
-      const response = await axios.post('http://localhost:3000/api/voter', payload);
+      const response = await axios.post("http://localhost:3000/api/voter",payload);
 
       setIsLoading(false);
 
       console.log(response);
 
     } catch (error) {
+
       setIsLoading(false);
-      console.log('error');
+
+      console.log("error");
+
     } finally {
       setIsLoading(false); // Set isLoading to false when the request is completed or encounters an error
     }
   };
 
-
   if (isLoading) {
-    return <div className="flex justify-center min-h-screen">Loading...</div>;
+    return (
+      <div classNameName="flex justify-center min-h-screen">Loading...</div>
+    );
   }
 
-
-
   return (
-   
-    <div className="flex justify-center h-screen">
-      <div className="w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6">Voters Information</h1>
-        <form onSubmit={addVoter} className="space-y-4">
-          <div>
-            <label className="block mb-1">First Name:</label>
-            <input
-              type="text"
-              value={fname}
-              onChange={(e) => setfname(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
-            />
+    <div className="flex justify-center">
+      <div className="flex-row w-full lg:w-3/4 m-4 bg-gray-50 p-4 rounded-lg">
+        <form onSubmit={addVoter}>
+          <div className="grid md:grid-cols-2 md:gap-6">
+           
+          <div className="relative z-0 w-full mb-6 group">
+              <input
+                type="text"
+                value={fname}
+                onChange={(e) => setfname(e.target.value)}
+                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=" "
+                required
+              />
+              <label               
+                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >
+                First name
+              </label>
+            </div>
+
+            <div className="relative z-0 w-full mb-6 group">
+              <input
+                type="text"
+                value={lname}
+                onChange={(e) => setlname(e.target.value)}
+                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=" "
+                required
+              />
+              <label               
+                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >
+                Last name
+              </label>
+            </div>
+
+           
           </div>
-          <div>
-            <label className="block mb-1">Last Name</label>
-            <input
-              type="text"
-              value={lname}
-              onChange={(e) => setlname(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
-            />
-          </div>
-          <div>
-            <label className="block mb-1">Age</label>
-            <input
-              type="text"
-              value={age}
-              onChange={(e) => setage(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
-            />
-          </div>
-          <div>
-            <label className="block mb-1">Position</label>
-            <input
-              type="text"
-              value={position}
-              onChange={(e) => setposition(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
-            />
-          </div>
+
+
+
+
+          <div className="grid md:grid-cols-2 md:gap-6">
          
-          <div>
-            <label className="block mb-1">Precinct Number</label>
-            <input
-              type="text"
-              value={prec_num}
-              onChange={(e) => setprec_num(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
-            />
+          <div className="relative z-0 w-full mb-6 group">
+              <input
+                type="text"
+                value={age}
+                onChange={(e) => setage(e.target.value)}
+                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=" "
+                required
+              />
+              <label
+               
+                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >
+                Age
+              </label>
+            </div>
+            
+            <div className="relative z-0 w-full mb-6 group">
+              <input
+                type="text"
+                value={position}
+                onChange={(e) => setposition(e.target.value)}
+                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=" "
+                required
+              />
+              <label
+              
+                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >
+                Position
+              </label>
+            </div>
+
           </div>
-          <div>
-            <label className="block mb-1">Purok</label>
-            <input
-              type="text"
-              value={purok}
-              onChange={(e) => setpurok(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
-            />
-          </div>
-          <div>
-            <label className="block mb-1">Member</label>
-            <input
-              type="text"
-              value={member}
-              onChange={(e) => setmember(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
-            />
-          </div>
+
+          <div className="grid md:grid-cols-2 md:gap-6">
+
+            <div className="relative z-0 w-full mb-6 group">
+              <input
+                type="text"
+                value={prec_num}
+                onChange={(e) => setprec_num(e.target.value)}
+                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=" "
+                required
+              />
+              <label               
+                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >
+                Precinct Number
+              </label>
+            </div>
+
        
+
+
+            <div className="relative z-0 w-full mb-6 group">
+             
+            <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Select Purok</label>
+
+          <select value={purok} onChange={(e) => setpurok(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          {datalist.map((item,i)=> (
+            <option key={i} value={item.PName}>{item.PName}</option>
+          ))}
+
+          </select>
+
+
+            </div>
+
+            </div>
+
+             <div className="grid md:grid-cols-2 md:gap-6">
+
+            <div className="relative z-0 w-full mb-6 group">
+
+            <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Member Type</label>
+
+              <select value={member} onChange={(e) => setmember(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option value={1}>Yes</option>
+              <option value={0}>No</option>
+
+             </select>
+             
+            </div>
+
+            
+          </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600"
+            className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            Save
+            Submit
           </button>
         </form>
       </div>
-    
-    
-    {/* <button type="submit" onClick={addVoter} disabled={isLoading}>
-      {isLoading ? 'Loading...' : 'Save'}
-    </button> */}
-  </div>
+    </div>
   );
 };
 

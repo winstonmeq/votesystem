@@ -14,7 +14,7 @@ function Purok2() {
 
       try {
         const { data } = await axios.get(
-          `http://localhost:3000/api/purok/${prkname}`
+          process.env.LOCAL_URL + `/api/purok/${prkname}`
         );
         setdatalist(data);
         setLoading(false);
@@ -41,7 +41,7 @@ function Purok2() {
             borderRadius: '10px'
           }}
         >
-        <div className='text-white p-2 font-bold'><Link href={`/purok/${Pname}`}>{Pname}</Link></div>
+        <div className='text-white p-2 font-bold'><Link href={`/voters/${Pname}`}>{Pname}</Link></div>
         </div>
       );
     } else if (y >= x && y >= z) {
@@ -55,7 +55,7 @@ function Purok2() {
             borderRadius: '10px'
           }}
         >
-        <div className='text-white p-2 font-bold'><Link href={`/purok/${Pname}`}>{Pname}</Link></div>
+        <div className='text-white p-2 font-bold'><Link href={`/voters/${Pname}`}>{Pname}</Link></div>
         </div>
       );
     } else {
@@ -69,7 +69,7 @@ function Purok2() {
             borderRadius: '10px'
           }}
         >
-        <div className='text-white p-2 font-bold'><Link href={`/purok/${Pname}`}>{Pname}</Link></div>
+        <div className='text-white p-2 font-bold'><Link href={`/voters/${Pname}`}>{Pname}</Link></div>
         </div>
       );
     }

@@ -17,7 +17,7 @@ function Purok3() {
 
       try {
         const { data } = await axios.get(
-          `http://localhost:3000/api/purok/${prkname}`
+          process.env.LOCAL_URL + `/api/purok/${prkname}`
         );
         setdatalist(data);
         setLoading(false);

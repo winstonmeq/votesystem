@@ -15,7 +15,7 @@ const Page = () => {
 
     async function FetchData() {
       try {
-      const { data } = await axios.get(`http://localhost:3000/api/purok`)
+      const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok`)
       setdatalist(data);
       setLoading(false);
 

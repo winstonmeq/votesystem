@@ -14,7 +14,7 @@ export default function Home() {
 
 
   return (
-    <main className="flex min-h-screen flex-col justify-between p-4">
+    <section className='w-full flex-center flex-col'>
       <div className='flex border-2 justify-center border-red-500 m-4 p-8 rounded-2xl'>
  
     <Purok1 />
@@ -23,8 +23,10 @@ export default function Home() {
     <Purok4 />
     <Purok5 />
     </div>
+    <br className='max-md:hidden' />
      
-    </main>
+    </section>
+   
   )
 }
 
