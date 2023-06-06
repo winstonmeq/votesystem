@@ -15,7 +15,7 @@ export default function Home() {
 
   return (
     <section className='w-full flex-center flex-col'>
-      <div className='flex border-2 justify-center border-red-500 m-4 p-8 rounded-2xl'>
+    <div className='flex border-2 justify-center border-red-500 m-4 p-8 rounded-2xl'>
  
     <Purok1 />
     <Purok2 />
