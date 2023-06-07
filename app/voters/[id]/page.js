@@ -7,16 +7,45 @@ import axios from 'axios';
 
 const Page = ({ params: { id } }) => {
 
-  const [datalist, setdatalist] = useState([]);    
+  const [datalist, setdatalist] = useState([]); 
+  const [datalist2, setdatalist2] = useState([]);    
+   
   const [loading, setLoading] = useState(true);
+
+  const [fname, setfname] = useState("");
+  const [lname, setlname] = useState("");
+  const [age, setage] = useState("");
+  const [position, setposition] = useState("");
+  const [prec_num, setprec_num] = useState("");
+  const [purok, setpurok] = useState("");
+  const [member, setmember] = useState(0);
 
 
   useEffect(() => {   
 
-    async function FetchData() {
+    async function FetchData(id) {
       try {
         const { data } = await axios.get(process.env.LOCAL_URL + `/api/voter/${id}`)
-        setdatalist(data);
+       
+        console.log(data)
+        if(data) {
+
+          setdatalist(data);
+
+        
+
+
+        }else {
+          
+        }
+
+         setfname(datalist[0].fname)
+          // setlname(datalist[0].lname)
+          // setage(datalist[0].age)
+          // setposition(datalist[0].position)
+          // setprec_num(datalist[0].prec_num)
+          // setpurok(datalist[0].purok)
+          // setmember(datalist[0].member)
       setLoading(false);
     } catch (error) {
       console.error(error);
@@ -24,8 +53,25 @@ const Page = ({ params: { id } }) => {
     }
            
   }
+
+  async function FetchData2() {
+    try {
+    const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok`)
+    setdatalist2(data);
+    setLoading(false);
+
+
+  } catch (error) {
+
+    console.error(error);
+    setLoading(false);
+
+  }
+         
+}
  
     FetchData();
+    FetchData2();
     }, [id]);
 
     if (loading) {
@@ -33,65 +79,177 @@ const Page = ({ params: { id } }) => {
     }
 
 
+    const addVoter = async () => {
+
+      try {
+  
+        setLoading(true); // Set isLoading to true when the request is initiated
+  
+        const payload = {fname,lname, age, position, prec_num, purok, member, };
+  
+        const response = await axios.post("http://localhost:3000/api/voter",payload);
+  
+        setLoading(false);
+  
+        console.log(response);
+  
+      } catch (error) {
+  
+        setLoading(false);
+  
+        console.log("error");
+  
+      } finally {
+        setLoading(false); // Set isLoading to false when the request is completed or encounters an error
+      }
+    };
+
 
   return (
-   <div className='overflow-x-auto'>
-    <div className='min-w-screen min-h-screen bg-gray-100 flex justify-center font-sans overflow-hidden'>
-     <div className="m-2 w-full lg:w-5/6">
-     <div className="flex flex-row p-2 text-sm text-left">{id}</div>
+    <div className="flex justify-center">
+    <div className="flex-row w-full lg:w-3/4 m-4 bg-gray-50 p-4 rounded-lg">
+      <form onSubmit={addVoter}>
+        <div className="grid md:grid-cols-2 md:gap-6">
+         
+        <div className="relative z-0 w-full mb-6 group">
+            <input
+              type="text"
+              value={fname}
+              onChange={(e) => setfname(e.target.value)}
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              required
+            />
+            <label               
+              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              First name
+            </label>
+          </div>
 
-      <div className="bg-white shadow-md rounded my-6">
+          <div className="relative z-0 w-full mb-6 group">
+            <input
+              type="text"
+              value={lname}
+              onChange={(e) => setlname(e.target.value)}
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              required
+            />
+            <label               
+              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              Last name
+            </label>
+          </div>
 
-        <table className='min-w-max w-full table-auto'>
-        <thead>
-            <tr className='bg-gray-200 text-gray-600 uppercase text-sm leading-normal'>
-              <th className="py-3 px-6 text-left">First Name</th>
-              <th className="py-3 px-6 text-left">Last Name</th>
-              <th className="py-3 px-6 text-center">Age</th>
-              <th className="py-3 px-6 text-center">Position</th>
-              <th className="py-3 px-6 text-center">Precinct</th>
-              <th className="py-3 px-6 text-center">Purok</th>
-              <th className="py-3 px-6 text-center">Status</th>
-            </tr>
-          </thead>
-          <tbody className="text-gray-600 text-sm font-light">
-            {datalist.map((item, i) => (
-              <tr key={i} className="border-b border-gray-200 hover:bg-gray-100">
-                <td className="py-3 px-6 text-left whitespace-nowwrap">{item.fname}</td>
-                <td className="py-3 px-6 text-left whitespace-nowwrap">{item.lname}</td>
-                <td className="py-3 px-6 text-center whitespace-nowwrap">{item.age}</td>
-                <td className="py-3 px-6 text-center whitespace-nowwrap">{item.position}</td>
-                <td className="py-3 px-6 text-center whitespace-nowwrap">{item.prec_num}</td>
-                <td className="py-3 px-6 text-center whitespace-nowwrap">{item.purok}</td>
-                <td class="py-3 px-6 text-center">
-                                    <div class="flex item-center justify-center">
-                                        <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                            </svg>
-                                        </div>
-                                        <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                            </svg>
-                                        </div>
-                                        <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </td>
-              </tr>
-            ))}
-          </tbody>
+         
+        </div>
 
-        </table>
-      </div>
-     </div>
+
+
+
+        <div className="grid md:grid-cols-2 md:gap-6">
+       
+        <div className="relative z-0 w-full mb-6 group">
+            <input
+              type="text"
+              value={age}
+              onChange={(e) => setage(e.target.value)}
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              required
+            />
+            <label
+             
+              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              Age
+            </label>
+          </div>
+          
+          <div className="relative z-0 w-full mb-6 group">
+            <input
+              type="text"
+              value={position}
+              onChange={(e) => setposition(e.target.value)}
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              required
+            />
+            <label
+            
+              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              Position
+            </label>
+          </div>
+
+        </div>
+
+        <div className="grid md:grid-cols-2 md:gap-6">
+
+          <div className="relative z-0 w-full mb-6 group">
+            <input
+              type="text"
+              value={prec_num}
+              onChange={(e) => setprec_num(e.target.value)}
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              required
+            />
+            <label               
+              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              Precinct Number
+            </label>
+          </div>
+
+     
+
+
+          <div className="relative z-0 w-full mb-6 group">
+           
+          <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Select Purok</label>
+
+        <select value={purok} onChange={(e) => setpurok(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        {datalist2.map((item,i)=> (
+          <option key={i} value={item.PName}>{item.PName}</option>
+        ))}
+
+        </select>
+
+
+          </div>
+
+          </div>
+
+           <div className="grid md:grid-cols-2 md:gap-6">
+
+          <div className="relative z-0 w-full mb-6 group">
+
+          <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Member Type</label>
+
+            <select value={member} onChange={(e) => setmember(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value={1}>Yes</option>
+            <option value={0}>No</option>
+
+           </select>
+           
+          </div>
+
+          
+        </div>
+        <button
+          type="submit"
+          className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Submit
+        </button>
+      </form>
+
     </div>
-   </div>
+  </div>
     
   )
 }

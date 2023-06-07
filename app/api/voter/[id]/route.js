@@ -16,7 +16,7 @@ export async function GET(request, {params}) {
      
     await dbConnect();
 
-    const getdata = await Voter.find({purok:id}).exec();
+    const getdata = await Voter.find({prec_num:'1231231'}).exec();
     
     //return new Response(JSON.stringify(getdata))
 

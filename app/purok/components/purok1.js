@@ -19,7 +19,7 @@ function Purok1() {
 
       try {
 
-      const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok/${prkname}`)
+      const { data } = await axios.get(process.env.LOCAL_URL + `/api/dashboard/${prkname}`)
       setdatalist(data);
       setLoading(false);
 
@@ -43,17 +43,17 @@ function Purok1() {
       
         return <div style={{margin:'5px' , width:'100px', height:'100px', backgroundColor:'red', borderRadius: '10px'}}>
         
-        <div className='text-white p-2 font-bold'><Link href={`/voters/${Pname}`}>{Pname}</Link></div>
+        <div className='text-white p-2 font-bold'><Link href={`/purok/${Pname}`}>{Pname}</Link></div>
         
         </div>
       } else if (y >= x && y >= z) {
         return <div style={{margin:'5px' , width:'50px', height:'50px', backgroundColor:'blue' , borderRadius: '10px'}}>
-        <div className='text-white p-2 font-bold'><Link href={`/voters/${Pname}`}>{Pname}</Link></div>
+        <div className='text-white p-2 font-bold'><Link href={`/purok/${Pname}`}>{Pname}</Link></div>
         </div>
   
       } else {
         return <div style={{margin:'5px' , width:'50px', height:'50px', backgroundColor:'green' , borderRadius: '10px'}}>
-        <div className='text-white p-2 font-bold'><Link href={`/voters/${Pname}`}>{Pname}</Link></div>
+        <div className='text-white p-2 font-bold'><Link href={`/purok/${Pname}`}>{Pname}</Link></div>
         </div>
   
       } 
