@@ -54,8 +54,7 @@ export async function POST(request) {
     console.log('Voter save')
 
     return new Response(JSON.stringify('add Voter successfully'))
-     
-
+    
 
   } catch (error) {
   
@@ -64,37 +63,3 @@ export async function POST(request) {
   } 
 }
 
-export async function PATCH(request, {params}) {
-
-  const {fname,lname} = await request.json();
- 
-   try {
-  
-     console.log(fname,lname)
-      
-     await dbConnect();
-     
-     const updatedata = await Voter.findById(params.id);
- 
-     if (!updatedata) {
-      
-       return new Response("Voter not found", { status: 404 });
-   }
- 
-   // Update the prompt with new data
-   updatedata.fname = fname;
-   updatedata.lname = lname;
- 
-   await updatedata.save();
- 
-     
-   return NextResponse.json('Successfully updated')      
- 
-      
- 
-   } catch (error) {
-   
-    return new Response('error');
- 
-   } 
- }

@@ -29,38 +29,58 @@ export async function GET(request, {params}) {
   } 
 }
 
-
 export async function PATCH(request, {params}) {
 
- const {fname,lname} = await request.json();
+  const {fname,lname,age,position,purok, prec_num,member} = await request.json();
+ 
+   try {
+  
+     console.log(params.id, fname,lname,age,position,purok, prec_num,member)
+      
+     await dbConnect();
+ 
+ 
+     const updatedVoter = await Voter.findByIdAndUpdate(
+       params.id,
+       { fname, lname, age, position, purok, prec_num, member },
+       { new: true }
+     );
+     
+     if (!updatedVoter) {
+       return new Response('Voter not found', { status: 404 });
+     }
+     
+   return NextResponse.json('Successfully updated')      
+ 
+      
+ 
+   } catch (error) {
+   
+    return new Response('error');
+ 
+   }  
+ }
+
+
+ export async function DELETE(request, { params }) {
 
   try {
- 
-    console.log(fname,lname)
-     
+
     await dbConnect();
-    
-    const updatedata = await Voter.findById(params.id);
 
-    if (!updatedata) {
-      return new Response("Voter not found", { status: 404 });
-  }
+    const deleteResult = await Voter.findByIdAndDelete(params.id);
 
-  // Update the prompt with new data
-  updatedata.fname = fname;
-  updatedata.lname = lname;
+    if (deleteResult.deletedCount === 0) {
+      return new Response('Voter not found', { status: 404 });
+    }
 
-  await updatedata.save();
-
-    
-  return NextResponse.json('Successfully updated')      
-
-     
+    return new Response('Successfully deleted', { status: 200 });
 
   } catch (error) {
-  
-   return new Response('error');
 
-  } 
+    return new Response('Error deleting voter', { status: 500 });
+
+  }
 }
+
 

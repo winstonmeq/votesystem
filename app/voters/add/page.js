@@ -2,6 +2,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
+import { useRouter } from 'next/navigation';
 
 
 const Page = () => {
@@ -16,6 +17,7 @@ const Page = () => {
   const [datalist, setdatalist] = useState([]);
 
 
+  const router = useRouter()
 
 
   useEffect(() => {   
@@ -54,8 +56,15 @@ const Page = () => {
       const response = await axios.post("http://localhost:3000/api/voter",payload);
 
       setIsLoading(false);
-
       console.log(response);
+
+      // setfname('')
+      // setlname('')
+      // setage('')
+      // setposition('')
+      // setprec_num('')
+
+      router.push('/')
 
     } catch (error) {
 
@@ -182,6 +191,7 @@ const Page = () => {
             <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Select Purok</label>
 
           <select value={purok} onChange={(e) => setpurok(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value=''>Select Purok</option>
           {datalist.map((item,i)=> (
             <option key={i} value={item.PName}>{item.PName}</option>
           ))}

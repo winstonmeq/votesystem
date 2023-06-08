@@ -3,8 +3,10 @@ import Link from "next/link";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const Page = ({ params: { id } }) => {
+
   const [datalist2, setdatalist2] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -16,6 +18,7 @@ const Page = ({ params: { id } }) => {
   const [prec_num, setprec_num] = useState("");
   const [purok, setpurok] = useState("");
   const [member, setmember] = useState(0);
+
 
   useEffect(() => {
     async function FetchData() {
@@ -58,17 +61,16 @@ const Page = ({ params: { id } }) => {
     FetchData2();
   }, [id]);
 
-  if (loading) {
-    return <div className="flex justify-center min-h-screen ">Loading...</div>;
-  }
+
+
 
   const updateVoter = async () => {
     try {
       setLoading(true); // Set isLoading to true when the request is initiated
 
-      const payload = { fname, lname};
+      const payload = { fname, lname,age,position,prec_num, purok, member};
 
-      const response = await axios.patch(process.env.LOCAL_URL + "/api/voter",payload);
+      const response = await axios.patch(process.env.LOCAL_URL + `/api/voter/${id}`,payload);
 
       setLoading(false);
 
@@ -81,6 +83,40 @@ const Page = ({ params: { id } }) => {
       setLoading(false); // Set isLoading to false when the request is completed or encounters an error
     }
   };
+
+  
+  const deleteVoter = async () => {
+   
+
+    try {
+      setLoading(true); // Set isLoading to true when the request is initiated
+
+
+      const response = await axios.delete(process.env.LOCAL_URL + `/api/voter/${id}`);
+        
+      console.log(response);
+      
+      return null
+
+    } catch (error) {
+      setLoading(false);
+
+      console.log("error");
+    } finally {
+      setLoading(false); // Set isLoading to false when the request is completed or encounters an error
+    }
+
+  };
+
+
+
+
+
+  if (loading) {
+    return <div className="flex justify-center min-h-screen ">Loading...</div>;
+  }
+
+  
 
   return (
     <div className="flex justify-center">
@@ -196,13 +232,29 @@ const Page = ({ params: { id } }) => {
               </select>
             </div>
           </div>
-          <button
+         
+         <div className=" flex justify-between">
+         <button
             type="submit"
             className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            Submit
+            Update
           </button>
+
+          <button
+            type="submit" onClick={deleteVoter}
+            className="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+          >
+            Delete
+          </button>
+        
+
+
+         </div>
         </form>
+
+      
+       
       </div>
     </div>
   );
