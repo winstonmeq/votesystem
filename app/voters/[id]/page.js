@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/navigation';
 
 const Page = ({ params: { id } }) => {
 
@@ -18,6 +18,10 @@ const Page = ({ params: { id } }) => {
   const [prec_num, setprec_num] = useState("");
   const [purok, setpurok] = useState("");
   const [member, setmember] = useState(0);
+
+
+  const router = useRouter()
+
 
 
   useEffect(() => {
@@ -66,15 +70,19 @@ const Page = ({ params: { id } }) => {
 
   const updateVoter = async () => {
     try {
+     
       setLoading(true); // Set isLoading to true when the request is initiated
 
       const payload = { fname, lname,age,position,prec_num, purok, member};
 
       const response = await axios.patch(process.env.LOCAL_URL + `/api/voter/${id}`,payload);
 
-      setLoading(false);
+     
+      router.push('/voters')
 
+  
       console.log(response);
+
     } catch (error) {
       setLoading(false);
 
@@ -84,15 +92,20 @@ const Page = ({ params: { id } }) => {
     }
   };
 
+
+
+
   
   const deleteVoter = async () => {
    
 
     try {
+
       setLoading(true); // Set isLoading to true when the request is initiated
 
-
       const response = await axios.delete(process.env.LOCAL_URL + `/api/voter/${id}`);
+
+      router.push('/voters')
         
       console.log(response);
       
@@ -113,7 +126,7 @@ const Page = ({ params: { id } }) => {
 
 
   if (loading) {
-    return <div className="flex justify-center min-h-screen ">Loading...</div>;
+    return <div className="flex justify-center item-center min-h-screen ">Loading...</div>;
   }
 
   
