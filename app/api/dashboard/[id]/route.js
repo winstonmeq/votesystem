@@ -29,6 +29,8 @@ export async function GET(request, {params}) {
           //total:{$sum: {$cond:[{$eq:['$member',1]},'$member',0]}},
           member_yes:{$sum:'$member'},
           total:{$push:'$member'}
+
+          
         }
       }
     ]).exec();
