@@ -22,6 +22,8 @@ export default function Page() {
     <Purok1 />
     <Purok2 />
     <Purok3 />
+
+    
     <Purok4 />
     <Purok5 />
 
