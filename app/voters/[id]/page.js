@@ -132,10 +132,16 @@ const Page = ({ params: { id } }) => {
   
 
   return (
-    <div className="flex justify-center">
-      <div className="flex-row w-full lg:w-3/4 m-4 bg-gray-50 p-4 rounded-lg">
+    <div className="flex-row w-full justify-center">
+    <div className="flex  w-full justify-end">    
+    <button
+            type="submit" onClick={deleteVoter}>X</button>
+    </div>
+      <div className="m-2 bg-gray-50 p-2 rounded-lg">
         <form onSubmit={updateVoter}>
+       
           <div className="grid md:grid-cols-2 md:gap-6">
+          
             <div className="relative z-0 w-full mb-6 group">
               <input
                 type="text"
@@ -196,6 +202,7 @@ const Page = ({ params: { id } }) => {
           </div>
 
           <div className="grid md:grid-cols-2 md:gap-6">
+          
             <div className="relative z-0 w-full mb-6 group">
               <input
                 type="text"
@@ -254,12 +261,7 @@ const Page = ({ params: { id } }) => {
             Update
           </button>
 
-          <button
-            type="submit" onClick={deleteVoter}
-            className="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-          >
-            Delete
-          </button>
+         
         
 
 

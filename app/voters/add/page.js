@@ -84,8 +84,8 @@ const Page = () => {
   }
 
   return (
-    <div className="flex justify-center">
-      <div className="flex-row w-full lg:w-3/4 m-4 bg-gray-50 p-4 rounded-lg">
+    <div className="flex-row w-full ">
+      <div className=" m-4 bg-gray-50 p-4 rounded-lg">
         <form onSubmit={addVoter}>
           <div className="grid md:grid-cols-2 md:gap-6">
            

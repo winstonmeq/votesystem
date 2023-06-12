@@ -6,9 +6,27 @@ const nextConfig = {
        
          //NEXTAUTH_URL: 'https://deltaph.vercel.app',
          //LOCAL_URL: 'http://localhost:3000',
-         LOCAL_URL: 'https://vms-green.vercel.app',
+         //LOCAL_URL: 'https://vms-green.vercel.app',
 
      },
+
+
+     experimental: {
+        appDir:true,
+        serverComponentsExternalPackages:["mongoose"]
+     },
+     images: {
+        domains:['lh3.googleusercontent.com']
+     },
+     webpack(config){
+        config.experiments = {
+            ...config.experiments,
+            topLevelAwait: true,
+        }
+        return config
+     }
+
+
 }
 
 module.exports = nextConfig

@@ -1,5 +1,5 @@
 import dbConnect from "@/conn/dbconnect";
-import User from "@/models/User";
+import User from "@/models/UserOld";
 
 export async function GET(request) {
 

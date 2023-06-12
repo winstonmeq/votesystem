@@ -1,68 +1,29 @@
 
-import mongoose from "mongoose";
-// const bcrypt = require('bcrypt');
 
-const UserSchema = mongoose.Schema({
-    
-    
+import {Schema, model, models} from 'mongoose'
 
-    email: {
+
+const UserSchema = new Schema ({
+
+    email:{
         type:String,
-        required:true,        
-        index: true,
-        unique:true
-
-    },
-    password:{
-        type:String,
-        required:true,
-        trim:true
-
+        unique:[true,'Email already exists'],
+        required: [true, 'Email is required']
     },
 
-    fname: {
+    username: {
         type:String,
-        required:true,        
-        index: true,
-        unique:true
-
-    },
-    lname: {
-        type:String,
-        required:true,        
-        index: true,
-        unique:true
-
+        required:[true, 'Username is required!'],
+        match:[/^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/, 'Username invalid, it should contain, 8-20  alphanumeric letters and be unique']
     },
 
-    position: {
-        type:String,
-        required:true,        
-        index: true,
-        unique:true
-
-    },
-  
-    userlevel:{
-        type:Number, 
-        index:true,            
-        trim:true
+    image: {
+        type: String
     }
 
-},{
-
-    timestamps: true,
 
 });
 
-// UserSchema.methods.comparePassword = async function (password) {
-//     return await bcrypt.compare(password, this.password);
-//   };
+const User = models.User || model("User",UserSchema);
 
-UserSchema.methods.comparePassword = function (password) {
-    return this.password === password;
-  };
-  
-
-
-export default mongoose.models.User || mongoose.model('User', UserSchema);
+export default User;
