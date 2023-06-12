@@ -9,6 +9,7 @@ import Purok4 from "../purok/components/purok4"
 import Purok5 from "../purok/components/purok5"
 import { useSession} from 'next-auth/react';
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 
 export default function Page() {
@@ -16,15 +17,15 @@ export default function Page() {
 
   const {data:session} = useSession();
 
-  useEffect(() => {
+  const router = useRouter();
 
+
+  useEffect(() => {
 
     if(!session) {
       alert('Please login')
       router.push('/')
     }
-
-
 
   }, []);
 
