@@ -36,7 +36,7 @@ useEffect(() =>{
     <nav className="flex-between w-full mb-16 pt-3">
         <Link href={'/'} className="flex gap-2 flex-center">
             <Image src='/images/cotraceLogo.png' 
-            width={60}
+            width={50}
             height={50} 
             alt="Cotrace Logo"
             className="objec-contain"
@@ -50,6 +50,8 @@ useEffect(() =>{
         <div className="sm:flex hidden">
               {session?.user ? (
                 <div className="flex gap-3 md:gap-6">
+                    
+                    <Link href={'/dashboard'} className="black_btn">Dashboard</Link>
                     <Link href={'/voters'} className="black_btn">Voters</Link>
                     <Link href={'/purok'} className="black_btn">Puroks</Link>
 

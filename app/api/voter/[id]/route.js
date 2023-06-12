@@ -1,6 +1,6 @@
 import dbConnect from "@/conn/dbconnect";
 import Voter from "@/models/Voter";
-
+import { connectToDB } from "@/utils/database";
 import { NextResponse } from "next/server";
 
 
@@ -13,7 +13,7 @@ export async function GET(request, {params}) {
  
     console.log(id)
      
-    await dbConnect();
+   await connectToDB();
 
     const getdata = await Voter.find({_id:id}).exec();
     
@@ -29,6 +29,9 @@ export async function GET(request, {params}) {
   } 
 }
 
+
+
+
 export async function PATCH(request, {params}) {
 
   const {fname,lname,age,position,purok, prec_num,member} = await request.json();
@@ -37,7 +40,7 @@ export async function PATCH(request, {params}) {
   
      console.log(params.id, fname,lname,age,position,purok, prec_num,member)
       
-     await dbConnect();
+    await connectToDB();
  
  
      const updatedVoter = await Voter.findByIdAndUpdate(

@@ -1,12 +1,13 @@
 import dbConnect from "@/conn/dbconnect";
 import Purok from "@/models/Purok";
+import { connectToDB } from "@/utils/database";
 
 
 export async function GET(request) {
 
   try {
 
-    await dbConnect();
+    await connectToDB();
 
     const getdata = await Purok.find({}).exec();
     
@@ -30,7 +31,7 @@ export async function POST(request) {
 
     console.log(PName,Coordinator , Phone, totalVote, RedBox, BlueBox, GreenBox)
 
-    await dbConnect();
+   await connectToDB();
 
     const addPurok = new Purok({
         PName:PName,
