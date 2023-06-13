@@ -74,21 +74,12 @@ const Page = ({ params: { id } }) => {
 
 
 
-
-
-
-
-
-
-
-
-
   const columns = [
     {
       name: "Name",
       selector: (row) =>
         row.member ? (
-          <div className="text-red-900 font-bold">
+          <div className="text-red-900 flex-row w-full font-bold">
             {row.fname} {row.lname}
           </div>
         ) : (
@@ -96,12 +87,13 @@ const Page = ({ params: { id } }) => {
             {row.fname} {row.lname}
           </div>
         ),
+        
     },
 
     {
-      name: "Age",
+      name: <div className="sm:flex hidden">Age</div>,
       selector: (row) => (
-        <div className="justify-center text-sm">{row.age}</div>
+        <div className="sm:flex hidden ">{row.age}</div>
       ),
     },
 
@@ -164,7 +156,7 @@ const Page = ({ params: { id } }) => {
         <div className="flex-row">
         <div className="relative z-0 w-full mb-6 group">
              
-          <div className="overflow-y-auto max-h-12">
+          <div className="flex flex-row ">
            <select value={purok} onChange={handleSelectChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
              <option value=''>Select Purok</option>
            {puroklist.map((item,i)=> (
