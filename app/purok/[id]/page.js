@@ -3,105 +3,199 @@ import Link from "next/link";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from 'axios';
+import DataTable from "react-data-table-component";
 
 
 const Page = ({ params: { id } }) => {
 
-  const [datalist, setdatalist] = useState([]);    
+  const [datalist, setdatalist] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [puroklist, setpuroklist] = useState([]);
+  const [purok, setpurok] = useState("");
 
 
-  useEffect(() => {   
+  useEffect(() => {
 
     async function FetchData() {
       try {
         const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok/${id}`)
         setdatalist(data);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
+
+    }
+
+
+    async function FetchData2() {
+      try {
+        const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok`)
+        setpuroklist(data);
+
+
+      } catch (error) {
+
+        console.error(error);
+
+      }
+
+    }
+
+    FetchData2();
+    FetchData();
+  }, [id]);
+
+
+
+  const handleSelectChange = async (e) => {
+    const selectedPurok = e.target.value;
+    setpurok(selectedPurok);
+
+    try {
+      // Make an API request or perform any action you need based on the selected purok
+       const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok/${selectedPurok}`)
+      setdatalist(data);
       setLoading(false);
+
+
     } catch (error) {
       console.error(error);
-      setLoading(false);
     }
-           
-  }
- 
-    FetchData();
-    }, [id]);
+  };
 
-    if (loading) {
-      return <div className="flex justify-center min-h-screen ">Loading...</div>;
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const columns = [
+    {
+      name: "Name",
+      selector: (row) =>
+        row.member ? (
+          <div className="text-red-900 font-bold">
+            {row.fname} {row.lname}
+          </div>
+        ) : (
+          <div>
+            {row.fname} {row.lname}
+          </div>
+        ),
+    },
+
+    {
+      name: "Age",
+      selector: (row) => (
+        <div className="justify-center text-sm">{row.age}</div>
+      ),
+    },
+
+    // {
+    //   name: "Position",
+    //   selector: (row) => row.position,
+    // },
+    {
+      name: "Precinct",
+      selector: (row) => row.prec_num,
+    },
+
+    // {
+    //   name: (
+    //     <div className=" text-white text-sm bg-slate-500 p-2 rounded-lg font-bold">
+    //       Purok
+    //     </div>
+    //   ),
+    //   selector: (row) => row.purok,
+    // },
+
+    {
+      name: "Action",
+      selector: (row) => (
+        <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+          <Link href={`/voters/${row._id}`}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+              />
+            </svg>
+          </Link>
+        </div>
+      ),
+    },
+  ];
+
+
+
+
+
+  if (loading) {
+    return <div className="flex text-sm justify-center min-h-screen ">Loading...</div>;
+  }
 
 
 
   return (
-   <div className='overflow-x-auto'>
-    <div className='min-w-screen min-h-screen bg-gray-100 flex justify-center font-sans overflow-hidden'>
-     <div className="m-2 w-full lg:w-5/6">
-     <div className="flex flex-row p-2 text-sm text-left">{id}</div>
+    <div className="flex-row w-full">
 
-      <div className="bg-white shadow-md rounded my-6">
+      <div className="flex-col">
+        <div className="flex-row">
+        <div className="relative z-0 w-full mb-6 group">
+             
+          <div className="overflow-y-auto max-h-12">
+           <select value={purok} onChange={handleSelectChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+             <option value=''>Select Purok</option>
+           {puroklist.map((item,i)=> (
+             <option key={i} value={item.PName}>{item.PName}</option>
+           ))}
+ 
+           </select>
+ 
+ 
+             </div>
+             </div>
 
-        <table className='min-w-max w-full table-auto'>
-        <thead>
-            <tr className='bg-gray-200 text-gray-600 uppercase text-sm leading-normal'>
-              <th className="py-3 px-6 text-left">First Name</th>
-              <th className="py-3 px-6 text-left">Last Name</th>
-              <th className="py-3 px-6 text-center">Age</th>
-              <th className="py-3 px-6 text-center">Position</th>
-              <th className="py-3 px-6 text-center">Precinct</th>
-              <th className="py-3 px-6 text-center">Purok</th>
-              <th className="py-3 px-6 text-center">Status</th>
-            </tr>
-          </thead>
-          <tbody className="text-gray-600 text-sm font-light">
-            {datalist.map((item, i) => (
-              <tr key={i} className="border-b border-gray-200 hover:bg-gray-100">
-                <td className="py-3 px-6 text-left whitespace-nowwrap">{item.fname}</td>
-                <td className="py-3 px-6 text-left whitespace-nowwrap">{item.lname}</td>
-                <td className="py-3 px-6 text-center whitespace-nowwrap">{item.age}</td>
-                <td className="py-3 px-6 text-center whitespace-nowwrap">{item.position}</td>
-                <td className="py-3 px-6 text-center whitespace-nowwrap">{item.prec_num}</td>
-                <td className="py-3 px-6 text-center whitespace-nowwrap">{item.purok}</td>
-                <td class="py-3 px-6 text-center">
-                                    <div class="flex item-center justify-center">
-                                        {/* <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                            </svg>
-                                        </div> */}
-                                        <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                          <Link href={`/voters/${item._id}`}>
-                                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                            </svg>
+        </div>
+          <div className="flex-row w-full">
+            <DataTable
+              columns={columns}
+              data={datalist}
+              defaultSortFieldId="createdAt"
+              pagination
+              paginationPerpage={datalist.length}
+            />
 
-                                          </Link>
-                                            
-                                        </div>
-                                        <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                        <Link href={`/voters/delete/${item._id}`}>
-                                             
-                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                            </svg>
+          </div>
+     
 
-                                        </Link>
-                                          
-                                        </div>
-                                    </div>
-                                </td>
-              </tr>
-            ))}
-          </tbody>
-
-        </table>
       </div>
-     </div>
+
+
+
     </div>
-   </div>
-    
+
   )
 }
 

@@ -40,7 +40,7 @@ export async function POST(request) {
     console.log('check post voter data',{fname, lname})
 
 
-    await dbConnect();
+    await connectToDB();
 
     const addVoter = new Voter({
         fname:fname,

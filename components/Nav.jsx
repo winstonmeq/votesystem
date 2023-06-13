@@ -100,6 +100,15 @@ useEffect(() =>{
 
                     {toggleDropdown && (
                         <div className="dropdown">
+
+                            <Link href={'/dashboard'}
+                           className="dropdown_link"
+                           onClick={() =>setToggleDropdown(false)}
+                           >
+                            Dashboard
+                           </Link>
+    
+
                            <Link href={'/profile'}
                            className="dropdown_link"
                            onClick={() =>setToggleDropdown(false)}
@@ -120,9 +129,7 @@ useEffect(() =>{
                            onClick={() =>setToggleDropdown(false)}
                            >
                             Voter
-                           </Link>
-    
-                         
+                           </Link>                            
 
                            <button type="button" className="mt-5 w-full black_btn" 
                            onClick={() => {

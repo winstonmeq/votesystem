@@ -24,7 +24,7 @@ const Page = () => {
 
 
     if(!session) {
-      alert('Please login')
+      // alert('Please login')
       router.push('/')
     }
 
@@ -50,7 +50,7 @@ const Page = () => {
 
     
     return (
-      <div className="flex justify-center items-center min-h-screen ">
+      <div className="flex justify-center min-h-screen ">
         Loading...
       </div>
     );
@@ -80,14 +80,14 @@ const Page = () => {
       ),
     },
 
-    {
-      name: "Position",
-      selector: (row) => row.position,
-    },
-    {
-      name: "Precinct",
-      selector: (row) => row.prec_num,
-    },
+    // {
+    //   name: "Position",
+    //   selector: (row) => row.position,
+    // },
+    // {
+    //   name: "Precinct",
+    //   selector: (row) => row.prec_num,
+    // },
 
     {
       name: (
@@ -124,15 +124,29 @@ const Page = () => {
 
   return (
     <div className="flex-row w-full">
-    <div className="flex flex-row w-full justify-between m-3">
-<div className="flex">
+<div className="flex flex-col sm:flex-row w-full justify-between m-2">
 
-<input type="text" className="border rounded-lg bg-gray-100 pl-2" placeholder="Search..." />
-<button  className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
-</div>      <button className="black_btn"> <Link href={'/voters/add'}>Add Voter</Link> </button>
-    </div>
-      
-          <DataTable
+<button className="black_btn">
+    <Link href="/voters/add">Add Voter</Link>
+  </button>
+  
+  {/* <div className="flex flex-row">
+    <input
+      type="text"
+      className="border rounded-lg bg-gray-100 pl-2"
+      placeholder="Search..."
+    />
+    <button className="black_btn">
+      Search
+    </button>
+  </div> */}
+
+ 
+
+</div>
+
+<div className="w-full">
+<DataTable
             columns={columns}
             data={datalist}
             title="Voter Lists"
@@ -140,6 +154,9 @@ const Page = () => {
             pagination
             paginationPerpage={datalist.length}
           />
+</div>
+
+        
       
     </div>
   );

@@ -39,7 +39,7 @@ const Page = () => {
   }
  
     FetchData();
-    }, []);
+  }, []);
 
 
 
