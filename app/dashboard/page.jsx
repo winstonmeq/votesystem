@@ -10,6 +10,9 @@ import Purok5 from "../purok/components/purok5"
 import { useSession} from 'next-auth/react';
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Purok_5 from "../purok5/page"
+import Purok_2 from "../purok2/page"
+import Purok_3 from "../purok3/page"
 
 
 export default function Page() {
@@ -23,7 +26,7 @@ export default function Page() {
   useEffect(() => {
 
     if(!session) {
-      alert('Please login')
+     // alert('Please login')
       router.push('/')
     }
 
@@ -35,12 +38,9 @@ export default function Page() {
     <div className='flex justify-center m-4 p-8 rounded-2xl'>
  
     <Purok1 />
-    <Purok2 />
-    <Purok3 />
-
-
-    <Purok4 />
-    <Purok5 />
+    <Purok_2 />
+    <Purok_3 />
+    <Purok_5 />
 
     </div>
      
