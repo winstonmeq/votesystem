@@ -16,7 +16,7 @@ export async function GET(request) {
 
     const getdata = await Voter.find({}).exec();
 
-    return NextResponse(getdata)
+    return NextResponse.json(getdata)
     
     //return new Response(JSON.stringify(getdata))
      

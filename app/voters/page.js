@@ -15,7 +15,8 @@ const Page = () => {
 
   const [datalist, setdatalist] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
 
   useEffect(() => {
@@ -40,9 +41,14 @@ const Page = () => {
   }, []);
 
 
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/"); // Redirect to homepage if user is not logged in
+    }
+  }, [status, router]);
+
 
   if (loading) {
-
     
     return (
       <div className="flex justify-center min-h-screen ">
@@ -69,9 +75,9 @@ const Page = () => {
     },
 
     {
-      name: "Member",
+      name: "Age",
       selector: (row) => (
-        <div className="justify-center text-sm">{row.member}</div>
+        <div className="justify-center text-sm">{row.age}</div>
       ),
     },
 
