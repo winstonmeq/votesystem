@@ -23,11 +23,7 @@ const Page = () => {
   useEffect(() => {
 
 
-    if(!session) {
-      // alert('Please login')
-      router.push('/')
-    }
-
+   
 
     async function FetchData() {
       try {
@@ -45,6 +41,17 @@ const Page = () => {
 
 
   }, []);
+
+
+
+  if(!session) {
+    alert('Please login')
+    router.push('/')
+  }
+
+
+
+
 
   if (loading) {
 
@@ -74,9 +81,9 @@ const Page = () => {
     },
 
     {
-      name: "Age",
+      name: "Member",
       selector: (row) => (
-        <div className="justify-center text-sm">{row.age}</div>
+        <div className="justify-center text-sm">{row.member}</div>
       ),
     },
 
