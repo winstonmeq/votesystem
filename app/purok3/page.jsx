@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Link from "next/link";
 import axios from 'axios';
-
+import Image from "next/image";
 
 function Purok_3() {
 
@@ -119,7 +119,7 @@ function Purok_3() {
             },
           }}
         >
-               <img src={'/images/Ripple.svg'} alt="Circle Loading" width="40" height="40" />
+               <Image src={'/images/Ripple.svg'} alt="Circle Loading" width="40" height="40" />
         </div>
       );
     }

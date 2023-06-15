@@ -19,23 +19,17 @@ import Purok_10 from "../purok10/page";
 
 import Status_p1 from '../statusP1/page';
 
+
 export default function Page() {
-
-
-  const {data:session} = useSession();
-
-  const router = useRouter();
 
 
   useEffect(() => {
 
-    if(!session) {
-     // alert('Please login')
-      router.push('/')
-    }
-
+   
   }, []);
 
+
+  
   return (
     <section className='w-full flex-center flex-col'>
 

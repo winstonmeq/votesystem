@@ -15,15 +15,12 @@ const Page = () => {
 
   const [datalist, setdatalist] = useState([]);
   const [loading, setLoading] = useState(true);
-  const {data:session} = useSession();
 
-  const router = useRouter();
 
 
   useEffect(() => {
 
-
-   
+ 
 
     async function FetchData() {
       try {
@@ -41,15 +38,6 @@ const Page = () => {
 
 
   }, []);
-
-
-
-  if(!session) {
-    alert('Please login')
-    router.push('/')
-  }
-
-
 
 
 
