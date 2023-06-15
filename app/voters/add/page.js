@@ -64,7 +64,7 @@ const Page = () => {
       // setposition('')
       // setprec_num('')
 
-      router.push('/')
+      router.push('/voters')
 
     } catch (error) {
 

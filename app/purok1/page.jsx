@@ -5,7 +5,7 @@ import Link from "next/link";
 import axios from 'axios';
 
 
-function Purok_2() {
+function Purok_1() {
 
   const [datalist, setdatalist] = useState([]);    
   const [loading, setLoading] = useState(true);
@@ -18,7 +18,7 @@ function Purok_2() {
 
       try {
 
-      const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok2`)
+      const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok1`)
 
       setdatalist(data);
       setLoading(false);
@@ -136,4 +136,4 @@ function Purok_2() {
   )
 }
 
-export default Purok_2
+export default Purok_1

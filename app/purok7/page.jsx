@@ -5,7 +5,7 @@ import Link from "next/link";
 import axios from 'axios';
 
 
-function Purok_2() {
+function Purok_7() {
 
   const [datalist, setdatalist] = useState([]);    
   const [loading, setLoading] = useState(true);
@@ -15,10 +15,11 @@ function Purok_2() {
 
     async function FetchData() {
 
+        const prkname = 'Purok5'
 
       try {
 
-      const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok2`)
+      const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok7`)
 
       setdatalist(data);
       setLoading(false);
@@ -46,9 +47,9 @@ function Purok_2() {
               height: '80px',
               backgroundColor: 'red',
               borderRadius: '10px',
-              '@media (max-width: 600px)': {
-                width: '60px',
-                height: '60px',
+              '@media (max-width: 800px)': {
+                width: '20px',
+                height: '20px',
               },
             }}
           >
@@ -66,9 +67,9 @@ function Purok_2() {
               height: '80px',
               backgroundColor: 'blue',
               borderRadius: '10px',
-              '@media (max-width: 600px)': {
-                width: '60px',
-                height: '60px',
+              '@media (max-width: 800px)': {
+                width: '20px',
+                height: '20px',
               },
             }}
           >
@@ -86,9 +87,9 @@ function Purok_2() {
               height: '80px',
               backgroundColor: 'green',
               borderRadius: '10px',
-              '@media (max-width: 600px)': {
-                width: '60px',
-                height: '60px',
+              '@media (max-width: 800px)': {
+                width: '20px',
+                height: '20px',
               },
             }}
           >
@@ -124,6 +125,7 @@ function Purok_2() {
       );
     }
     
+  
 
   return (
     <div>
@@ -136,4 +138,4 @@ function Purok_2() {
   )
 }
 
-export default Purok_2
+export default Purok_7

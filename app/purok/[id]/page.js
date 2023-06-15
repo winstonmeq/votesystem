@@ -102,8 +102,8 @@ const Page = ({ params: { id } }) => {
     //   selector: (row) => row.position,
     // },
     {
-      name: "Precinct",
-      selector: (row) => row.prec_num,
+      name: "Member",
+      selector: (row) => row.member,
     },
 
     // {

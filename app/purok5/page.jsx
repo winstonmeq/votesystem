@@ -1,4 +1,4 @@
-
+'use client'
 import { useState } from "react";
 import { useEffect } from "react";
 import Link from "next/link";
@@ -43,13 +43,13 @@ function Purok_5() {
           <div
             style={{
               margin: '5px',
-              width: '20px',
-              height: '20px',
+              width: '80px',
+              height: '80px',
               backgroundColor: 'red',
               borderRadius: '10px',
               '@media (max-width: 800px)': {
-                width: '60px',
-                height: '60px',
+                width: '20px',
+                height: '20px',
               },
             }}
           >
@@ -63,13 +63,13 @@ function Purok_5() {
           <div
             style={{
               margin: '5px',
-              width: '20px',
-              height: '20px',
+              width: '80px',
+              height: '80px',
               backgroundColor: 'blue',
               borderRadius: '10px',
               '@media (max-width: 800px)': {
-                width: '60px',
-                height: '60px',
+                width: '20px',
+                height: '20px',
               },
             }}
           >
@@ -83,13 +83,13 @@ function Purok_5() {
           <div
             style={{
               margin: '5px',
-              width: '20px',
-              height: '20px',
+              width: '80px',
+              height: '80px',
               backgroundColor: 'green',
               borderRadius: '10px',
               '@media (max-width: 800px)': {
-                width: '60px',
-                height: '60px',
+                width: '20px',
+                height: '20px',
               },
             }}
           >
@@ -102,11 +102,29 @@ function Purok_5() {
     };
     
 
-
-
     if (loading) {
-      return <div className="flex justify-center min-h-screen">Loading...</div>;
+      return (
+        <div
+          style={{
+            margin: '5px',
+            width: '80px',
+            height: '80px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'green',
+            borderRadius: '10px',
+            '@media (max-width: 800px)': {
+              width: '20px',
+              height: '20px',
+            },
+          }}
+        >
+               <img src={'/images/Ripple.svg'} alt="Circle Loading" width="40" height="40" />
+        </div>
+      );
     }
+    
   
 
   return (
