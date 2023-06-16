@@ -127,9 +127,7 @@ const Page = () => {
     <div className="flex-row w-full">
 <div className="flex flex-col sm:flex-row w-full justify-between m-2">
 
-<button className="black_btn">
-    <Link href="/voters/add">Add Voter</Link>
-  </button>
+  <Link href="/voters/add" className="black_btn">Add Voter</Link>
   
   {/* <div className="flex flex-row">
     <input

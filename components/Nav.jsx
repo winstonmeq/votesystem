@@ -47,7 +47,7 @@ useEffect(() =>{
 {/* 
        desktop navigation */}
 
-        <div className="sm:flex hidden">
+        <div className="sm:flex hidden relative">
               {session?.user ? (
                 <div className="flex gap-3 md:gap-6">
                     
