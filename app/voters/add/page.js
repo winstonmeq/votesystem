@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useRouter } from 'next/navigation';
+import { useSession} from 'next-auth/react';
 
 
 const Page = () => {
@@ -15,6 +16,7 @@ const Page = () => {
   const [purok, setpurok] = useState("");
   const [member, setmember] = useState(0);
   const [datalist, setdatalist] = useState([]);
+  const { data: session, status } = useSession();
 
 
   const router = useRouter()
@@ -26,13 +28,11 @@ const Page = () => {
       try {
       const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok`)
       setdatalist(data);
-      setIsLoading(false);
 
 
     } catch (error) {
 
       console.error(error);
-      setIsLoading(false);
 
     }
            
@@ -42,6 +42,11 @@ const Page = () => {
   }, []);
 
 
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/"); // Redirect to homepage if user is not logged in
+    }
+  }, [status, router]);
 
 
 
@@ -49,20 +54,9 @@ const Page = () => {
 
     try {
 
-      setIsLoading(true); // Set isLoading to true when the request is initiated
-
       const payload = {fname,lname, age, position, prec_num, purok, member, };
 
       const response = await axios.post("http://localhost:3000/api/voter",payload);
-
-      setIsLoading(false);
-      console.log(response);
-
-      // setfname('')
-      // setlname('')
-      // setage('')
-      // setposition('')
-      // setprec_num('')
 
       router.push('/voters')
 
@@ -70,10 +64,10 @@ const Page = () => {
 
       setIsLoading(false);
 
-      console.log("error");
-
     } finally {
-      setIsLoading(false); // Set isLoading to false when the request is completed or encounters an error
+
+      setIsLoading(false);
+       // Set isLoading to false when the request is completed or encounters an error
     }
   };
 

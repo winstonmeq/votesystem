@@ -6,7 +6,8 @@ import { connectToDB } from "@/utils/database";
 
 import User from "@/models/User";
 
-import { useRouter } from "next/navigation";
+
+
 
 
 const handler = NextAuth({
@@ -18,12 +19,11 @@ const handler = NextAuth({
               }),
             ],
 
+         
 
 
             
 callbacks:{
-
-
   
     async session({ session }) {
         const sessionUser = await User.findOne({
@@ -38,10 +38,10 @@ callbacks:{
       async signIn({ profile }) {
 
         try {
-    
-    
+                   
+
           await connectToDB();
-    
+
           //check if a suser already exists
           const userExists = await User.findOne({
             email: profile.email,

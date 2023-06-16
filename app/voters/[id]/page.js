@@ -4,6 +4,10 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { useRouter } from 'next/navigation';
+import { useSession} from 'next-auth/react';
+
+
+
 
 const Page = ({ params: { id } }) => {
 
@@ -18,11 +22,13 @@ const Page = ({ params: { id } }) => {
   const [prec_num, setprec_num] = useState("");
   const [purok, setpurok] = useState("");
   const [member, setmember] = useState(0);
+  const { data: session, status } = useSession();
 
 
   const router = useRouter()
 
 
+  
 
   useEffect(() => {
     async function FetchData() {
@@ -31,8 +37,7 @@ const Page = ({ params: { id } }) => {
           process.env.LOCAL_URL + `/api/voter/${id}`
         );
 
-        console.log(data);
-
+   
         if (data.length > 0) {
           setfname(data[0].fname);
           setlname(data[0].lname);
@@ -43,10 +48,11 @@ const Page = ({ params: { id } }) => {
           setmember(data[0].member);
         }
 
-        setLoading(false);
+
       } catch (error) {
+
         console.error(error);
-        setLoading(false);
+
       }
     }
 
@@ -54,10 +60,8 @@ const Page = ({ params: { id } }) => {
       try {
         const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok`);
         setdatalist2(data);
-        setLoading(false);
       } catch (error) {
         console.error(error);
-        setLoading(false);
       }
     }
 
@@ -66,12 +70,21 @@ const Page = ({ params: { id } }) => {
   }, [id]);
 
 
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/"); // Redirect to homepage if user is not logged in
+    }
+  }, [status, router]);
+
+
 
 
   const updateVoter = async () => {
+
+    setLoading(true); // Set isLoading to true when the request is initiated
+
     try {
      
-      setLoading(true); // Set isLoading to true when the request is initiated
 
       const payload = { fname, lname,age,position,prec_num, purok, member};
 
@@ -86,7 +99,6 @@ const Page = ({ params: { id } }) => {
     } catch (error) {
       setLoading(false);
 
-      console.log("error");
     } finally {
       setLoading(false); // Set isLoading to false when the request is completed or encounters an error
     }
@@ -98,23 +110,20 @@ const Page = ({ params: { id } }) => {
   
   const deleteVoter = async () => {
    
+    setLoading(true); // Set isLoading to true when the request is initiated
+
 
     try {
 
-      setLoading(true); // Set isLoading to true when the request is initiated
-
       const response = await axios.delete(process.env.LOCAL_URL + `/api/voter/${id}`);
 
-      router.push('/voters')
-        
-      console.log(response);
-      
-      return null
+      router.push('/voters')       
+    
+     
 
     } catch (error) {
       setLoading(false);
 
-      console.log("error");
     } finally {
       setLoading(false); // Set isLoading to false when the request is completed or encounters an error
     }
