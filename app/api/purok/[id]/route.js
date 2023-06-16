@@ -1,22 +1,21 @@
-import dbConnect from "@/conn/dbconnect";
+
+
+import { connectToDB } from "@/utils/database";
 import Voter from "@/models/Voter";
 
 import { NextResponse } from "next/server";
 
 
 
-export async function GET(request, {params}) {
+export async function GET(request, {params:{id}}) {
 
-  const id = params.id
 
   try {
-
  
-    console.log(id)
      
-    await dbConnect();
+   await connectToDB();
 
-    const getdata = await Voter.find({purok:id}).exec();
+   const getdata = await Voter.find({ purok: id }).lean().exec();
     
     //return new Response(JSON.stringify(getdata))
 
@@ -25,7 +24,8 @@ export async function GET(request, {params}) {
 
   } catch (error) {
   
-   return new Response('Error nih pre!');
+    return new Response("Error occurred during database query.");
+
 
   } 
 }
