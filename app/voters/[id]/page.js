@@ -27,8 +27,14 @@ const Page = ({ params: { id } }) => {
 
   const router = useRouter()
 
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/"); // Redirect to homepage if user is not logged in
+    }
+  }, [status, router]);
 
-  
+
+
 
   useEffect(() => {
     async function FetchData() {
@@ -48,12 +54,13 @@ const Page = ({ params: { id } }) => {
           setmember(data[0].member);
         }
 
-
+        
       } catch (error) {
-
         console.error(error);
-
       }
+
+     
+
     }
 
     async function FetchData2() {
@@ -63,18 +70,17 @@ const Page = ({ params: { id } }) => {
       } catch (error) {
         console.error(error);
       }
+
+    setLoading(false)
+
     }
 
     FetchData();
     FetchData2();
+
+
+
   }, [id]);
-
-
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/"); // Redirect to homepage if user is not logged in
-    }
-  }, [status, router]);
 
 
 
@@ -89,12 +95,9 @@ const Page = ({ params: { id } }) => {
       const payload = { fname, lname,age,position,prec_num, purok, member};
 
       const response = await axios.patch(process.env.LOCAL_URL + `/api/voter/${id}`,payload);
-
      
       router.push('/voters')
-
   
-      console.log(response);
 
     } catch (error) {
       setLoading(false);
@@ -112,14 +115,12 @@ const Page = ({ params: { id } }) => {
    
     setLoading(true); // Set isLoading to true when the request is initiated
 
-
     try {
 
       const response = await axios.delete(process.env.LOCAL_URL + `/api/voter/${id}`);
 
       router.push('/voters')       
-    
-     
+        
 
     } catch (error) {
       setLoading(false);
@@ -131,20 +132,39 @@ const Page = ({ params: { id } }) => {
   };
 
 
+  function deleteVoter2() {
+    var result = window.confirm("Are you sure you want to delete?")
+
+    if(result) {
+        deleteVoter()
+        alert('Voter deleted!')
+    }else {
+      alert('Delete canceled')
+    }
+  }
+
+
+
 
 
 
   if (loading) {
+
     return <div className="flex justify-center item-center min-h-screen ">Loading...</div>;
+   
   }
 
   
+  
+
 
   return (
+    
     <div className="flex-row w-full justify-center">
+    
     <div className="flex  w-full justify-end">    
     <button
-            type="submit" onClick={deleteVoter}>X</button>
+            type="submit" onClick={deleteVoter2}>X</button>
     </div>
       <div className="m-2 bg-gray-50 p-2 rounded-lg">
         <form onSubmit={updateVoter}>
@@ -280,6 +300,7 @@ const Page = ({ params: { id } }) => {
       
        
       </div>
+     
     </div>
   );
 };
