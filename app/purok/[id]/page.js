@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from 'axios';
 import DataTable from "react-data-table-component";
-
+import { useRouter } from 'next/navigation';
+import { useSession} from 'next-auth/react';
 
 const Page = ({ params: { id } }) => {
 
@@ -14,24 +15,51 @@ const Page = ({ params: { id } }) => {
   const [purok, setpurok] = useState("");
 
 
+  const { data: session, status } = useSession();
+  const router = useRouter()
+
+
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/"); // Redirect to homepage if user is not logged in
+    }
+  }, [status, router]);
+
+
+
+
+
+
+
+
   useEffect(() => {
 
     async function FetchData() {
       try {
         const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok/${id}`)
+
         setdatalist(data);
+
         setLoading(false);
+
       } catch (error) {
+
         console.error(error);
+
         setLoading(false);
+
       }
 
     }
 
-
+/// function to fetch all purok in database and display to dropdown menu
     async function FetchData2() {
+
       try {
+
         const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok`)
+
         setpuroklist(data);
 
 
@@ -50,27 +78,27 @@ const Page = ({ params: { id } }) => {
 
 
   const handleSelectChange = async (e) => {
+
     const selectedPurok = e.target.value;
+  
     setpurok(selectedPurok);
 
-    try {
-      // Make an API request or perform any action you need based on the selected purok
-       const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok/${selectedPurok}`)
-      setdatalist(data);
-      setLoading(false);
+    router.replace(`/purok/${selectedPurok}`)
+  
+
+    // try {
+    //   // Make an API request or perform any action you need based on the selected purok
+    //    const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok/${selectedPurok}`)
+
+    //   setdatalist(data);
+
+    //   setLoading(false);
 
 
-    } catch (error) {
-      console.error(error);
-    }
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
-
-
-
-
-
-
-
 
 
 
@@ -153,11 +181,12 @@ const Page = ({ params: { id } }) => {
     <div className="flex-row w-full">
 
       <div className="flex-col">
+      <div className="flex flex-row m-2 ">Purok Name: {id}</div>
         <div className="flex-row">
         <div className="relative z-0 w-full mb-6 group">
              
           <div className="flex flex-row ">
-           <select value={purok} onChange={handleSelectChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+           <select onChange={handleSelectChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
              <option value=''>Select Purok</option>
 
            {puroklist.map((item,i)=> (

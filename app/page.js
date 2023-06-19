@@ -18,7 +18,7 @@ export default function Home() {
     </h1>
 
       <span className='head_text orange_gradient text-center m-2'>
-      Beyond Numbers: Transforming Votes into Trusted Results</span>
+      Transforming Votes into Trusted Results</span>
     
 
     <p className='desc text-center mt-2'>

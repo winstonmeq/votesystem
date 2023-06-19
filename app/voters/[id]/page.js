@@ -96,7 +96,7 @@ const Page = ({ params: { id } }) => {
 
       const response = await axios.patch(process.env.LOCAL_URL + `/api/voter/${id}`,payload);
      
-      router.push('/voters')
+      router.back();
   
 
     } catch (error) {
