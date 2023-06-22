@@ -2,7 +2,7 @@
 
 'use client'
 
-import { useSession} from 'next-auth/react';
+import { useSession, getSession } from 'next-auth/react';
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useState } from 'react';
@@ -35,27 +35,74 @@ export default function Page() {
 
 
 
+  // useEffect(() => {
+
+  //   setLoading(true)
+    
+  //   if (status === "unauthenticated") {
+
+  //     router.push("/"); // Redirect to homepage if user is not logged in
+
+  //   }else {
+
+  //     setLoading(false)
+  //   }
+
+ 
+
+  // }, [status, router]);
+
+  
   useEffect(() => {
 
-    setLoading(true)
+    setLoading(true);
     
-    if (status === "unauthenticated") {
-      router.push("/"); // Redirect to homepage if user is not logged in
-    }else {
+    const checkAdminPrivileges = async () => {
 
-      setLoading(false)
-    }
+      const session = await getSession();
+
+      if (session == null){
+
+        router.push('/')
+
+      } else {
+
+
+        if (session.user.isAdmin == false) {
+
+          console.log('check privilege',session.user.isAdmin)
+  
+          router.push("/purok"); // Redirect to homepage if user is not logged in or doesn't have admin privileges
+        } else {
+          setLoading(false);
+          console.log('session null')
+  
+        }
 
 
 
-  }, [status, router]);
+      }
+
+    };
+
+
+    checkAdminPrivileges();
+
+  }, [router]);
+
+
+
 
 
   const scrollToRef = (ref) => {
+
     window.scrollTo({
+      
       top: ref.current.offsetTop,
       behavior: 'smooth',
+
     });
+
   };
 
 
@@ -72,7 +119,7 @@ export default function Page() {
   return (
 
     <div className='w-screen'>
-
+{  console.log('seesion', session)}
 <nav className="flex justify-end mb-4 mr-20">
   <ul className="flex">
     <li className="mr-4">
@@ -90,21 +137,21 @@ export default function Page() {
 <div className='flex flex-wrap justify-center m-1 p-1 rounded-2xl'>
  
   <Purok_1 />
-  <Purok_2 />
+  {/* <Purok_2 />
   <Purok_3 />
   <Purok_4 />
   <Purok_5 />
-  <Purok_6 />      
+  <Purok_6 />       */}
 
 
 </div>
 
 <div className='flex flex-wrap justify-center p-1 rounded-2xl'>
-  <Purok_7 />
+  {/* <Purok_7 />
   <Purok_8 />
   <Purok_9 />
   <Purok_10 />
- 
+  */}
  
 </div>
 
@@ -117,7 +164,7 @@ export default function Page() {
 <h1 className='p-4 flex justify-center'>Status Bar</h1>
 <div className='flex flex-wrap justify-center p-1 rounded-2xl'>
 
-<Status_p1 />
+{/* <Status_p1 /> */}
 
 
 </div>

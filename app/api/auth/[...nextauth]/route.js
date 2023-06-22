@@ -26,11 +26,15 @@ const handler = NextAuth({
 callbacks:{
   
     async session({ session }) {
+
         const sessionUser = await User.findOne({
+
           email: session.user.email,
+
         });
     
         session.user.id = sessionUser._id.toString();
+        session.user.isAdmin = sessionUser.admin; // Add the isAdmin property to the session user object
     
         return session;
       },
@@ -44,7 +48,9 @@ callbacks:{
 
           //check if a suser already exists
           const userExists = await User.findOne({
+
             email: profile.email,
+
           });
     
           console.log(profile.email)
@@ -57,6 +63,7 @@ callbacks:{
     
               email: profile.email,
               username: profile.name.replace(" ", "").toLowerCase(),
+              admin:false,
               image: profile.picture,
     
             });
