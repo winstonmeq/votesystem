@@ -30,38 +30,16 @@ const Page = () => {
 
       const session = await getSession();
 
-      if (session == null){
-
-        router.push('/')
-
+      if (!session || !session.user || !session.user.isAdmin) {
+        router.push('/');
       } else {
-
-
-        if (session.user.isAdmin == false) {
-
-          console.log('check privilege',session.user.isAdmin)
-  
-          router.push("/admin"); // Redirect to homepage if user is not logged in or doesn't have admin privileges
-
-        } else {
-
-          setLoading(false);
-
-          console.log('session null')
-  
-        }
-
-
-
+        console.log('session is good!');
       }
 
     };
 
 
-    checkAdminPrivileges();
-
-
-    async function FetchData() {
+    const FetchData = async () => {
       try {
         const { data } = await axios.get(process.env.LOCAL_URL + `/api/voter`);
         setdatalist(data);
@@ -74,6 +52,7 @@ const Page = () => {
     }
 
 
+    checkAdminPrivileges();
     FetchData();
 
 
