@@ -18,48 +18,13 @@ const Page = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-
-  useEffect(() => {
+  
 
  
 
-    async function FetchData() {
-      try {
-        const { data } = await axios.get(process.env.LOCAL_URL + `/api/voter`);
-        setdatalist(data);
-        setLoading(false);
-        console.log('voters', data)
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
-    }
-
-    FetchData();
-
-
-  }, []);
-
-
-  // useEffect(() => {
-  //   if (status === "unauthenticated") {
-  //     router.push("/"); // Redirect to homepage if user is not logged in
-  //   }
-  // }, [status, router]);
-
-
-  // if (loading) {
-    
-  //   return (
-  //     <div className="flex justify-center min-h-screen ">
-  //       Loading...
-  //     </div>
-  //   );
-  // }
-
   useEffect(() => {
 
-    setLoading(true);
+   // setLoading(true);
     
     const checkAdminPrivileges = async () => {
 
@@ -76,10 +41,10 @@ const Page = () => {
 
           console.log('check privilege',session.user.isAdmin)
   
-          router.push("/purok"); // Redirect to homepage if user is not logged in or doesn't have admin privileges
+          router.push("/admin"); // Redirect to homepage if user is not logged in or doesn't have admin privileges
 
         } else {
-          
+
           setLoading(false);
 
           console.log('session null')
@@ -95,7 +60,63 @@ const Page = () => {
 
     checkAdminPrivileges();
 
+
+    async function FetchData() {
+      try {
+        const { data } = await axios.get(process.env.LOCAL_URL + `/api/voter`);
+        setdatalist(data);
+        setLoading(false);
+        console.log('voters', data)
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
+    }
+
+
+    FetchData();
+
+
   }, [router]);
+
+
+
+  if (loading) {
+    
+    return (
+      <div className="flex justify-center min-h-screen ">
+        Loading...
+      </div>
+    );
+  }
+
+
+
+  // useEffect(() => {
+
+  //  async function FetchData() {
+  //     try {
+  //       const { data } = await axios.get(process.env.LOCAL_URL + `/api/voter`);
+  //       setdatalist(data);
+  //       setLoading(false);
+  //       console.log('voters', data)
+  //     } catch (error) {
+  //       console.error(error);
+  //       setLoading(false);
+  //     }
+  //   }
+
+  //   FetchData();
+
+  // }, []);
+
+
+  // useEffect(() => {
+  //   if (status === "unauthenticated") {
+  //     router.push("/"); // Redirect to homepage if user is not logged in
+  //   }
+  // }, [status, router]);
+
 
 
 
