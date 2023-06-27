@@ -55,7 +55,6 @@ export default function Page() {
   
   useEffect(() => {
 
-    setLoading(true);
     
     const checkAdminPrivileges = async () => {
 
