@@ -41,21 +41,59 @@ const Page = () => {
   }, []);
 
 
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/"); // Redirect to homepage if user is not logged in
-    }
-  }, [status, router]);
+  // useEffect(() => {
+  //   if (status === "unauthenticated") {
+  //     router.push("/"); // Redirect to homepage if user is not logged in
+  //   }
+  // }, [status, router]);
 
 
-  if (loading) {
+  // if (loading) {
     
-    return (
-      <div className="flex justify-center min-h-screen ">
-        Loading...
-      </div>
-    );
-  }
+  //   return (
+  //     <div className="flex justify-center min-h-screen ">
+  //       Loading...
+  //     </div>
+  //   );
+  // }
+
+  useEffect(() => {
+
+    setLoading(true);
+    
+    const checkAdminPrivileges = async () => {
+
+      const session = await getSession();
+
+      if (session == null){
+
+        router.push('/')
+
+      } else {
+
+
+        if (session.user.isAdmin == false) {
+
+          console.log('check privilege',session.user.isAdmin)
+  
+          router.push("/purok"); // Redirect to homepage if user is not logged in or doesn't have admin privileges
+        } else {
+          setLoading(false);
+          console.log('session null')
+  
+        }
+
+
+
+      }
+
+    };
+
+
+    checkAdminPrivileges();
+
+  }, [router]);
+
 
 
 
