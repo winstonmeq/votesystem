@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-import { useSession} from 'next-auth/react';
+import { useSession, getSession } from 'next-auth/react';
 import { useRouter } from "next/navigation";
 
 
@@ -77,8 +77,11 @@ const Page = () => {
           console.log('check privilege',session.user.isAdmin)
   
           router.push("/purok"); // Redirect to homepage if user is not logged in or doesn't have admin privileges
+
         } else {
+          
           setLoading(false);
+
           console.log('session null')
   
         }
