@@ -137,21 +137,21 @@ export default function Page() {
 <div className='flex flex-wrap justify-center m-1 p-1 rounded-2xl'>
  
   <Purok_1 />
-  {/* <Purok_2 />
+  <Purok_2 />
   <Purok_3 />
   <Purok_4 />
   <Purok_5 />
-  <Purok_6 />       */}
+  <Purok_6 />      
 
 
 </div>
 
 <div className='flex flex-wrap justify-center p-1 rounded-2xl'>
-  {/* <Purok_7 />
+  <Purok_7 />
   <Purok_8 />
   <Purok_9 />
   <Purok_10 />
-  */}
+ 
  
 </div>
 
@@ -164,7 +164,7 @@ export default function Page() {
 <h1 className='p-4 flex justify-center'>Status Bar</h1>
 <div className='flex flex-wrap justify-center p-1 rounded-2xl'>
 
-{/* <Status_p1 /> */}
+<Status_p1 />
 
 
 </div>
