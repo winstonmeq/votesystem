@@ -29,7 +29,7 @@ export default function Page() {
 
   const [loading, setLoading] = useState(true);
 
-  const { data: session, status } = useSession();
+
   const router = useRouter();
 
 
@@ -58,29 +58,50 @@ export default function Page() {
     
     const checkAdminPrivileges = async () => {
 
+
+
       const session = await getSession();
 
-      if (session == null){
+      if (!session || !session.user || !session.user.isAdmin) {
 
-        router.push('/')
+        router.push('/');
 
       } else {
 
+        setLoading(false);
 
-        if (session.user.isAdmin == false) {
-
-          console.log('check privilege',session.user.isAdmin)
-  
-          router.push("/purok"); // Redirect to homepage if user is not logged in or doesn't have admin privileges
-        } else {
-          setLoading(false);
-          console.log('session null')
-  
-        }
-
-
+        console.log('successfully login');
 
       }
+
+
+
+      // if (session === null){
+
+      //   router.push('/')
+
+      // } else {
+
+
+      //   if (session.user.isAdmin === false) {
+
+      //     console.log('check privilege',session.user.isAdmin)
+  
+      //     router.push("/admin"); // Redirect to homepage if user is not logged in or doesn't have admin privileges
+
+      //   } 
+        
+      //   else {
+
+      //     setLoading(false);
+
+      //     console.log('session is good!')
+  
+      //   }
+
+
+
+      // }
 
     };
 
@@ -88,6 +109,17 @@ export default function Page() {
     checkAdminPrivileges();
 
   }, [router]);
+
+
+  
+  if (loading) {
+    return (
+     <div className="flex justify-center min-h-screen ">
+       Loading...
+     </div>
+   );
+ }
+
 
 
 
@@ -105,20 +137,10 @@ export default function Page() {
   };
 
 
-  if (loading) {
-     return (
-      <div className="flex justify-center min-h-screen ">
-        Loading...
-      </div>
-    );
-  }
-
-
   
   return (
 
     <div className='w-screen'>
-{  console.log('seesion', session)}
 <nav className="flex justify-end mb-4 mr-20">
   <ul className="flex">
     <li className="mr-4">
