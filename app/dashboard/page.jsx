@@ -25,13 +25,13 @@ export default function Page() {
   const home = useRef(null)
 
   const status_bar = useRef(null)
+
   const contactRef = useRef(null);
 
   const [loading, setLoading] = useState(true);
 
 
   const router = useRouter();
-
 
 
 
@@ -59,12 +59,11 @@ export default function Page() {
     const checkAdminPrivileges = async () => {
 
 
-
       const session = await getSession();
 
       if (!session || !session.user || !session.user.isAdmin) {
 
-        router.push('/');
+        router.push('/purok');
 
       } else {
 
@@ -153,7 +152,7 @@ export default function Page() {
 </nav>
 
 
-<section ref={home} className='w-full flex-top flex-col h-screen'>
+{/* <section ref={home} className='w-full flex-top flex-col h-screen'>
 
 <div className='flex flex-wrap justify-center m-1 p-1 rounded-2xl'>
  
@@ -178,7 +177,7 @@ export default function Page() {
 
 
 
-</section>
+</section> */}
 
 <section ref={status_bar} className="h-screen w-full bg-red-50 justify-center">
 <button type='button' onClick={() => scrollToRef(home)}>Top</button>
