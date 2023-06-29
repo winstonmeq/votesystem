@@ -121,6 +121,7 @@ export default function Page() {
 
 
 
+ const boxArray = Array.from({ length: 28 }, (_, index) => index + 1);
 
 
 
@@ -152,32 +153,36 @@ export default function Page() {
 </nav>
 
 
-{/* <section ref={home} className='w-full flex-top flex-col h-screen'>
+<section ref={home} className='w-full flex-top flex-col h-screen'>
+
+
+
 
 <div className='flex flex-wrap justify-center m-1 p-1 rounded-2xl'>
  
   <Purok_1 />
-  <Purok_2 />
+  {/* <Purok_2 />
   <Purok_3 />
   <Purok_4 />
   <Purok_5 />
-  <Purok_6 />      
+  <Purok_6 />       */}
+
 
 
 </div>
 
-<div className='flex flex-wrap justify-center p-1 rounded-2xl'>
+{/* <div className='flex flex-wrap justify-center p-1 rounded-2xl'>
   <Purok_7 />
   <Purok_8 />
   <Purok_9 />
   <Purok_10 />
  
  
-</div>
+</div> */}
 
 
 
-</section> */}
+</section>
 
 <section ref={status_bar} className="h-screen w-full bg-red-50 justify-center">
 <button type='button' onClick={() => scrollToRef(home)}>Top</button>

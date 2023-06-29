@@ -17,12 +17,13 @@ export async function GET(request, {params}) {
     await connectToDB();
 
     const getdata = await Voter.aggregate([
-      {
-        $match : {
-            purok:'Purok1'
-        },       
+      // {
+      //   $match : {
+      //       purok:'Purok1'
+      //   },       
 
-      },{
+      // },
+      {
         $group:{
 
           _id:'$purok',
