@@ -19,7 +19,7 @@ function Purok_1() {
 
       try {
 
-      const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok1`)
+      const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok1`, { next: { revalidate: 10 } })
 
       setdatalist(data);
       setLoading(false);
@@ -45,7 +45,7 @@ function Purok_1() {
               margin: '5px',
               width: '80px',
               height: '80px',
-              backgroundColor: 'red',
+              backgroundColor: 'green',           
               borderRadius: '10px',
               '@media (max-width: 600px)': {
                 width: '60px',
@@ -65,7 +65,7 @@ function Purok_1() {
               margin: '5px',
               width: '80px',
               height: '80px',
-              backgroundColor: 'blue',
+              backgroundColor: 'red',
               borderRadius: '10px',
               '@media (max-width: 600px)': {
                 width: '60px',
@@ -85,7 +85,7 @@ function Purok_1() {
               margin: '5px',
               width: '80px',
               height: '80px',
-              backgroundColor: 'green',
+              backgroundColor: 'black',
               borderRadius: '10px',
               '@media (max-width: 600px)': {
                 width: '60px',
@@ -112,7 +112,7 @@ function Purok_1() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: 'green',
+            backgroundColor: 'gray',
             borderRadius: '10px',
             '@media (max-width: 800px)': {
               width: '20px',
