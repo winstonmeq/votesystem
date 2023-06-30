@@ -63,7 +63,7 @@ export default function Page() {
 
       if (!session || !session.user || !session.user.isAdmin) {
 
-        router.push('/purok');
+        router.push('/');
 
       } else {
 
@@ -72,7 +72,6 @@ export default function Page() {
         console.log('successfully login');
 
       }
-
 
 
       // if (session === null){
@@ -124,12 +123,12 @@ export default function Page() {
  const boxArray = Array.from({ length: 28 }, (_, index) => index + 1);
 
 
-
   const scrollToRef = (ref) => {
 
     window.scrollTo({
       
       top: ref.current.offsetTop,
+
       behavior: 'smooth',
 
     });
