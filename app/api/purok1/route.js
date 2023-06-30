@@ -19,7 +19,7 @@ export async function GET(request, {params}) {
     const getdata = await Voter.aggregate([
       // {
       //   $match : {
-      //       purok:'Purok1'
+      //       purok:'Purok3'
       //   },       
 
       // },
