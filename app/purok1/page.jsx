@@ -6,38 +6,39 @@ import axios from 'axios';
 import Image from "next/image";
 
 
-function Purok_1() {
+const Purok_1 = ({data2}) => {
 
   const [datalist, setdatalist] = useState([]);    
   const [loading, setLoading] = useState(true);
 
 
-  useEffect(() => {   
+  // useEffect(() => {   
 
-    async function FetchData() {
+  //   async function FetchData() {
 
 
-      try {
+  //     try {
 
-      const { data } = await axios.get(process.env.LOCAL_URL + '/api/purok1')
+  //     const { data } = await axios.get(process.env.LOCAL_URL + '/api/purok1')
 
-      setdatalist(data);
-      setLoading(false);
+  //     setdatalist(data);
+  //     setLoading(false);
 
-      console.log(data)
+  //     console.log(data)
 
-    } catch (error) {
-      console.error(error);
-      setLoading(false);
-    }
+  //   } catch (error) {
+  //     console.error(error);
+  //     setLoading(false);
+  //   }
            
-  }
+  // }
  
-    FetchData();
-    }, []);
+  //   FetchData();
+  //   }, []);
 
 
     const p1 = (Pname, x, y, z) => {
+      
       if (x >= y && x >= z) {
         return (
           <div
@@ -47,7 +48,7 @@ function Purok_1() {
               height: '80px',
               backgroundColor: 'green',           
               borderRadius: '10px',
-              '@media (max-width: 600px)': {
+              '@media (maxWidth: 600px)': {
                 width: '60px',
                 height: '60px',
               },
@@ -67,7 +68,7 @@ function Purok_1() {
               height: '80px',
               backgroundColor: 'red',
               borderRadius: '10px',
-              '@media (max-width: 600px)': {
+              '@media (maxWidth: 600px)': {
                 width: '60px',
                 height: '60px',
               },
@@ -87,7 +88,7 @@ function Purok_1() {
               height: '80px',
               backgroundColor: 'black',
               borderRadius: '10px',
-              '@media (max-width: 600px)': {
+              '@media (maxWidth: 600px)': {
                 width: '60px',
                 height: '60px',
               },
@@ -102,40 +103,41 @@ function Purok_1() {
     };
     
 
-    if (loading) {
-      return (
-        <div
-          style={{
-            margin: '5px',
-            width: '80px',
-            height: '80px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: 'gray',
-            borderRadius: '10px',
-            '@media (max-width: 800px)': {
-              width: '20px',
-              height: '20px',
-            },
-          }}
-        >
-               <Image src={'/images/Ripple.svg'} alt="Circle Loading" width="40" height="40" />
-        </div>
-      );
-    }
+    // if (loading) {
+    //   return (
+    //     <div
+    //       style={{
+    //         margin: '5px',
+    //         width: '80px',
+    //         height: '80px',
+    //         display: 'flex',
+    //         alignItems: 'center',
+    //         justifyContent: 'center',
+    //         backgroundColor: 'gray',
+    //         borderRadius: '10px',
+    //         '@media (max-width: 800px)': {
+    //           width: '20px',
+    //           height: '20px',
+    //         },
+    //       }}
+    //     >
+    //            <Image src={'/images/Ripple.svg'} alt="Circle Loading" width="40" height="40" />
+    //     </div>
+    //   );
+    // }
     
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-2">
-    
-       {datalist.map((item, i) => (
+    {console.log('data2 nih', data2)}
+       {data2.map((item, i) => (
 
               <div key={i}>{p1(item._id, item.member_yes,item.total.length - item.member_yes, 0)}</div>
 
             ))}
-         
     </div>
+
+
   )
 }
 

@@ -64,7 +64,7 @@ const Page = () => {
     
     return (
       <div className="flex justify-center min-h-screen ">
-        Loading...
+        Loading...voters
       </div>
     );
   }

@@ -16,7 +16,7 @@ import Purok_7 from "../purok7/page";
 import Purok_8 from "../purok8/page";
 import Purok_9 from "../purok9/page";
 import Purok_10 from "../purok10/page";
-
+import axios from 'axios';
 import Status_p1 from '../statusP1/page';
 
 
@@ -27,6 +27,8 @@ export default function Page() {
   const status_bar = useRef(null)
 
   const contactRef = useRef(null);
+
+  const [datalist, setdatalist] = useState([]);    
 
   const [loading, setLoading] = useState(true);
 
@@ -67,44 +69,40 @@ export default function Page() {
 
       } else {
 
-        setLoading(false);
 
         console.log('successfully login');
 
       }
-
-
-      // if (session === null){
-
-      //   router.push('/')
-
-      // } else {
-
-
-      //   if (session.user.isAdmin === false) {
-
-      //     console.log('check privilege',session.user.isAdmin)
-  
-      //     router.push("/admin"); // Redirect to homepage if user is not logged in or doesn't have admin privileges
-
-      //   } 
-        
-      //   else {
-
-      //     setLoading(false);
-
-      //     console.log('session is good!')
-  
-      //   }
-
-
-
-      // }
+     
 
     };
 
 
+    const FetchData = async () => {
+
+
+      try {
+
+      const { data } = await axios.get(process.env.LOCAL_URL + '/api/purok1')
+
+      setdatalist(data);
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      // setLoading(false);
+    }
+           
+    setLoading(false);
+
+
+  }
+
+
     checkAdminPrivileges();
+    FetchData();
 
   }, [router]);
 
@@ -113,14 +111,13 @@ export default function Page() {
   if (loading) {
     return (
      <div className="flex justify-center min-h-screen ">
-       Loading...
+       Loading...dashboard
      </div>
    );
  }
 
 
 
- const boxArray = Array.from({ length: 28 }, (_, index) => index + 1);
 
 
   const scrollToRef = (ref) => {
@@ -139,6 +136,7 @@ export default function Page() {
   
   return (
 
+ 
     <div className='w-screen'>
 <nav className="flex justify-end mb-4 mr-20">
   <ul className="flex">
@@ -154,12 +152,11 @@ export default function Page() {
 
 <section ref={home} className='w-full flex-top flex-col h-screen'>
 
-
-
+{console.log(loading)}
 
 <div className='flex flex-wrap justify-center m-1 p-1 rounded-2xl'>
  
-  <Purok_1 />
+ <Purok_1 data2={datalist} />
   {/* <Purok_2 />
   <Purok_3 />
   <Purok_4 />
