@@ -19,7 +19,7 @@ function Purok_1() {
 
       try {
 
-      const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok1`, { next: { revalidate: 10 } })
+      const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok1`, { cache: 'no-store' })
 
       setdatalist(data);
       setLoading(false);
