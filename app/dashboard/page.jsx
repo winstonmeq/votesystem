@@ -6,16 +6,7 @@ import { useSession, getSession } from 'next-auth/react';
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useState } from 'react';
-import Purok_1 from "../purok1/page"
-import Purok_2 from "../purok2/page";
-import Purok_3 from "../purok3/page";
-import Purok_4 from "../purok4/page";
-import Purok_5 from "../purok5/page"
-import Purok_6 from "../purok6/page";
-import Purok_7 from "../purok7/page";
-import Purok_8 from "../purok8/page";
-import Purok_9 from "../purok9/page";
-import Purok_10 from "../purok10/page";
+
 import axios from 'axios';
 import Status_p1 from '../statusP1/page';
 
@@ -58,24 +49,24 @@ export default function Page() {
   useEffect(() => {
 
     
-    // const checkAdminPrivileges = async () => {
+    const checkAdminPrivileges = async () => {
 
 
-    //   const session = await getSession();
+      const session = await getSession();
 
-    //   if (!session || !session.user || !session.user.isAdmin) {
+      if (!session || !session.user || !session.user.isAdmin) {
 
-    //     router.push('/');
+        router.push('/');
 
-    //   } else {
+      } else {
 
 
-    //     console.log('successfully login');
+        console.log('successfully login');
 
-    //   }
+      }
      
 
-    // };
+    };
 
 
     const FetchData = async () => {
@@ -92,7 +83,6 @@ export default function Page() {
 
       console.error(error);
 
-      // setLoading(false);
     } finally {
 
       setLoading(false);
@@ -103,10 +93,10 @@ export default function Page() {
   }
 
 
-   // checkAdminPrivileges();
+    checkAdminPrivileges();
     FetchData();
 
-  }, []);
+  }, [router]);
 
 
   
@@ -154,30 +144,12 @@ export default function Page() {
 
 <section ref={home} className='w-full flex-top flex-col h-screen'>
 
-{console.log(loading)}
 
 <div className='flex flex-wrap justify-center m-1 p-1 rounded-2xl'>
  
  <Purok_1 data2={datalist} />
-  {/* <Purok_2 />
-  <Purok_3 />
-  <Purok_4 />
-  <Purok_5 />
-  <Purok_6 />       */}
-
-
-
+ 
 </div>
-
-{/* <div className='flex flex-wrap justify-center p-1 rounded-2xl'>
-  <Purok_7 />
-  <Purok_8 />
-  <Purok_9 />
-  <Purok_10 />
- 
- 
-</div> */}
-
 
 
 </section>
