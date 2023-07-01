@@ -16,12 +16,13 @@ export async function GET(request) {
 
     
     const getdata3 = await Voter.aggregate([
-        {
-          $match : {
-            purok:'Purok9'
-          },       
+        // {
+        //   $match : {
+        //     purok:'Purok9'
+        //   },       
   
-        },{
+        // },
+        {
           $group:{
   
             _id:'$purok',
