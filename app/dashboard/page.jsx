@@ -64,6 +64,9 @@ export default function Page() {
     const fetchData = async () => {
       try {
         const { data } = await axios.get(process.env.LOCAL_URL + '/api/purok1');
+
+        console.log('log data only',data);
+        
         setdatalist(data);
       } catch (error) {
         console.error(error);
