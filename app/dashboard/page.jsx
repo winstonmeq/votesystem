@@ -9,7 +9,6 @@ import { useState } from 'react';
 import Purok_1 from '../purok1/page';
 import axios from 'axios';
 import Status_p1 from '../statusP1/page';
-import Link from "next/link";
 
 
 export default function Page() {
@@ -46,19 +45,19 @@ export default function Page() {
 
   // }, [status, router]);
 
-  // useEffect(() => {
-  //   const checkAdminPrivileges = async () => {
-  //     const session = await getSession();
+  useEffect(() => {
+    const checkAdminPrivileges = async () => {
+      const session = await getSession();
   
-  //     if (!session || !session.user || !session.user.isAdmin) {
-  //       router.push('/');
-  //     } else {
-  //       console.log('successfully logged in');
-  //     }
-  //   };
+      if (!session || !session.user || !session.user.isAdmin) {
+        router.push('/');
+      } else {
+        console.log('successfully logged in');
+      }
+    };
   
-  //   checkAdminPrivileges();
-  // }, [router]);
+    checkAdminPrivileges();
+  }, [router]);
 
   
   useEffect(() => {
@@ -67,7 +66,7 @@ export default function Page() {
         const { data } = await axios.get(process.env.LOCAL_URL + '/api/purok1');
 
         console.log('log data only',data);
-
+        
         setdatalist(data);
       } catch (error) {
         console.error(error);
@@ -93,97 +92,69 @@ export default function Page() {
 
 
 
-  // const scrollToRef = (ref) => {
+  const scrollToRef = (ref) => {
 
-  //   window.scrollTo({
+    window.scrollTo({
       
-  //     top: ref.current.offsetTop,
+      top: ref.current.offsetTop,
 
-  //     behavior: 'smooth',
+      behavior: 'smooth',
 
-  //   });
+    });
 
-  // };
-
-
-  const p1 = (Pname, x, y, z) => {
-      
-    if (x >= y && x >= z) {
-      return (
-        <div
-          style={{
-            margin: '5px',
-            width: '80px',
-            height: '80px',
-            backgroundColor: 'green',           
-            borderRadius: '10px',
-            '@media (maxWidth: 600px)': {
-              width: '60px',
-              height: '60px',
-            },
-          }}
-        >
-          <div className='text-white p-2 font-bold'>
-            <Link href={`/purok/${Pname}`}>{Pname}</Link>
-          </div>
-        </div>
-      );
-    } else if (y >= x && y >= z) {
-      return (
-        <div
-          style={{
-            margin: '5px',
-            width: '80px',
-            height: '80px',
-            backgroundColor: 'red',
-            borderRadius: '10px',
-            '@media (maxWidth: 600px)': {
-              width: '60px',
-              height: '60px',
-            },
-          }}
-        >
-          <div className='text-white p-2 font-bold'>
-            <Link href={`/purok/${Pname}`}>{Pname}</Link>
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div
-          style={{
-            margin: '5px',
-            width: '80px',
-            height: '80px',
-            backgroundColor: 'black',
-            borderRadius: '10px',
-            '@media (maxWidth: 600px)': {
-              width: '60px',
-              height: '60px',
-            },
-          }}
-        >
-          <div className='text-white p-2 font-bold'>
-            <Link href={`/purok/${Pname}`}>{Pname}</Link>
-          </div>
-        </div>
-      );
-    }
   };
-  
+
 
   
   return (
 
  
-<div >
-    {console.log('data2 nih', datalist)}
-    {/* {datalist && datalist.length
-        ? datalist.map((item, i) => (
-            <div key={i}>{p1(item._id, item.member_yes, item.total.length - item.member_yes, 0)}</div>
-          ))
-        : null} */}
-    </div>
+    <div className='w-screen'>
+<nav className="flex justify-end mb-4 mr-20">
+  <ul className="flex">
+    <li className="mr-4">
+      <a className='hover:text-red-900' onClick={() => scrollToRef(status_bar)}>Status Bar</a>
+    </li>
+    <li>
+      <a onClick={() => scrollToRef(contactRef)}>Contact Us</a>
+    </li>
+  </ul>
+</nav>
+
+
+<section ref={home} className='w-full flex-top flex-col h-screen'>
+
+
+<div className='flex flex-wrap justify-center m-1 p-1 rounded-2xl'>
+ 
+ <Purok_1 data2={datalist} />
+ 
+</div>
+
+
+</section>
+
+<section ref={status_bar} className="h-screen w-full bg-red-50 justify-center">
+<button type='button' onClick={() => scrollToRef(home)}>Top</button>
+<h1 className='p-4 flex justify-center'>Status Bar</h1>
+<div className='flex flex-wrap justify-center p-1 rounded-2xl'>
+
+<Status_p1 />
+
+
+</div>
+</section>
+
+
+<section ref={contactRef} className="h-screen w-full bg-green-50">
+
+<div className='flex flex-row justify-center'>
+<p>www.cotrace.com</p>
+</div>
+
+</section>
+
+</div>
  
   )
 }
