@@ -66,7 +66,7 @@ export default function Page() {
         const { data } = await axios.get(process.env.LOCAL_URL + '/api/purok1');
 
         console.log('log data only',data);
-        
+
         setdatalist(data);
       } catch (error) {
         console.error(error);
@@ -127,7 +127,7 @@ export default function Page() {
 
 <div className='flex flex-wrap justify-center m-1 p-1 rounded-2xl'>
  
- <Purok_1 data2={datalist} />
+ {/* <Purok_1 data2={datalist} /> */}
  
 </div>
 
@@ -139,7 +139,7 @@ export default function Page() {
 <h1 className='p-4 flex justify-center'>Status Bar</h1>
 <div className='flex flex-wrap justify-center p-1 rounded-2xl'>
 
-<Status_p1 />
+{/* <Status_p1 /> */}
 
 
 </div>
