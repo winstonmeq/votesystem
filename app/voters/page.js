@@ -19,46 +19,44 @@ const Page = () => {
   const router = useRouter();
 
   
-
  
 
+   
   useEffect(() => {
-
-   // setLoading(true);
-    
+        
     const checkAdminPrivileges = async () => {
 
       const session = await getSession();
-
+  
       if (!session || !session.user || !session.user.isAdmin) {
         router.push('/');
       } else {
-        console.log('session is good!');
+        console.log('successfully logged in');
       }
-
     };
+  
+    checkAdminPrivileges();
+  }, [router]);
 
 
-    const FetchData = async () => {
+
+useEffect(() => {
+    const fetchData = async () => {
       try {
-        const { data } = await axios.get(process.env.LOCAL_URL + `/api/voter`);
+        const { data } = await axios.get(process.env.LOCAL_URL + `/api/task`);
+            
         setdatalist(data);
-        console.log('voters', data)
       } catch (error) {
         console.error(error);
       } finally {
+
         setLoading(false)
+
       }
-
-
-    }
-
-
-    checkAdminPrivileges();
-    FetchData();
-
-
-  }, [router]);
+    };
+  
+    fetchData();
+  }, []);
 
 
 
