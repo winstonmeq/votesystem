@@ -25,7 +25,7 @@ useEffect(() =>{
 
         const response = await getProviders();
 
-        console.log('nav page providers', response)
+       // console.log('nav page providers', response)
 
         setProviders(response)
     }
