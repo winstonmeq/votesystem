@@ -1,3 +1,4 @@
+
 import Voter from "@/models/Voter";
 import { connectToDB } from "@/utils/database";
 import { NextResponse } from "next/server";
@@ -11,7 +12,7 @@ export async function GET(request) {
         
     await connectToDB();
 
-    const getdata = await Voter.aggregate([
+    const get_progress = await Voter.aggregate([
      {
         $group:{
 
@@ -24,16 +25,17 @@ export async function GET(request) {
         }
       },
       { $sort: { purok: 1 } } 
+
     ]).exec();
     
     //return new Response(JSON.stringify(getdata))
 
-    return NextResponse.json(getdata)
+    return NextResponse.json(get_progress)
      
 
   } catch (error) {
   
-   return new Response('Error nih pre!');
+   return new Response('progress data error in query');
 
   } 
 }
