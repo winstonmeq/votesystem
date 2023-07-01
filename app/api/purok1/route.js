@@ -36,14 +36,9 @@ export async function GET(request, {params}) {
       }
     ]).exec();
     
-    //return new Response(JSON.stringify(getdata))
+    return new Response(JSON.stringify(getdata))
 
-    const response = NextResponse.json(data);
-
-    // Set cache control headers to disable caching
-    response.headers.set('Cache-Control', 'no-store, max-age=0');
-
-    return response
+    //return NextResponse.json(getdata)
      
 
   } catch (error) {
