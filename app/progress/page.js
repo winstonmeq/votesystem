@@ -12,15 +12,23 @@ function Progress() {
   useEffect(() => {
 
     async function fetchData() {
+
       try {
-        const { data } = await axios.get(`${process.env.LOCAL_URL}/api/progress`);
+
+        const { data } = await axios.get(process.env.LOCAL_URL + '/api/progress');
+        
         setdatalist(data);
+
       } catch (error) {
+
         console.error(error);
+
       } finally {
+
         setLoading(false);
 
       }
+
     }
 
     fetchData();
