@@ -58,24 +58,24 @@ export default function Page() {
   useEffect(() => {
 
     
-    const checkAdminPrivileges = async () => {
+    // const checkAdminPrivileges = async () => {
 
 
-      const session = await getSession();
+    //   const session = await getSession();
 
-      if (!session || !session.user || !session.user.isAdmin) {
+    //   if (!session || !session.user || !session.user.isAdmin) {
 
-        router.push('/');
+    //     router.push('/');
 
-      } else {
+    //   } else {
 
 
-        console.log('successfully login');
+    //     console.log('successfully login');
 
-      }
+    //   }
      
 
-    };
+    // };
 
 
     const FetchData = async () => {
@@ -93,18 +93,20 @@ export default function Page() {
       console.error(error);
 
       // setLoading(false);
-    }
-           
-    setLoading(false);
+    } finally {
+
+      setLoading(false);
+
+    }          
 
 
   }
 
 
-    checkAdminPrivileges();
+   // checkAdminPrivileges();
     FetchData();
 
-  }, [router]);
+  }, []);
 
 
   
