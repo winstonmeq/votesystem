@@ -55,6 +55,8 @@ useEffect(() =>{
               {session?.user ? (
                 <div className="flex gap-3 md:gap-6">
                     
+                <Link href={'/wall'} className="black_btn">Wall</Link>
+
                     <Link href={'/dashboard'} className="black_btn">Dashboard</Link>
                     
                     <Link href={'/voters'} className="black_btn">Voters</Link>
