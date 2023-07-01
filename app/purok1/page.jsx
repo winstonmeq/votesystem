@@ -130,11 +130,11 @@ const Purok_1 = ({data2}) => {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-2">
     {console.log('data2 nih', data2)}
-       {data2.map((item, i) => (
-
-              <div key={i}>{p1(item._id, item.member_yes,item.total.length - item.member_yes, 0)}</div>
-
-            ))}
+    {data2 && data2.length
+        ? data2.map((item, i) => (
+            <div key={i}>{p1(item._id, item.member_yes, item.total.length - item.member_yes, 0)}</div>
+          ))
+        : null}
     </div>
 
 

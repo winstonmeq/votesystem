@@ -43,12 +43,14 @@ const Page = () => {
       try {
         const { data } = await axios.get(process.env.LOCAL_URL + `/api/voter`);
         setdatalist(data);
-        setLoading(false);
         console.log('voters', data)
       } catch (error) {
         console.error(error);
-        setLoading(false);
+      } finally {
+        setLoading(false)
       }
+
+
     }
 
 
