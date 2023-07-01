@@ -37,7 +37,17 @@ const Page = () => {
         };
       
         fetchData();
-      }, [router]);
+      }, []);
+
+
+
+
+
+
+
+
+
+
 
       const columns = [
         {
