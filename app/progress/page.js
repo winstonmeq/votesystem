@@ -4,36 +4,28 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 
-function Progress() {
+const Progress = () => {
   
   const [datalist, setdatalist] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const { data } = await axios.get(process.env.LOCAL_URL + `/api/progress`);
+                
+            setdatalist(data);
+          } catch (error) {
+            console.error(error);
+          } finally {
 
-    async function fetchData() {
+            setLoading(false)
 
-      try {
-
-        const { data } = await axios.get(process.env.LOCAL_URL + '/api/progress');
-        
-        setdatalist(data);
-
-      } catch (error) {
-
-        console.error(error);
-
-      } finally {
-
-        setLoading(false);
-
-      }
-
-    }
-
-    fetchData();
-
-  }, []);
+          }
+        };
+      
+        fetchData();
+      }, []);
 
   const ProgressBar = ({ Pname, min, max }) => {
 
