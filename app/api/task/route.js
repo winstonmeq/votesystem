@@ -14,27 +14,27 @@ export async function GET(request) {
 
     await connectToDB();
 
-    const getdata = await Voter.find([
+    
+    const getdata3 = await Voter.aggregate([
         {
-            $match : {
-                purok:'Purok9'
-            },       
-    
-          },
-          {
-            $group:{
-    
-              _id:'$purok',
-              //total:{$sum: {$cond:[{$eq:['$member',1]},'$member',0]}},
-              member_yes:{$sum:'$member'},
-              total:{$push:'$member'}
-    
-              
-            }
+          $match : {
+            purok:'Purok9'
+          },       
+  
+        },{
+          $group:{
+  
+            _id:'$purok',
+            //total:{$sum: {$cond:[{$eq:['$member',1]},'$member',0]}},
+            member_yes:{$sum:'$member'},
+            total:{$push:'$member'}
+  
+            
           }
-    ]).exec();
+        }
+      ]).exec();
 
-    return NextResponse.json(getdata)
+    return NextResponse.json(getdata3)
     
     //return new Response(JSON.stringify(getdata))
      
