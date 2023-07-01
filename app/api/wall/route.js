@@ -1,4 +1,5 @@
 
+import dbConnect from "@/conn/dbconnect";
 
 import Voter from "@/models/Voter";
 import { NextResponse } from "next/server";
@@ -10,9 +11,12 @@ export async function GET(request) {
   try {
 
 
-    await connectToDB();
+    // await connectToDB();
 
-    const getdata = await Voter.find({purok:'Purok9'}).exec();
+    await dbConnect();
+
+
+    const getdata = await Voter.find({}).exec();
 
     return NextResponse.json(getdata)
     
