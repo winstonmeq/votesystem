@@ -9,6 +9,7 @@ import { useState } from 'react';
 import Purok_1 from '../purok1/page';
 import axios from 'axios';
 import Status_p1 from '../statusP1/page';
+import Link from "next/link";
 
 
 export default function Page() {
@@ -105,6 +106,72 @@ export default function Page() {
   };
 
 
+  const p1 = (Pname, x, y, z) => {
+      
+    if (x >= y && x >= z) {
+      return (
+        <div
+          style={{
+            margin: '5px',
+            width: '80px',
+            height: '80px',
+            backgroundColor: 'green',           
+            borderRadius: '10px',
+            '@media (maxWidth: 600px)': {
+              width: '60px',
+              height: '60px',
+            },
+          }}
+        >
+          <div className='text-white p-2 font-bold'>
+            <Link href={`/purok/${Pname}`}>{Pname}</Link>
+          </div>
+        </div>
+      );
+    } else if (y >= x && y >= z) {
+      return (
+        <div
+          style={{
+            margin: '5px',
+            width: '80px',
+            height: '80px',
+            backgroundColor: 'red',
+            borderRadius: '10px',
+            '@media (maxWidth: 600px)': {
+              width: '60px',
+              height: '60px',
+            },
+          }}
+        >
+          <div className='text-white p-2 font-bold'>
+            <Link href={`/purok/${Pname}`}>{Pname}</Link>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div
+          style={{
+            margin: '5px',
+            width: '80px',
+            height: '80px',
+            backgroundColor: 'black',
+            borderRadius: '10px',
+            '@media (maxWidth: 600px)': {
+              width: '60px',
+              height: '60px',
+            },
+          }}
+        >
+          <div className='text-white p-2 font-bold'>
+            <Link href={`/purok/${Pname}`}>{Pname}</Link>
+          </div>
+        </div>
+      );
+    }
+  };
+  
+
   
   return (
 
@@ -127,7 +194,14 @@ export default function Page() {
 
 <div className='flex flex-wrap justify-center m-1 p-1 rounded-2xl'>
  
- <Purok_1 data2={datalist} />
+<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-2">
+    {console.log('data2 nih', datalist)}
+    {datalist && datalist.length
+        ? datalist.map((item, i) => (
+            <div key={i}>{p1(item._id, item.member_yes, item.total.length - item.member_yes, 0)}</div>
+          ))
+        : null}
+    </div>
  
 </div>
 
