@@ -19,6 +19,7 @@ const Page = () => {
   const router = useRouter();
 
   
+
  
 
    
@@ -43,7 +44,7 @@ const Page = () => {
 useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(process.env.LOCAL_URL + `/api/task`);
+        const { data } = await axios.get(process.env.LOCAL_URL + `/api/voter`);
             
         setdatalist(data);
       } catch (error) {
