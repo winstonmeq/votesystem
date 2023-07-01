@@ -11,8 +11,8 @@ export async function GET(request) {
   try {
 
 
-    await connectToDB();   
 
+    await connectToDB();   
 
     const getdata = await Voter.find({}).exec();
 
