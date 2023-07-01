@@ -23,7 +23,7 @@ const Page = () => {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const { data } = await axios.get(process.env.LOCAL_URL + '/api/purok1');
+            const { data } = await axios.get(process.env.LOCAL_URL + '/api/wall');
                 
             setdatalist(data);
           } catch (error) {
@@ -44,8 +44,8 @@ const Page = () => {
     {console.log(datalist)}
         {datalist.map((item,i) => (
             <div key={i}>
-            <li >{item.total.length}</li>
-            <li >{item.member_yes}</li>
+            <li >{item.purok}</li>
+            <li >{item.member}</li>
             </div>
         ))}
     </div>
