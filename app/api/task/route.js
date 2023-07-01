@@ -14,7 +14,25 @@ export async function GET(request) {
 
     await connectToDB();
 
-    const getdata = await Voter.find({}).exec();
+    const getdata = await Voter.find([
+        {
+            $match : {
+                purok:'Purok9'
+            },       
+    
+          },
+          {
+            $group:{
+    
+              _id:'$purok',
+              //total:{$sum: {$cond:[{$eq:['$member',1]},'$member',0]}},
+              member_yes:{$sum:'$member'},
+              total:{$push:'$member'}
+    
+              
+            }
+          }
+    ]).exec();
 
     return NextResponse.json(getdata)
     
