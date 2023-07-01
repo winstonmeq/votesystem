@@ -25,7 +25,7 @@ const Page = () => {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const { data } = await axios.get(process.env.LOCAL_URL + `/api/voter`);
+            const { data } = await axios.get(process.env.LOCAL_URL + `/api/wall`);
                 
             setdatalist(data);
           } catch (error) {
