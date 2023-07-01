@@ -1,4 +1,3 @@
-import dbConnect from "@/conn/dbconnect";
 import Voter from "@/models/Voter";
 import { connectToDB } from "@/utils/database";
 import { NextResponse } from "next/server";
@@ -10,8 +9,6 @@ export async function GET(request, {params}) {
   
 
   try {
-
- 
    
      
     await connectToDB();

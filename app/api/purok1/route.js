@@ -38,7 +38,12 @@ export async function GET(request, {params}) {
     
     //return new Response(JSON.stringify(getdata))
 
-    return NextResponse.json(getdata)
+    const response = NextResponse.json(data);
+
+    // Set cache control headers to disable caching
+    response.headers.set('Cache-Control', 'no-store, max-age=0');
+
+    return response
      
 
   } catch (error) {
