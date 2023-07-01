@@ -6,7 +6,7 @@ import { useSession, getSession } from 'next-auth/react';
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useState } from 'react';
-
+import Purok_1 from '../purok1/page';
 import axios from 'axios';
 import Status_p1 from '../statusP1/page';
 
@@ -45,58 +45,35 @@ export default function Page() {
 
   // }, [status, router]);
 
+  useEffect(() => {
+    const checkAdminPrivileges = async () => {
+      const session = await getSession();
+  
+      if (!session || !session.user || !session.user.isAdmin) {
+        router.push('/');
+      } else {
+        console.log('successfully logged in');
+      }
+    };
+  
+    checkAdminPrivileges();
+  }, [router]);
+
   
   useEffect(() => {
-
-    
-    const checkAdminPrivileges = async () => {
-
-
-      const session = await getSession();
-
-      if (!session || !session.user || !session.user.isAdmin) {
-
-        router.push('/');
-
-      } else {
-
-
-        console.log('successfully login');
-
-      }
-     
-
-    };
-
-
-    const FetchData = async () => {
-
-
+    const fetchData = async () => {
       try {
-
-      const { data } = await axios.get(process.env.LOCAL_URL + '/api/purok1')
-
-      setdatalist(data);
-
-
-    } catch (error) {
-
-      console.error(error);
-
-    } finally {
-
-      setLoading(false);
-
-    }          
-
-
-  }
-
-
-    checkAdminPrivileges();
-    FetchData();
-
-  }, [router]);
+        const { data } = await axios.get(process.env.LOCAL_URL + '/api/purok1');
+        setdatalist(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchData();
+  }, []);
 
 
   
