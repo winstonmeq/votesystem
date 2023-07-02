@@ -56,7 +56,7 @@ const Page = () => {
 
       const payload = {fname,lname, age, position, prec_num, purok, member, };
 
-      const response = await axios.post("http://localhost:3000/api/voter",payload);
+      const response = await axios.post(process.env.LOCAL_URL + '/api/voter',payload);
 
       router.push('/voters')
 
