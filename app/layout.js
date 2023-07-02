@@ -15,7 +15,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+
       <body>
+
       <Provider>
           <div className='main'>
             <div className='gradient'></div>
@@ -26,6 +28,7 @@ export default function RootLayout({ children }) {
           {children}
           </main>  
        </Provider>    
+       
       </body>
     </html>
   )
