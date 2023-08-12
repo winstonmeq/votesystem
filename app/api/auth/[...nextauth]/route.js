@@ -21,7 +21,6 @@ const handler = NextAuth({
 
          
 
-
             
 callbacks:{
   
@@ -34,9 +33,11 @@ callbacks:{
         });
     
         session.user.id = sessionUser._id.toString();
+
         session.user.isAdmin = sessionUser.admin; // Add the isAdmin property to the session user object
     
         return session;
+
       },
     
       async signIn({ profile }) {
@@ -53,7 +54,7 @@ callbacks:{
 
           });
     
-          console.log(profile.email)
+         // console.log(profile.email)
           
           //if not, create a new user
     
