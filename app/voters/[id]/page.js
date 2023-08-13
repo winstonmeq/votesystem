@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { useRouter } from 'next/navigation';
-import { useSession} from 'next-auth/react';
+import { useSession, getSession } from 'next-auth/react';
 
 
 
@@ -27,17 +27,30 @@ const Page = ({ params: { id } }) => {
 
   const router = useRouter()
 
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/"); // Redirect to homepage if user is not logged in
-    }
-  }, [status, router]);
-
-
-
 
   useEffect(() => {
-    async function FetchData() {
+        
+    const fetchDataAndCheckAdmin = async () => {
+      try {
+        const session = await getSession();
+        if (!session || !session.user || !session.user.isAdmin) {
+          router.push('/');
+        } else {
+          console.log('successfully logged in');
+          FetchData();
+          FetchData2(); // Fetch data after admin check
+        }
+      } catch (error) {
+        console.error('Error checking admin privileges:', error);
+      }  
+    };
+
+    fetchDataAndCheckAdmin();
+    }, [router]);
+  
+
+
+   const FetchData = async () => {
       try {
         const { data } = await axios.get(
           process.env.LOCAL_URL + `/api/voter/${id}`
@@ -63,52 +76,42 @@ const Page = ({ params: { id } }) => {
 
     }
 
-    async function FetchData2() {
+  const FetchData2 = async () =>  {
       try {
         const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok`);
         setdatalist2(data);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false)
       }
 
-    setLoading(false)
 
     }
 
-    FetchData();
-    FetchData2();
 
+    const updateVoter = async () => {
+      setLoading(true); // Set isLoading to true when the request is initiated
+    
+      try {
+        const payload = { fname, lname, age, position, prec_num, purok, member };
+    
+        // Make a PATCH request to update the voter's data
+        const response = await axios.patch(
+          process.env.LOCAL_URL + `/api/voter/${id}`,
+          payload
+        );
+    
+        // After successful update, navigate back to the previous page
+        router.back();
+      } catch (error) {
+        console.error('Error in updating data:', error);
+      } finally {
+        setLoading(false); // Set isLoading to false when the request is completed or encounters an error
+      }
+    };
 
-
-  }, [id]);
-
-
-
-
-  const updateVoter = async () => {
-
-    setLoading(true); // Set isLoading to true when the request is initiated
-
-    try {
-     
-
-      const payload = { fname, lname,age,position,prec_num, purok, member};
-
-      const response = await axios.patch(process.env.LOCAL_URL + `/api/voter/${id}`,payload);
-     
-      router.back();
   
-
-    } catch (error) {
-      setLoading(false);
-
-    } finally {
-      setLoading(false); // Set isLoading to false when the request is completed or encounters an error
-    }
-  };
-
-
-
 
   
   const deleteVoter = async () => {
@@ -123,8 +126,7 @@ const Page = ({ params: { id } }) => {
         
 
     } catch (error) {
-      setLoading(false);
-
+      console.error('unable to delete data')
     } finally {
       setLoading(false); // Set isLoading to false when the request is completed or encounters an error
     }
@@ -146,18 +148,20 @@ const Page = ({ params: { id } }) => {
 
 
 
-
-
   if (loading) {
-
-    return <div className="flex justify-center item-center min-h-screen ">Loading...</div>;
-   
+    
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-10">
+      <div className="flex flex-col items-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-opacity-75"></div>
+        <p className="mt-4">Loading...</p>
+      </div>
+      </div>
+    );
   }
 
   
   
-
-
   return (
     
     <div className="flex-row w-full justify-center">

@@ -25,45 +25,48 @@ const Page = () => {
   
     const [loading, setLoading] = useState(true);
   
+    const [isOpen, setIsOpen] = useState(false);
+
+
+
+    const toggleModal = () => {
+      setIsOpen(!isOpen);
+    };
   
     const router = useRouter();
 
   
     useEffect(() => {
         
-        const checkAdminPrivileges = async () => {
-
+      const fetchDataAndCheckAdmin = async () => {
+        try {
           const session = await getSession();
-      
           if (!session || !session.user || !session.user.isAdmin) {
             router.push('/');
           } else {
             console.log('successfully logged in');
+            fetchData(); // Fetch data after admin check
           }
-        };
-      
-        checkAdminPrivileges();
+        } catch (error) {
+          console.error('Error checking admin privileges:', error);
+        }  
+      };
+  
+      fetchDataAndCheckAdmin();
       }, [router]);
     
 
 
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const { data } = await axios.get(process.env.LOCAL_URL + `/api/task`);
-                
-            setdatalist(data);
-          } catch (error) {
-            console.error(error);
-          } finally {
-
-            setLoading(false)
-
-          }
-        };
-      
-        fetchData();
-      }, []);
+      const fetchData = async () => {
+        try {
+          const { data } = await axios.get(process.env.LOCAL_URL + '/api/task');
+          setdatalist(data);
+        } catch (error) {
+          console.error('Error fetching task data:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
 
 
       const p1 = (Pname, x, y, z) => {
@@ -132,13 +135,43 @@ const Page = () => {
       };
  
 
-      if (loading) {
-        return (
-         <div className="flex justify-center min-h-screen ">
-           Loading...task
-         </div>
-       );
-     }
+    //   if (loading) {
+    //     return (
+
+    //       <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-10">
+    //       <div class="flex flex-col items-center">
+    //         <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-opacity-75"></div>
+    //         <p class="mt-4">Loading...</p>
+    //       </div>
+    //     </div>
+
+    //       )     
+       
+    //  }
+
+     //this code for opening a modal page
+
+    //  <button
+    //     className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+    //     onClick={toggleModal}
+    //   >
+    //     Open Modal
+    //   </button>
+
+    //   {isOpen && (
+    //     <div className="fixed inset-0 flex items-center justify-center z-50">
+    //       <div className="bg-white p-4 rounded shadow-md">
+    //         <h2 className="text-lg font-semibold mb-2">Modal Content</h2>
+    //         <p>This is the content of the modal.</p>
+    //         <button
+    //           className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+    //           onClick={toggleModal}
+    //         >
+    //           Close
+    //         </button>
+    //       </div>
+    //     </div>
+    //   )}
     
     
         
@@ -174,10 +207,29 @@ const Page = () => {
   </ul>
 </nav>
 
+
+
     <section ref={home} className='w-full flex-top flex-col h-screen'>
     
     
     <div className='flex flex-wrap justify-center m-1 p-1 rounded-2xl'>
+
+
+     {loading &&  (
+
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-10">
+          <div className="flex flex-col items-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-opacity-75"></div>
+            <p className="mt-4">Loading...</p>
+          </div>
+        </div>
+
+          )
+
+               
+     }
+
+
      
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-2">
     {console.log('data2 nih', datalist)}

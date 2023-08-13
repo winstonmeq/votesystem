@@ -22,53 +22,91 @@ const Page = () => {
 
  
 
-   
+
+
   useEffect(() => {
         
-    const checkAdminPrivileges = async () => {
-
-      const session = await getSession();
-  
-      if (!session || !session.user || !session.user.isAdmin) {
-        router.push('/');
-      } else {
-        console.log('successfully logged in');
-      }
+    const fetchDataAndCheckAdmin = async () => {
+      try {
+        const session = await getSession();
+        if (!session || !session.user || !session.user.isAdmin) {
+          router.push('/');
+        } else {
+          console.log('successfully logged in');
+          fetchData(); // Fetch data after admin check
+        }
+      } catch (error) {
+        console.error('Error checking admin privileges:', error);
+      }  
     };
+
+    fetchDataAndCheckAdmin();
+    }, [router]);
   
-    checkAdminPrivileges();
-  }, [router]);
 
 
-
-useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get(process.env.LOCAL_URL + `/api/voter`);
-            
+        const { data } = await axios.get(process.env.LOCAL_URL + '/api/voter');
         setdatalist(data);
       } catch (error) {
-        console.error(error);
+        console.error('Error fetching voters data:', error);
       } finally {
-
-        setLoading(false)
-
+        setLoading(false);
       }
     };
+
+
+//   useEffect(() => {
+        
+//     const checkAdminPrivileges = async () => {
+
+//       const session = await getSession();
   
-    fetchData();
-  }, []);
+//       if (!session || !session.user || !session.user.isAdmin) {
+//         router.push('/');
+//       } else {
+//         console.log('successfully logged in');
+//       }
+//     };
+  
+//     checkAdminPrivileges();
+//   }, [router]);
+
+
+
+// useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         const { data } = await axios.get(process.env.LOCAL_URL + `/api/voter`);
+            
+//         setdatalist(data);
+//       } catch (error) {
+//         console.error(error);
+//       } finally {
+
+//         setLoading(false)
+
+//       }
+//     };
+  
+//     fetchData();
+//   }, []);
 
 
 
   if (loading) {
     
     return (
-      <div className="flex justify-center min-h-screen ">
-        Loading...voters
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-10">
+      <div className="flex flex-col items-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-opacity-75"></div>
+        <p className="mt-4">Loading...</p>
+      </div>
       </div>
     );
   }
+
 
 
 
@@ -167,6 +205,9 @@ useEffect(() => {
 
   return (
     <div className="flex-row w-full">
+
+
+
 <div className="flex flex-col sm:flex-row w-full justify-between m-2">
 
   <Link href="/voters/add" className="black_btn">Add Voter</Link>
@@ -187,6 +228,7 @@ useEffect(() => {
 </div>
 
 <div className="w-full">
+
 <DataTable
             columns={columns}
             data={datalist}

@@ -13,28 +13,39 @@ const Page = () => {
 
   useEffect(() => {   
 
-    async function FetchData() {
-      try {
-      const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok`)
-      setdatalist(data);
-      setLoading(false);
+              async function FetchData() {
+                try {
+                const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok`)
+                setdatalist(data);
+                setLoading(false);
 
-      console.log(data)
+                console.log(data)
 
-    } catch (error) {
+              } catch (error) {
 
-      console.error(error);
-      setLoading(false);
+                console.error(error);
+                setLoading(false);
 
-    }
-           
-  }
+              }
+                    
+            }
  
     FetchData();
+
     }, []);
 
     if (loading) {
-      return <div className="flex justify-center min-h-screen ">Loading...</div>;
+      return (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30">
+        <div className="flex flex-col items-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-opacity-75"></div>
+          <p className="mt-4">Loading...</p>
+        </div>
+        </div>
+
+
+      )
+    
     }
 
 

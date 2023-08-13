@@ -30,22 +30,19 @@ const Page = ({ params: { id } }) => {
 
 
 
-
-
-
   useEffect(() => {
 
     async function FetchData() {
       try {
         const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok/${id}`)
 
-        setdatalist(data);
-
-        setLoading(false);
+        setdatalist(data);      
 
       } catch (error) {
 
         console.error(error);
+
+      } finally {
 
         setLoading(false);
 
@@ -66,6 +63,10 @@ const Page = ({ params: { id } }) => {
       } catch (error) {
 
         console.error(error);
+
+      } finally {
+
+        setLoading(false);
 
       }
 
@@ -170,11 +171,17 @@ const Page = ({ params: { id } }) => {
 
 
 
-
-  if (loading) {
-    return <div className="flex text-sm justify-center min-h-screen ">Loading...</div>;
-  }
-
+  // if (loading) {
+    
+  //   return (
+  //     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30">
+  //     <div className="flex flex-col items-center">
+  //       <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-opacity-75"></div>
+  //       <p className="mt-4">Loading...</p>
+  //     </div>
+  //     </div>
+  //   );
+  // }
 
 
   return (
@@ -203,13 +210,25 @@ const Page = ({ params: { id } }) => {
 
         </div>
           <div className="flex-row w-full">
+          {loading && (
+
+      <div className="fixed inset-0 flex items-center justify-center">
+      <div className="flex flex-col items-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-opacity-75"></div>
+       <p className="mt-4">Loading...</p>
+     </div>
+      </div>
+
+            
+          ) || 
             <DataTable
               columns={columns}
               data={datalist}
               defaultSortFieldId="createdAt"
               pagination
               paginationPerpage={datalist.length}
-            />
+            />}
+
 
           </div>
      
