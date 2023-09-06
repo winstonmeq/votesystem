@@ -54,7 +54,11 @@ body {
   margin: 5px;
 } */
 
-
+@media print {
+  .hidden-print {
+    display: none;
+  }
+}
 
 .main {
   width: 100vw;

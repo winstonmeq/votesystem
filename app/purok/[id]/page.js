@@ -145,9 +145,10 @@ const Page = ({ params: { id } }) => {
     // },
 
     {
-      name: "Action",
+      name: "Action ",
       selector: (row) => (
-        <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+        <div className="flex flex-row w-full">
+         <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
           <Link href={`/voters/${row._id}`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -163,7 +164,32 @@ const Page = ({ params: { id } }) => {
               />
             </svg>
           </Link>
+     
         </div>
+        <div>
+        <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+          <Link href={`/qrcode/${row._id}`}>
+          <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 6h3v3H6V6zm5 0h3v3h-3V6zm5 0h3v3h-3V6zm0 5h3v3h-3v-3zm-5 0h3v3h-3v-3zm-5 0h3v3H6v-3zm0 5h3v3H6v-3zm5 0h3v3h-3v-3zm5 0h3v3h-3v-3zm-10 5h3v3H6v-3zm5 0h3v3h-3v-3zm5 0h3v3h-3v-3zm0-15h3v3h-3V6zm5 0h3v3h-3V6zm-10 0h3v3H6V6z"
+              />
+            </svg>
+
+          </Link>
+     
+        </div>
+      </div>
+        </div>
+      
+        
       ),
     },
   ];

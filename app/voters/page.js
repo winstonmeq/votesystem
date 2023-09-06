@@ -198,7 +198,9 @@ const Page = () => {
               />
             </svg>
           </Link>
+          
         </div>
+        
       ),
     },
   ];
