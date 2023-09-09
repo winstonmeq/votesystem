@@ -57,7 +57,10 @@ useEffect(() =>{
                     
                    <Link href={'/task'} className="black_btn">Task</Link>
 
-                    
+                   <Link href={'/store'} className="black_btn">Stores</Link>
+
+                   <Link href={'/distribution'} className="black_btn">Distribution</Link>
+
                     <Link href={'/voters'} className="black_btn">Voters</Link>
 
                     <button type="button" onClick={signOut} className="outline_btn">
@@ -113,7 +116,20 @@ useEffect(() =>{
                             Task
                            </Link>
     
+                           <Link href={'/store'}
+                           className="dropdown_link"
+                           onClick={() =>setToggleDropdown(false)}
+                           >
+                            Store
+                           </Link>
+    
 
+                           <Link href={'/distribution'}
+                           className="dropdown_link"
+                           onClick={() =>setToggleDropdown(false)}
+                           >
+                            Distribution
+                           </Link>     
 
                            <Link href={'/voters'}
                            className="dropdown_link"
