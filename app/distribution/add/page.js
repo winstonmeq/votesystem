@@ -26,7 +26,7 @@ const Page = () => {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-        window.location.href = "/"; // Redirect to homepage if user is not logged in
+        router.push('/') // Redirect to homepage if user is not logged in
     }
   }, [status, router]);
 
@@ -42,7 +42,7 @@ const Page = () => {
       };
 
       const response = await axios.post(
-        process.env.LOCAL_URL + "/api/distribution",
+        process.env.LOCAL_URL + "/api/distribution/",
         payload
       );
 
@@ -51,6 +51,7 @@ const Page = () => {
         
       }
 
+      console.log(payload)
 
     } catch (error) {
 
@@ -58,7 +59,7 @@ const Page = () => {
 
     } finally {
 
-        console.log('savesdfsdfsdfsdfsdf')
+        console.log('close')
     }
 
 
