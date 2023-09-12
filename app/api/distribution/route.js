@@ -29,17 +29,22 @@ export async function GET(request) {
 
 export async function POST(request) {
 
+ 
   try {
-
 
     const { distribution_name, type, target , active} = await request.json();
 
-    console.log('checking distribution api data',{distribution_name, type, target , active})
+    // Validate the incoming data (you can add more checks as needed)
+    if (!distribution_name || !type || !target || active === undefined) {
+     return new Response(JSON.stringify({ error: 'Invalid data provided' }), { status: 400 });
+   }
+ 
 
+    console.log('checking distribution api data',{distribution_name, type, target , active})
 
     await connectToDB();
 
-    const addDistribution = new Distribution({
+    const addDistribution = Distribution({
         distribution_name:distribution_name,
         target:target,
         type:type,        
@@ -48,15 +53,12 @@ export async function POST(request) {
     
     await addDistribution.save();
 
-    
-    console.log('Distribution data save')
-
-    return new Response(JSON.stringify('Distribution add successfully'))
+    return new NextResponse('Distribution add successfully')
     
 
   } catch (error) {
   
-   return new Response('POST Error nih pre!');
+   return new NextResponse('POST Error nih pre!');
 
   } 
 }

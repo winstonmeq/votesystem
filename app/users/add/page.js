@@ -11,7 +11,10 @@ const Page = () => {
   const [address, setAddress] = useState('');
 
 
-  const addUser = async () => {
+  const addUser = async (e) => {
+
+    e.preventDefault()
+
     try {
       setIsLoading(true); // Set isLoading to true when the request is initiated
 

@@ -50,7 +50,9 @@ const Page = () => {
 
 
 
-  const addVoter = async () => {
+  const addVoter = async (e) => {
+
+    e.preventDefault()
 
     try {
 

@@ -21,9 +21,6 @@ const Page = () => {
   const router = useRouter();
 
 
-
-
-
   useEffect(() => {
     if (status === "unauthenticated") {
         router.push('/') // Redirect to homepage if user is not logged in
@@ -32,36 +29,41 @@ const Page = () => {
 
 
 
-  const addDistribution = async () => {
-    try {
-      const payload = {
-        distribution_name,
-        type,
-        target,
-        active,
-      };
+  const addDistribution = async (e) => {
 
+    e.preventDefault();
+
+
+    try {
+      
+    const payload = {
+      distribution_name, type, target, active,
+    };
+     
       const response = await axios.post(
-        process.env.LOCAL_URL + "/api/distribution/",
-        payload
+        process.env.LOCAL_URL + '/api/distribution',payload
       );
 
       if (response.status === 200) {
-        alert(response.data);
-        
+
+        alert(response.data)
+
+        console.log(payload)
+
+        router.push('/distribution'); 
+
+      } else {
+        // Handle unexpected response status codes
+        console.error('Unexpected response status:', response.status);
       }
 
-      console.log(payload)
-
+     
     } catch (error) {
 
-        setIsLoading(false);
+      console.error('Error:', error);
+      setIsLoading(false);
 
-    } finally {
-
-        console.log('close')
-    }
-
+    } 
 
   };
 
@@ -112,7 +114,6 @@ const Page = () => {
           </div>
 
           
-
         
           <div className="grid md:grid-cols-3 md:gap-6">
 

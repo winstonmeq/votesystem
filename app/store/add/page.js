@@ -29,7 +29,10 @@ const Page = () => {
 
 
 
-  const addStore = async () => {
+  const addStore = async (e) => {
+
+    e.preventDefault();
+
     try {
       const payload = {
         store_name,
@@ -47,6 +50,10 @@ const Page = () => {
 
       if (response.status === 200) {
         alert(response.data);
+
+        console.log(payload)
+
+        router.push('/store'); 
         
       }
 
@@ -57,7 +64,7 @@ const Page = () => {
 
     } finally {
 
-        console.log('savesdfsdfsdfsdfsdf')
+        console.log('close')
     }
 
 

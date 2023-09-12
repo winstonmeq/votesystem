@@ -32,22 +32,23 @@ callbacks:{
 
         });
     
-        session.user.id = sessionUser._id.toString();
-
+        //session.user.id = sessionUser._id.toString();
         session.user.isAdmin = sessionUser.admin; // Add the isAdmin property to the session user object
     
         return session;
 
       },
     
-      async signIn({ profile }) {
+
+
+  async signIn({ profile }) {
 
         try {
                    
 
           await connectToDB();
 
-          //check if a suser already exists
+          //check if a user already exists
           const userExists = await User.findOne({
 
             email: profile.email,

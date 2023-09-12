@@ -46,6 +46,9 @@ const Page = () => {
 
 
     const fetchData = async () => {
+
+     
+
       try {
         const { data } = await axios.get(process.env.LOCAL_URL + '/api/store');
         setdatalist(data);

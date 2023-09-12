@@ -26,40 +26,50 @@ export async function GET(request) {
 }
 
 
-
 export async function POST(request) {
+
+
 
   try {
 
+    
+  const { store_name, owner_name, mobile, barangay, municipality, active } = await request.json();
 
-    const { store_name, owner_name , mobile, barangay, municipality, active} = await request.json();
+  console.log('Checking store API data', { store_name, owner_name, mobile, barangay, municipality, active });
 
-    console.log('checking store api data',{store_name,owner_name , mobile, barangay, municipality, active})
+  // Validate the incoming data (you can add more checks as needed)
+  if (!store_name || !owner_name || !mobile || !barangay || !municipality || active === undefined) {
+    return new Response(JSON.stringify({ error: 'Invalid data provided' }), { status: 400 });
+  }
 
-
+   
+    // Assuming connectToDB establishes a database connection
     await connectToDB();
 
     const addStore = new Store({
-        store_name:store_name,
-        owner_name:owner_name, 
-        mobile: mobile,
-        barangay:barangay, 
-        municipality:municipality, 
-        active:active, 
-        })
-    
+      store_name: store_name,
+      owner_name: owner_name,
+      mobile: mobile,
+      barangay: barangay,
+      municipality: municipality,
+      active: active,
+    });
+
     await addStore.save();
 
-    
-    console.log('Store data save')
+    console.log('Store data saved');
 
-    return new Response(JSON.stringify('add Store successfully'))
-    
+    return new NextResponse('Store add successfully')
 
   } catch (error) {
-  
-   return new Response('POST Error nih pre!');
 
-  } 
+    console.error(error);
+
+    return new Response(JSON.stringify({ error: 'An error occurred while processing your request' }), {
+
+      status: 500,
+
+    });
+  }
 }
 
