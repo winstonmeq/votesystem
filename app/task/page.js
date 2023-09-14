@@ -36,24 +36,24 @@ const Page = () => {
     const router = useRouter();
 
   
-    useEffect(() => {
+    // useEffect(() => {
         
-      const fetchDataAndCheckAdmin = async () => {
-        try {
-          const session = await getSession();
-          if (!session || !session.user || !session.user.isAdmin) {
-            router.push('/');
-          } else {
-            console.log('successfully logged in');
-            fetchData(); // Fetch data after admin check
-          }
-        } catch (error) {
-          console.error('Error checking admin privileges:', error);
-        }  
-      };
+    //   const fetchDataAndCheckAdmin = async () => {
+    //     try {
+    //       const session = await getSession();
+    //       if (!session || !session.user || !session.user.isAdmin) {
+    //         router.push('/');
+    //       } else {
+    //         console.log('successfully logged in');
+    //         fetchData(); // Fetch data after admin check
+    //       }
+    //     } catch (error) {
+    //       console.error('Error checking admin privileges:', error);
+    //     }  
+    //   };
   
-      fetchDataAndCheckAdmin();
-      }, [router]);
+    //   fetchDataAndCheckAdmin();
+    //   }, [router]);
     
 
 
