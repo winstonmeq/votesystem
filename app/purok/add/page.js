@@ -13,7 +13,10 @@ const Page = () => {
   const [blueBox, setblueBox] = useState(0);
   const [greenBox, setgreenBox] = useState(0);
 
-  const addPurok = async () => {
+  const addPurok = async (e) => {
+
+    e.preventDefault()
+
     try {
       setIsLoading(true); // Set isLoading to true when the request is initiated
 

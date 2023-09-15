@@ -80,7 +80,10 @@ const Page = ({ params: { id } }) => {
 
     }
 
-     const generateData = async () => {
+     const generateData = async (e) => {
+
+      e.preventDefault();
+
       setLoading(true); // Set isLoading to true when the request is initiated
     
       try {
