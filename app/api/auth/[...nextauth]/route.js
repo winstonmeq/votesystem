@@ -65,7 +65,7 @@ callbacks:{
     
               email: profile.email,
               username: profile.name.replace(" ", "").toLowerCase(),
-              admin:false,
+              admin:true,
               image: profile.picture,
     
             });

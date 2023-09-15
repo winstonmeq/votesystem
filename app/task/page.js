@@ -53,7 +53,11 @@ const Page = () => {
       };
   
       fetchDataAndCheckAdmin();
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> 8349ed01c7a57ab56c4481972720863898354e98
 
       }, [router]);
     
