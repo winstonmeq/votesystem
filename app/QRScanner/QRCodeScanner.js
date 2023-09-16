@@ -1,31 +1,45 @@
 import { useState } from "react";
 import { QrReader } from "react-qr-reader";
+import { useEffect } from "react";
 
-
-const QRCodeScanner = () => {
+function QRCodeScanner() {
   const [result, setResult] = useState('');
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Request camera permission when the component mounts
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then((stream) => {
+        setError(null); // Reset any previous errors
+      })
+      .catch((err) => {
+        setError(err);
+        console.error(err);
+      });
+  }, []);
 
   const handleScan = (data) => {
     if (data) {
       setResult(data);
     }
-  }
-
-  const handleError = (error) => {
-    console.error(error);
-  }
+  };
 
   return (
     <div>
-      <QrReader
-        delay={300}
-        onError={handleError}
-        onScan={handleScan}
-        style={{ width: '80%' }}
-      />
+      {error ? (
+        <p>Error: {error.message}</p>
+      ) : (
+        <QrReader
+          delay={300}
+          onScan={handleScan}
+          style={{ width: '100%' }}
+        />
+      )}
       <p>{result}</p>
     </div>
   );
 }
+ 
 
 export default QRCodeScanner;
