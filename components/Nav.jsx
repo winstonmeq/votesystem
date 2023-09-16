@@ -61,6 +61,8 @@ useEffect(() =>{
 
                    <Link href={'/recipient'} className="black_btn">Recipient</Link>
 
+                   <Link href={'/QRScanner'} className="black_btn">Scanner</Link>
+
 
                    <Link href={'/distribution'} className="black_btn">Distribution</Link>
 
@@ -133,6 +135,12 @@ useEffect(() =>{
                             Recipient
                            </Link>
     
+                           <Link href={'/QRScanner'}
+                           className="dropdown_link"
+                           onClick={() =>setToggleDropdown(false)}
+                           >
+                            Scanner
+                           </Link>
     
 
                            <Link href={'/distribution'}
