@@ -43,7 +43,7 @@ const Page = ({ params: { id } }) => {
     };
 
     fetchDataAndCheckAdmin();
-    }, [session,router,FetchData,FetchData2]);
+    }, [session,router]);
   
 
 
@@ -79,6 +79,10 @@ const Page = ({ params: { id } }) => {
 
 
     }
+
+
+
+
 
      const generateData = async (e) => {
 
