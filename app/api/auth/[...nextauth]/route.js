@@ -8,8 +8,6 @@ import User from "@/models/User";
 
 
 
-
-
 const handler = NextAuth({
 
             providers: [
@@ -32,7 +30,7 @@ callbacks:{
 
         });
     
-        //session.user.id = sessionUser._id.toString();
+        session.user.id = sessionUser._id.toString();
         session.user.isAdmin = sessionUser.admin; // Add the isAdmin property to the session user object
     
         return session;

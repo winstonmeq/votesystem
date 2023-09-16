@@ -32,8 +32,11 @@ const RecipientSchema = mongoose.Schema({
     barangay:{
         type:String,        
     },
-    
-    
+
+    active:{
+        type:String,        
+    },
+        
 
 },{
 

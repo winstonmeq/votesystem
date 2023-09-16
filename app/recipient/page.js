@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-import { useSession, getSession } from 'next-auth/react';
+import {getSession,useSession } from 'next-auth/react';
 import { useRouter } from "next/navigation";
 
 
@@ -15,8 +15,8 @@ const Page = () => {
 
   const [datalist, setdatalist] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { data: session, status } = useSession();
   const router = useRouter();
+  const { data: session, status } = useSession()
 
   
 
@@ -27,7 +27,7 @@ const Page = () => {
         if (!session || !session.user.isAdmin) {
           router.push('/');
         } else {
-          console.log('successfully logged in');
+          console.log('successfully logged in: ' + status);
           fetchData(); // Fetch data after admin check
         }
       } catch (error) {
@@ -36,7 +36,6 @@ const Page = () => {
     };
 
     fetchDataAndCheckAdmin();
-
     
     }, [router]);
   
@@ -44,10 +43,9 @@ const Page = () => {
 
     const fetchData = async () => {
 
-     
 
       try {
-        const { data } = await axios.get(process.env.LOCAL_URL + '/api/store');
+        const { data } = await axios.get(process.env.LOCAL_URL + '/api/recipient');
         setdatalist(data);
       } catch (error) {
         console.error('Error fetching store data:', error);
@@ -74,44 +72,37 @@ const Page = () => {
  
   const columns = [
     {
-      name: "Store",
+      name: "Activity",
       selector: (row) => (
-        <div className="justify-center text-sm">{row.store_name}</div>
+        <div className="justify-center text-sm">{row.distribution_name}</div>
       ),
        
     },
 
     {
-      name: "Owner",
+      name: "Voter Name",
       selector: (row) => (
-        <div className="justify-center text-sm">{row.owner_name}</div>
+        <div className="justify-center text-sm">{row.voter_name}</div>
       ),
-    },
-
-    {
-      name: "Mobile",
-      selector: (row) => row.mobile,
-    },
-    {
-      name: "Barangay",
-      selector: (row) => row.barangay,
     },
 
     {
         name: "Municipality",
         selector: (row) => row.municipality,
       },
-  
-    
+       
+
+    {
+      name: "Barangay",
+      selector: (row) => row.barangay,
+    },
+     
 
     {
       name: "Action",
       selector: (row) => (
-        <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-          <Link href={`/store/${row._id}`}>{row._id}
-           
-          
-          </Link>
+        <div className="w-100 transform hover:text-purple-500 hover:scale-110">
+         <button className="rounded p-2 bg-red-600"><Link href={`/recipient/${row._id}`}>Edit </Link></button> 
           
         </div>
         
@@ -124,20 +115,20 @@ const Page = () => {
 
 
 
-<div className="flex flex-col sm:flex-row w-full justify-between m-2">
+{/* <div className="flex flex-col sm:flex-row w-full justify-between m-2">
 
-  <Link href="/store/add" className="black_btn">Add Store</Link>
+  <Link href="/distribution/add" className="black_btn">Distribution</Link>
   
 
 
-</div>
+</div> */}
 
 <div className="w-full">
 
 <DataTable
             columns={columns}
             data={datalist}
-            title="Store Lists"
+            title="Recipient Lists"
             defaultSortFieldId="createdAt"
             pagination
             paginationPerpage={datalist.length}

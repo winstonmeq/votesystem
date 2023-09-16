@@ -28,8 +28,6 @@ const Page = ({ params: { id } }) => {
 
 
 
-
-
   useEffect(() => {
 
     async function FetchData() {

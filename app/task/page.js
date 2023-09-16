@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 import { useState } from 'react';
 import Link from "next/link";
 import Progress from '../progress/page';
-import { getSession } from 'next-auth/react';
+import { useSession, getSession } from 'next-auth/react';
 
 
 
@@ -27,21 +27,19 @@ const Page = () => {
   
     const [isOpen, setIsOpen] = useState(false);
 
-
+    const { data: session, status } = useSession()
 
     const toggleModal = () => {
       setIsOpen(!isOpen);
     };
   
     const router = useRouter();
-
-  
+     
     useEffect(() => {
         
       const fetchDataAndCheckAdmin = async () => {
         try {
-          const session = await getSession();
-          if (!session || !session.user || !session.user.isAdmin) {
+          if (!session || !session.user.isAdmin) {
             router.push('/');
           } else {
             console.log('successfully logged in');
