@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useRouter } from 'next/navigation';
 import { useSession, getSession } from 'next-auth/react';
+import { fetchData } from "next-auth/client/_utils";
 
 
 
@@ -42,7 +43,7 @@ const Page = ({ params: { id } }) => {
     };
 
     fetchDataAndCheckAdmin();
-    }, [session,router]);
+    }, [session,router,FetchData,FetchData2]);
   
 
 

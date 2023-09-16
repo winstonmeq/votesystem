@@ -45,7 +45,7 @@ const Page = ({ params: { id } }) => {
     };
 
     fetchDataAndCheckAdmin();
-    }, [session,router]);
+    }, [session,router,FetchData,FetchData2]);
   
 
 
