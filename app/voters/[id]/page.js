@@ -32,8 +32,7 @@ const Page = ({ params: { id } }) => {
         
     const fetchDataAndCheckAdmin = async () => {
       try {
-        const session = await getSession();
-        if (!session || !session.user || !session.user.isAdmin) {
+        if (!session || !session.user.isAdmin) {
           router.push('/');
         } else {
           console.log('successfully logged in');
@@ -46,7 +45,7 @@ const Page = ({ params: { id } }) => {
     };
 
     fetchDataAndCheckAdmin();
-    }, [router]);
+    }, [session,router]);
   
 
 

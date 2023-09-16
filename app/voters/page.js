@@ -38,7 +38,7 @@ const Page = () => {
     fetchDataAndCheckAdmin();
 
     
-    }, [router]);
+    }, [session,router]);
   
 
 
