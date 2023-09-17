@@ -20,30 +20,6 @@ export async function GET(request) {
 }
 
 
-export async function POST(request) {
-
-  try {
-
-    const { email, password}= await request.json();
-
-
-    await dbConnect();
-
-    const getdata = await User.find({}).exec();
-    
-    return new Response(JSON.stringify(getdata))
-     
-
-  } catch (error) {
-  
-   return new Response('Error nih pre!');
-
-  } 
-}
-
-
-
-
 
 
 export async function POST(request) {
