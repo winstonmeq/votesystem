@@ -1,4 +1,3 @@
-import Voter from "@/models/Voter";
 import Recipient from "@/models/Recipient";
 import { NextResponse } from "next/server";
 import { connectToDB } from "@/utils/database";
@@ -18,13 +17,14 @@ export async function GET(request) {
     // Check if the user is authenticated
 
     
-    if (!session) {
-      return new Response('Unauthorized', { status: 401 });
-    }
+    // if (!session) {
+    //   return new Response('Unauthorized', { status: 401 });
+    // }
 
     // Your authentication logic here, e.g., checking roles or permissions
 
     await connectToDB();
+
     const getdata = await Recipient.find({}).exec();
     return NextResponse.json(getdata);
   } catch (error) {
