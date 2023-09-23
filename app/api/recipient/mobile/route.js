@@ -52,38 +52,3 @@ export async function POST(request) {
     }
   }
   
-
-  
-export async function PATCH(request, {params}) {
-
-  const {active} = await request.json();
- 
-   try {
-  
-     console.log(active)
-      
-    await connectToDB();
- 
- 
-     const updatedVoter = await Voter.findByIdAndUpdate(
-       params.id,
-       { active },
-       { new: true }
-     );
-     
-     if (!updatedVoter) {
-       return new Response('Recipient not found', { status: 404 });
-     }
-     
-   return NextResponse.json('Successfully updated')      
- 
-      
- 
-   } catch (error) {
-   
-    return new Response('error');
- 
-   }  
- }
-
-  
