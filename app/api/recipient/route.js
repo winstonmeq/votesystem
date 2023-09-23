@@ -10,15 +10,14 @@ export async function GET(request) {
 
   try {
 
-    //await dbConnect();
 
     await connectToDB();
 
     const getdata = await Recipient.find({}).exec();
 
-    return NextResponse.json(getdata)
+    // return NextResponse.json(getdata)
     
-    //return new Response(JSON.stringify(getdata))
+    return new Response(JSON.stringify(getdata))
      
 
   } catch (error) {
@@ -27,6 +26,8 @@ export async function GET(request) {
 
   } 
 }
+
+
 
 // export async function GET(request) {
 

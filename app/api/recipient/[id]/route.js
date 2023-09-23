@@ -6,9 +6,10 @@ import { connectToDB } from "@/utils/database";
   
 export async function PATCH(request, {params}) {
 
-   
+     
      try {
 
+    const id = params.id
     
      const {status} = await request.json();
 
@@ -19,7 +20,7 @@ export async function PATCH(request, {params}) {
    
    
        const updateData = await Recipient.findByIdAndUpdate(
-         params.id,
+         id,
          { status },
          { new: true }
        );
