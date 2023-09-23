@@ -12,9 +12,8 @@ export async function PATCH(request, {params}) {
     
      const {status} = await request.json();
 
-
     
-       console.log(params.id, active)
+       console.log(params.id, status)
         
       await connectToDB();
    
