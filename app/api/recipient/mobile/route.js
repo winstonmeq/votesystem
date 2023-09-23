@@ -28,7 +28,7 @@ export async function POST(request) {
   
       const getdata = await Recipient.find({voter_id: voter_id}).exec();
   
-      if (getdata.length === 0) {
+      if (getdata.length === 0) {     
 
       return new NextResponse(
             JSON.stringify({ status: 'failed' }) // Use 200 for success
@@ -52,4 +52,38 @@ export async function POST(request) {
     }
   }
   
+
+  
+export async function PATCH(request, {params}) {
+
+  const {active} = await request.json();
+ 
+   try {
+  
+     console.log(active)
+      
+    await connectToDB();
+ 
+ 
+     const updatedVoter = await Voter.findByIdAndUpdate(
+       params.id,
+       { active },
+       { new: true }
+     );
+     
+     if (!updatedVoter) {
+       return new Response('Recipient not found', { status: 404 });
+     }
+     
+   return NextResponse.json('Successfully updated')      
+ 
+      
+ 
+   } catch (error) {
+   
+    return new Response('error');
+ 
+   }  
+ }
+
   

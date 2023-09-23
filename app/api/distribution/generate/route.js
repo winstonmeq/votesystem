@@ -21,6 +21,7 @@ export async function POST(request) {
         voter_name: item.fname,
         municipality: 'Pres.Roxas',
         barangay: item.purok,
+        active:'yes'
       });
 
       try {
