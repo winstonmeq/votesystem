@@ -96,6 +96,17 @@ const Page = () => {
       name: "Barangay",
       selector: (row) => row.barangay,
     },
+
+    {
+      name: "Active",
+      selector: (row) => row.active,
+    },
+
+    {
+      name: "Status",
+      selector: (row) => row.status,
+    },
+     
      
 
     {

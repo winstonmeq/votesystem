@@ -10,7 +10,7 @@ export async function PATCH(request, {params}) {
      try {
 
     
-     const {active} = await request.json();
+     const {status} = await request.json();
 
 
     
@@ -19,13 +19,14 @@ export async function PATCH(request, {params}) {
       await connectToDB();
    
    
-       const updatedVoter = await Recipient.findByIdAndUpdate(
+       const updateData = await Recipient.findByIdAndUpdate(
          params.id,
-         { active },
+         { status },
          { new: true }
        );
        
-       if (!updatedVoter) {
+       if (!updateData) {
+        
          return new Response('Recipient not found', { status: 404 });
        }
        

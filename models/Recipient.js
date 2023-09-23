@@ -36,6 +36,11 @@ const RecipientSchema = mongoose.Schema({
     active:{
         type:String,        
     },
+
+    status:{
+        type:String,        
+    },
+        
         
 
 },{

@@ -11,7 +11,7 @@ export async function POST(request) {
 
     await connectToDB();
 
-    const getdata = await Voter.find({ purok: purok_id }).exec();
+    const getdata = await Voter.find({ purok: purok_id, member: 1 }).exec();
 
     for (const item of getdata) {
       const addRecipient = new Recipient({
@@ -21,7 +21,8 @@ export async function POST(request) {
         voter_name: item.fname,
         municipality: 'Pres.Roxas',
         barangay: item.purok,
-        active:'yes'
+        active:'yes',
+        status:'ready'
       });
 
       try {
