@@ -140,10 +140,10 @@ const Page = () => {
               >
                 <option value={""}>select</option>
 
-                <option value={"Del Carmen"}>President Roxas</option>
-                <option value={"Poblacion"}>Kidapawan City</option>
-                <option value={"New Cebu"}>Antipas</option>
-                <option value={"Labuo"}>Arakan</option>
+                <option value={"President Roxas"}>President Roxas</option>
+                <option value={"Kidapawan City"}>Kidapawan City</option>
+                <option value={"Antipas"}>Antipas</option>
+                <option value={"Arakan"}>Arakan</option>
               </select>
             </div>
 

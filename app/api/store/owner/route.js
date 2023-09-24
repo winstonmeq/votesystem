@@ -1,7 +1,6 @@
 
 
-import Recipient from "@/models/Recipient";
-import { NextResponse } from "next/server";
+import Store from "@/models/Store";
 import { connectToDB } from "@/utils/database";
 
 
@@ -13,24 +12,24 @@ export async function POST(request) {
     try {
   
       
-    const { voter_id } = await request.json();
+    const { storeId } = await request.json();
   
-    console.log('recipient voter_id api', { voter_id});
+    console.log('storeId api', { storeId});
 
     // Validate the incoming data (you can add more checks as needed)
-    if (!voter_id === undefined) {
+    if (!storeId === undefined) {
       return new Response(JSON.stringify({ error: 'Invalid data provided' }), { status: 400 });
     }
        
       // Assuming connectToDB establishes a database connection
       await connectToDB();
   
-      const getdata = await Recipient.find({voter_id: voter_id, rec_status:'ready'}).exec();
+      const getdata = await Store.find({_id: storeId}).exec();
   
       if (getdata.length === 0) {     
 
-      return new NextResponse(
-            JSON.stringify({ status: 'failed' }) // Use 200 for success
+      return new Response(
+            JSON.stringify({ status: 'not found' }) // Use 200 for success
           );
 
       } else {

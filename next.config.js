@@ -6,10 +6,11 @@ const nextConfig = {
        
         //LOCAL_URL: 'http://localhost:3000',
         LOCAL_URL: 'https://vms-green.vercel.app',
-
           
 
      },
+
+
 
 
    //   experimental: {

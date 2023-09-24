@@ -24,6 +24,10 @@ const RecipientSchema = mongoose.Schema({
 
     },
 
+    storeId:{
+        type:String,        
+    },
+
     municipality: {
         type:String,
 
