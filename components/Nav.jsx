@@ -127,6 +127,13 @@ useEffect(() =>{
                             Store
                            </Link>
 
+                           <Link href={'/benificiary'}
+                           className="dropdown_link"
+                           onClick={() =>setToggleDropdown(false)}
+                           >
+                            Benificiary
+                           </Link>
+
                            <Link href={'/recipient'}
                            className="dropdown_link"
                            onClick={() =>setToggleDropdown(false)}
