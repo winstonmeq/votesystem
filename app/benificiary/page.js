@@ -41,6 +41,8 @@ const Page = () => {
   
 
 
+
+
     const fetchData = async () => {
 
 
@@ -53,6 +55,58 @@ const Page = () => {
         setLoading(false);
       }
     };
+
+
+
+    const addRecipient = async (e) => {
+
+        e.preventDefault();
+    
+    
+        try {
+          
+        const payload = {
+          distribution_name:'sample', voter_name:'winston me', rec_status:'readyy', active:'yes',
+        };
+         
+          const response = await axios.post(
+            process.env.LOCAL_URL + '/api/benificiary',payload
+          );
+    
+          if (response.status === 200) {
+    
+            alert(response.data)
+    
+            console.log(payload)
+    
+            router.push('/benificiary'); 
+    
+          } else {
+            // Handle unexpected response status codes
+            console.error('Unexpected response status:', response.status);
+          }
+    
+         
+        } catch (error) {
+    
+          console.error('Error:', error);
+          setIsLoading(false);
+    
+        } 
+    
+      };
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -112,8 +166,8 @@ const Page = () => {
 
 <div className="flex flex-col sm:flex-row w-full justify-between m-2">
 
-  <Link href="/distribution/add" className="black_btn">Add Distribution</Link>
-  
+  {/* <Link href="/distribution/add" className="black_btn">Add Distribution</Link> */}
+  <button className="black_btn" onClick={addRecipient}>Add Recipient</button>
 
 
 </div>

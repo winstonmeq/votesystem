@@ -26,6 +26,42 @@ export async function GET(request) {
   }
   
 
+  export async function POST(request) {
+
+ 
+    try {
+  
+      const { distribution_name, voter_name, rec_status , active} = await request.json();
+  
+      // Validate the incoming data (you can add more checks as needed)
+      if (!distribution_name || !rec_status || !voter_name || active === undefined) {
+       return new Response(JSON.stringify({ error: 'Invalid data provided' }), { status: 400 });
+     }
+   
+  
+      console.log('checking distribution api data',{distribution_name, voter_name, rec_status, active})
+  
+      await connectToDB();
+  
+      const addRecipient = Recipient({
+          distribution_name:distribution_name, 
+          voter_name:voter_name,           
+          active:active, 
+          rec_status:rec_status,
+          })
+      
+      await addRecipient.save();
+  
+      return new NextResponse('Recipient add successfully')
+      
+  
+    } catch (error) {
+    
+     return new NextResponse('POST Error nih pre!');
+  
+    } 
+  }
+
 
 
 
