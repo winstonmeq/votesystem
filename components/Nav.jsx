@@ -61,6 +61,7 @@ useEffect(() =>{
 
                    <Link href={'/recipient'} className="black_btn">Recipient</Link>
 
+                   <Link href={'/benificiary'} className="black_btn">Benificiary</Link>
 
 
                    <Link href={'/distribution'} className="black_btn">Distribution</Link>

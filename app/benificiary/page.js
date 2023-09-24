@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-import { useSession, getSession } from 'next-auth/react';
+import { useSession} from 'next-auth/react';
 import { useRouter } from "next/navigation";
 
 
@@ -15,9 +15,11 @@ const Page = () => {
 
   const [datalist, setdatalist] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { data: session, status } = useSession();
-  const router = useRouter();
+//   const { data: session} = useSession();
 
+
+  const router = useRouter();
+  const session = useSession();
   
 
   useEffect(() => {

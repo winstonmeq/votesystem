@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-import {getSession,useSession } from 'next-auth/react';
+import {useSession } from 'next-auth/react';
 import { useRouter } from "next/navigation";
 
 
@@ -16,7 +16,7 @@ const Page = () => {
   const [datalist, setdatalist] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
 
   
 
@@ -27,7 +27,7 @@ const Page = () => {
         if (!session || !session.user.isAdmin) {
           router.push('/');
         } else {
-          console.log('successfully logged in: ' + status);
+          console.log('successfully logged in: ');
           fetchData(); // Fetch data after admin check
         }
       } catch (error) {
@@ -37,7 +37,7 @@ const Page = () => {
 
     fetchDataAndCheckAdmin();
     
-    }, [session,router,status]);
+    }, [session,router]);
   
 
 
