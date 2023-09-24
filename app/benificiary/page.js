@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
-import { useSession} from 'next-auth/react';
+import { useSession, getSession } from 'next-auth/react';
 import { useRouter } from "next/navigation";
 
 
@@ -15,10 +15,9 @@ const Page = () => {
 
   const [datalist, setdatalist] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { data: session} = useSession();
-
-
+  const { data: session, status } = useSession();
   const router = useRouter();
+
   
 
   useEffect(() => {
@@ -37,7 +36,6 @@ const Page = () => {
     };
 
     fetchDataAndCheckAdmin();
-
     
     }, [session,router]);
   
@@ -48,11 +46,9 @@ const Page = () => {
 
       try {
         const { data } = await axios.get(process.env.LOCAL_URL + '/api/benificiary');
-
         setdatalist(data);
-
       } catch (error) {
-        console.error('Error fetching voters data:', error);
+        console.error('Error fetching store data:', error);
       } finally {
         setLoading(false);
       }
@@ -76,78 +72,62 @@ const Page = () => {
  
   const columns = [
     {
-      name: "Activity",
+      name: "Distribution",
       selector: (row) => (
         <div className="justify-center text-sm">{row.distribution_name}</div>
       ),
        
     },
 
-    {
-      name: "Voter Name",
-      selector: (row) => (
-        <div className="justify-center text-sm">{row.voter_name}</div>
-      ),
-    },
+    
 
     {
-        name: "Municipality",
-        selector: (row) => row.municipality,
+        name: "Active",
+        selector: (row) => row.active,
       },
        
-
-    {
-      name: "Barangay",
-      selector: (row) => row.barangay,
-    },
-
-    {
-      name: "Active",
-      selector: (row) => row.active,
-    },
 
     {
       name: "Status",
       selector: (row) => row.rec_status,
     },
      
-     
 
-    {
-      name: "Action",
-      selector: (row) => (
-        <div className="w-100 transform hover:text-purple-500 hover:scale-110">
-         <button className="rounded p-2 bg-red-600"><Link href={`/recipient/${row._id}`}>Edit </Link></button> 
+    // {
+    //   name: "Action",
+    //   selector: (row) => (
+    //     <div className="w-100 transform hover:text-purple-500 hover:scale-110">
+    //      <button className="rounded p-2 bg-red-600"><Link href={`/distribution/${row._id}`}>Generate </Link></button> 
           
-        </div>
+    //     </div>
         
-      ),
-    },
+    //   ),
+    // },
   ];
-
-
-
-
 
   return (
     <div className="flex-row w-full">
 
-     {console.log(datalist)}
+
+
+<div className="flex flex-col sm:flex-row w-full justify-between m-2">
+
+  <Link href="/distribution/add" className="black_btn">Add Distribution</Link>
+  
+
+
+</div>
 
 <div className="w-full">
 
-{Array.isArray(datalist) && datalist.length > 0 ? (
-        <DataTable
-          columns={columns}
-          data={datalist}
-          title="Benificiary Lists"
-          defaultSortFieldId="createdAt"
-          pagination
-          paginationPerPage={datalist.length} // Fixed typo here
-        />
-      ) : (
-        <p>No data to display.</p>
-      )}
+<DataTable
+            columns={columns}
+            data={datalist}
+            title="Benificiary Lists"
+            defaultSortFieldId="createdAt"
+            pagination
+            paginationPerpage={datalist.length}
+          />
 </div>
 
         
