@@ -134,14 +134,18 @@ const Page = () => {
 
 <div className="w-full">
 
-<DataTable
-            columns={columns}
-            data={datalist}
-            title="Benificiary Lists"
-            defaultSortFieldId="createdAt"
-            pagination
-            paginationPerpage={datalist.length}
-          />
+{Array.isArray(datalist) && datalist.length > 0 ? (
+        <DataTable
+          columns={columns}
+          data={datalist}
+          title="Benificiary Lists"
+          defaultSortFieldId="createdAt"
+          pagination
+          paginationPerPage={datalist.length} // Fixed typo here
+        />
+      ) : (
+        <p>No data to display.</p>
+      )}
 </div>
 
         
