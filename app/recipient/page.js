@@ -43,7 +43,6 @@ const Page = () => {
 
     const fetchData = async () => {
 
-
       try {
         const { data } = await axios.get(process.env.LOCAL_URL + "/api/recipient");
         setdatalist(data);
@@ -109,16 +108,16 @@ const Page = () => {
      
      
 
-    {
-      name: "Action",
-      selector: (row) => (
-        <div className="w-100 transform hover:text-purple-500 hover:scale-110">
-         <button className="rounded p-2 bg-red-600"><Link href={`/recipient/${row._id}`}>Edit </Link></button> 
+    // {
+    //   name: "Action",
+    //   selector: (row) => (
+    //     <div className="w-100 transform hover:text-purple-500 hover:scale-110">
+    //      <button className="rounded p-2 bg-red-600"><Link href={`/recipient/${row._id}`}>Edit </Link></button> 
           
-        </div>
+    //     </div>
         
-      ),
-    },
+    //   ),
+    // },
   ];
 
   return (
@@ -126,13 +125,6 @@ const Page = () => {
 
    {console.log('data sa recipient:', datalist)}
 
-{/* <div className="flex flex-col sm:flex-row w-full justify-between m-2">
-
-  <Link href="/distribution/add" className="black_btn">Distribution</Link>
-  
-
-
-</div> */}
 
 <div className="w-full">
 

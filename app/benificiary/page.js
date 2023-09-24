@@ -133,7 +133,20 @@ const Page = () => {
        
     },
 
+    {
+        name: "Name",
+        selector: (row) => row.voter_name,
+      },
     
+      {
+        name: "Municipality",
+        selector: (row) => row.municipality,
+      },
+
+      {
+        name: "Barangay",
+        selector: (row) => row.barangay,
+      },
 
     {
         name: "Active",
