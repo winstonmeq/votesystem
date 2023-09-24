@@ -48,7 +48,9 @@ const Page = () => {
 
       try {
         const { data } = await axios.get(process.env.LOCAL_URL + '/api/benificiary');
+
         setdatalist(data);
+
       } catch (error) {
         console.error('Error fetching voters data:', error);
       } finally {
@@ -130,7 +132,7 @@ const Page = () => {
   return (
     <div className="flex-row w-full">
 
-
+     {console.log(datalist)}
 
 <div className="w-full">
 
