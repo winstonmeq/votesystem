@@ -45,7 +45,7 @@ function QRCodePage({ params: { id } }) {
       // const pdfWidth = pdf.internal.pageSize.getWidth();
       // const pdfHeight = pdf.internal.pageSize.getHeight();
 
-      pdf.addImage(imgData, "JPEG", 0.2, 0.2, 2.8, 1.8);
+      pdf.addImage(imgData, "JPEG", 0.3, 0., 2.8, 1.8);
       pdf.save("qrcode.pdf");
 
     });
