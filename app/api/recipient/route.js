@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 
 
 
+
 export async function GET(request) {
 
   try {
@@ -17,7 +18,7 @@ export async function GET(request) {
 
     return NextResponse.json(getdata)
     
-     
+    
 
   } catch (error) {
   

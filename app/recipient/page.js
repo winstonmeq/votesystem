@@ -44,7 +44,7 @@ const Page = () => {
     const fetchData = async () => {
 
       try {
-        const { data } = await axios.get(process.env.LOCAL_URL + "/api/recipient");
+        const { data } = await axios.get(process.env.LOCAL_URL + '/api/recipient');
         setdatalist(data);
       } catch (error) {
         console.error('Error fetching store data:', error);

@@ -15,7 +15,7 @@ const Page = () => {
 
   const [datalist, setdatalist] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { data: session, status } = useSession();
+  const { data: session} = useSession();
   const router = useRouter();
 
   
@@ -56,6 +56,20 @@ const Page = () => {
       }
     };
 
+
+    const fetchVoter = async () => {
+
+
+        try {
+          const { data } = await axios.get(process.env.LOCAL_URL + '/api/benificiary');
+          setdatalist(data);
+        } catch (error) {
+          console.error('Error fetching store data:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
 
 
     const addRecipient = async (e) => {
