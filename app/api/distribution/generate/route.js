@@ -22,7 +22,7 @@ export async function POST(request) {
         municipality: 'Pres.Roxas',
         barangay: item.purok,
         active:'yes',
-        status:'ready'
+        rec_status:'ready'
       });
 
       try {

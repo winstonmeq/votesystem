@@ -37,7 +37,7 @@ const RecipientSchema = mongoose.Schema({
         type:String,        
     },
 
-    status:{
+    rec_status:{
         type:String,        
     },
         

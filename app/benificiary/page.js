@@ -108,7 +108,7 @@ const Page = () => {
 
     {
       name: "Status",
-      selector: (row) => row.status,
+      selector: (row) => row.rec_status,
     },
      
      
