@@ -45,7 +45,7 @@ const Page = () => {
 
 
       try {
-        const { data } = await axios.get(process.env.LOCAL_URL + '/api/recipient');
+        const { data } = await axios.get(process.env.LOCAL_URL + "/api/recipient");
         setdatalist(data);
       } catch (error) {
         console.error('Error fetching store data:', error);
@@ -124,7 +124,7 @@ const Page = () => {
   return (
     <div className="flex-row w-full">
 
-
+   {consolge.log('data sa recipient:', datalist)}
 
 {/* <div className="flex flex-col sm:flex-row w-full justify-between m-2">
 
