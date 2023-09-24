@@ -18,7 +18,7 @@ export async function POST(request) {
         distribution_id: id,
         distribution_name: distribution_name,
         voter_id: item._id,
-        voter_name: item.fname,
+        voter_name: item.fname +',' +item.lname,
         municipality: 'Pres.Roxas',
         barangay: item.purok,
         active:'yes',

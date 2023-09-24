@@ -59,7 +59,6 @@ useEffect(() =>{
 
                    <Link href={'/store'} className="black_btn">Stores</Link>
 
-                   <Link href={'/recipient'} className="black_btn">Recipient</Link>
 
                    <Link href={'/benificiary'} className="black_btn">Benificiary</Link>
 
@@ -135,14 +134,7 @@ useEffect(() =>{
                             Benificiary
                            </Link>
 
-                           <Link href={'/recipient'}
-                           className="dropdown_link"
-                           onClick={() =>setToggleDropdown(false)}
-                           >
-                            Recipient
-                           </Link>
-    
-                        
+                                          
 
                            <Link href={'/distribution'}
                            className="dropdown_link"

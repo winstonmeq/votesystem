@@ -57,20 +57,6 @@ const Page = () => {
     };
 
 
-    const fetchVoter = async () => {
-
-
-        try {
-          const { data } = await axios.get(process.env.LOCAL_URL + '/api/benificiary');
-          setdatalist(data);
-        } catch (error) {
-          console.error('Error fetching store data:', error);
-        } finally {
-          setLoading(false);
-        }
-      };
-  
-
 
     const addRecipient = async (e) => {
 

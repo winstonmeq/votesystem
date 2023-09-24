@@ -82,8 +82,6 @@ const Page = ({ params: { id } }) => {
 
 
 
-
-
      const generateData = async (e) => {
 
       e.preventDefault();
@@ -115,70 +113,6 @@ const Page = ({ params: { id } }) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-    // const updateVoter = async () => {
-    //   setLoading(true); // Set isLoading to true when the request is initiated
-    
-    //   try {
-    //     const payload = { fname, lname, age, position, prec_num, purok, member };
-    
-    //     // Make a PATCH request to update the voter's data
-    //     const response = await axios.patch(
-    //       process.env.LOCAL_URL + `/api/voter/${id}`,
-    //       payload
-    //     );
-    
-    //     // After successful update, navigate back to the previous page
-    //     router.back();
-    //   } catch (error) {
-    //     console.error('Error in updating data:', error);
-    //   } finally {
-    //     setLoading(false); // Set isLoading to false when the request is completed or encounters an error
-    //   }
-    // };
-
-  
-
-  
-//   const deleteVoter = async () => {
-   
-//     setLoading(true); // Set isLoading to true when the request is initiated
-
-//     try {
-
-//       const response = await axios.delete(process.env.LOCAL_URL + `/api/voter/${id}`);
-
-//       router.push('/voters')       
-        
-
-//     } catch (error) {
-//       console.error('unable to delete data')
-//     } finally {
-//       setLoading(false); // Set isLoading to false when the request is completed or encounters an error
-//     }
-
-//   };
-
-
-//   function deleteVoter2() {
-//     var result = window.confirm("Are you sure you want to delete?")
-
-//     if(result) {
-//         deleteVoter()
-//         alert('Voter deleted!')
-//     }else {
-//       alert('Delete canceled')
-//     }
-//   }
 
 
 
