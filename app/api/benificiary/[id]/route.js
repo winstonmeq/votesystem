@@ -11,17 +11,17 @@ export async function PATCH(request, {params}) {
 
     const id = params.id
     
-     const {status} = await request.json();
+     const {rec_status} = await request.json();
 
     
-       console.log(params.id, status)
+       console.log(params.id, rec_status)
         
       await connectToDB();
    
    
        const updateData = await Recipient.findByIdAndUpdate(
          id,
-         { status },
+         { rec_status },
          { new: true }
        );
        
