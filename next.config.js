@@ -9,7 +9,6 @@ const nextConfig = {
         LOCAL_URL: 'https://vms-green.vercel.app',
 
           
-          //LOCAL_URL: 'https://main.dv6267klxga6y.amplifyapp.com',
 
      },
 
