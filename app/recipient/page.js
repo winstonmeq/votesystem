@@ -124,7 +124,7 @@ const Page = () => {
   return (
     <div className="flex-row w-full">
 
-   {consolge.log('data sa recipient:', datalist)}
+   {console.log('data sa recipient:', datalist)}
 
 {/* <div className="flex flex-col sm:flex-row w-full justify-between m-2">
 
