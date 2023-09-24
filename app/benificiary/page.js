@@ -15,11 +15,10 @@ const Page = () => {
 
   const [datalist, setdatalist] = useState([]);
   const [loading, setLoading] = useState(true);
-//   const { data: session} = useSession();
+  const { data: session} = useSession();
 
 
   const router = useRouter();
-  const session = useSession();
   
 
   useEffect(() => {
@@ -100,15 +99,15 @@ const Page = () => {
       selector: (row) => row.barangay,
     },
 
-    // {
-    //   name: "Active",
-    //   selector: (row) => row.active,
-    // },
+    {
+      name: "Active",
+      selector: (row) => row.active,
+    },
 
-    // {
-    //   name: "Status",
-    //   selector: (row) => row.status,
-    // },
+    {
+      name: "Status",
+      selector: (row) => row.status,
+    },
      
      
 
