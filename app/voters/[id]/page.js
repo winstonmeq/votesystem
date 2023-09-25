@@ -22,7 +22,7 @@ const Page = ({ params: { id } }) => {
   const [prec_num, setprec_num] = useState("");
   const [purok, setpurok] = useState("");
   const [member, setmember] = useState(0);
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
 
   const router = useRouter()

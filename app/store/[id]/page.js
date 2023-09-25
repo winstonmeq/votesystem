@@ -10,12 +10,12 @@ import { useRouter } from "next/navigation";
 
 
 
-const Page = () => {
+const Page = ({ params: { id } }) => {
 
 
   const [datalist, setdatalist] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
 
   
@@ -28,7 +28,7 @@ const Page = () => {
           router.push('/');
         } else {
           console.log('successfully logged in');
-          fetchData(); // Fetch data after admin check
+          FetchData(); // Fetch data after admin check
         }
       } catch (error) {
         console.error('Error checking admin privileges:', error);
@@ -42,20 +42,31 @@ const Page = () => {
   
 
 
-    const fetchData = async () => {
-
-     
-
+    const FetchData = async () => {
       try {
-        const { data } = await axios.get(process.env.LOCAL_URL + '/api/store');
-        setdatalist(data);
+        const { data } = await axios.get(
+          process.env.LOCAL_URL + `/api/store/${id}`
+        );
+
+   
+        if (data.length > 0) {
+        
+          setdatalist(data)
+          setLoading(false);
+        }
+
+        
       } catch (error) {
-        console.error('Error fetching store data:', error);
+
+        console.error(error);
+
       } finally {
         setLoading(false);
       }
-    };
 
+     
+
+    }
 
 
   if (loading) {
@@ -74,71 +85,55 @@ const Page = () => {
  
   const columns = [
     {
-      name: "Store",
+      name: "Distribution",
       selector: (row) => (
-        <div className="justify-center text-sm">{row.store_name}</div>
+        <div className="justify-center text-sm">{row._id}</div>
       ),
        
     },
 
     {
-      name: "Owner",
+      name: "Target",
       selector: (row) => (
-        <div className="justify-center text-sm">{row.owner_name}</div>
+        <div className="justify-center text-sm">{row.count}</div>
       ),
-    },
-
-    {
-      name: "Mobile",
-      selector: (row) => row.mobile,
+       
     },
     {
-      name: "Barangay",
-      selector: (row) => row.barangay,
-    },
-
-    {
-        name: "Municipality",
-        selector: (row) => row.municipality,
-      },
-  
-    
-
-    {
-      name: "Action",
+      name: "Received",
       selector: (row) => (
-        <div className="w-full  transform hover:text-purple-500">
-          <Link className="black_btn" href={`/store/${row._id}`}>Details</Link>
-          
-        </div>
-        
+        <div className="justify-center text-sm">{row.receivedCount}</div>
       ),
+       
     },
+
+     
   ];
 
   return (
     <div className="flex-row w-full">
+    {console.log(datalist)}
 
 
+    <div className="flex flex-col sm:flex-row w-full justify-between m-2">
 
-<div className="flex flex-col sm:flex-row w-full justify-between m-2">
+<Link href="/store" className="black_btn">Back</Link>
 
-  <Link href="/store/add" className="black_btn">Add Store</Link>
-  
 
 
 </div>
-
 <div className="w-full">
 
 <DataTable
             columns={columns}
             data={datalist}
-            title="Store Lists"
+            title="Store Details"
             defaultSortFieldId="createdAt"
             pagination
             paginationPerpage={datalist.length}
           />
+
+
 </div>
 
         

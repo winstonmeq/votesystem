@@ -101,8 +101,8 @@ const Page = () => {
     {
       name: "Action",
       selector: (row) => (
-        <div className="w-100 transform hover:text-purple-500 hover:scale-110">
-         <button className="rounded p-2 bg-red-600"><Link href={`/distribution/${row._id}`}>Generate </Link></button> 
+        <div className="w-full transform hover:text-purple-500">
+        <Link className="black_btn" href={`/distribution/${row._id}`}>Generate </Link>
           
         </div>
         

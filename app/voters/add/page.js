@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { useSession} from 'next-auth/react';
-
+import Link from "next/link";
 
 const Page = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -81,7 +81,14 @@ const Page = () => {
 
   return (
     <div className="flex-row w-full ">
-      <div className=" m-4 bg-gray-50 p-4 rounded-lg">
+
+<div className="flex flex-col sm:flex-row w-full justify-end m-2">
+
+<Link href="/distribution" className="black_btn">Cancel</Link>
+</div>
+
+
+ <div className=" m-4 bg-gray-50 p-4 rounded-lg">
         <form onSubmit={addVoter}>
           <div className="grid md:grid-cols-2 md:gap-6">
            

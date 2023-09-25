@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-
+import Link from "next/link";
 import { useSession } from "next-auth/react";
 
 const Page = () => {
@@ -80,6 +80,15 @@ const Page = () => {
 
   return (
     <div className="flex-row w-full ">
+
+<div className="flex flex-col sm:flex-row w-full justify-end m-2">
+
+<Link href="/store" className="black_btn">Cancel</Link>
+
+</div>
+
+
+
       <div className=" m-4 bg-gray-50 p-4 rounded-lg">
         <form onSubmit={addStore}>
           <div className="grid md:grid-cols-2 md:gap-6">

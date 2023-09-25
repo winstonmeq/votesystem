@@ -13,11 +13,13 @@ import { fetchData } from "next-auth/client/_utils";
 const Page = ({ params: { id } }) => {
 
   const [datalist2, setdatalist2] = useState([]);
+  const [datalistStore, setdatalistStore] = useState([]);
 
   const [loading, setLoading] = useState(true);
 
   const [distribution_name, setdistribution_name] = useState("");
   const [purok_id, setpurok_id] = useState("");
+  const [storeId, setstoreId] = useState("");
 
 
   const { data: session, status } = useSession();
@@ -34,8 +36,10 @@ const Page = ({ params: { id } }) => {
           router.push('/');
         } else {
           console.log('successfully logged in');
+          FetchStore();
           FetchData();
-          FetchData2(); // Fetch data after admin check
+          FetchData2(); 
+          // Fetch data after admin check
         }
       } catch (error) {
         console.error('Error checking admin privileges:', error);
@@ -48,6 +52,7 @@ const Page = ({ params: { id } }) => {
 
 
    const FetchData = async () => {
+    
       try {
         const { data } = await axios.get(
           process.env.LOCAL_URL + `/api/distribution/${id}`
@@ -68,8 +73,9 @@ const Page = ({ params: { id } }) => {
     }
 
   const FetchData2 = async () =>  {
+    
       try {
-        const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok`);
+        const { data } = await axios.get(process.env.LOCAL_URL + '/api/purok');
         setdatalist2(data);
       } catch (error) {
         console.error(error);
@@ -77,6 +83,20 @@ const Page = ({ params: { id } }) => {
         setLoading(false)
       }
 
+    }
+
+
+    const FetchStore = async () =>  {
+
+
+      try {
+        const { data } = await axios.get(process.env.LOCAL_URL + '/api/store');
+        setdatalistStore(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false)
+      }
 
     }
 
@@ -89,7 +109,7 @@ const Page = ({ params: { id } }) => {
       setLoading(true); // Set isLoading to true when the request is initiated
     
       try {
-        const payload = { id, purok_id, distribution_name };
+        const payload = { id, storeId, purok_id, distribution_name };
     
         // pass data to generate qrcode data
         const response = await axios.post(
@@ -135,6 +155,11 @@ const Page = ({ params: { id } }) => {
     
     <div className="flex-row w-full justify-center">
     
+    <div className="flex  flex-col sm:flex-row w-full justify-end m-2">
+
+<Link href="/distribution" className="black_btn">Cancel</Link>
+</div>
+
     
       <div className="m-2 bg-gray-50 p-2 rounded-lg">
         <form onSubmit={''}>
@@ -180,6 +205,28 @@ const Page = ({ params: { id } }) => {
                 ))}
               </select>
             </div>
+
+
+            <div className="relative z-0 w-full mb-6 group">
+              <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                Select Store
+              </label>
+
+              <select
+                value={storeId}
+                onChange={(e) => setstoreId(e.target.value)}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              >
+              <option>Select</option>
+                {datalistStore.map((item, i) => (
+                 
+                  <option key={i} value={item._id}>
+                    {item.store_name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
           </div>
 
         

@@ -8,9 +8,9 @@ import { connectToDB } from "@/utils/database";
 
 export async function POST(request) {
   try {
-    const { id, purok_id, distribution_name } = await request.json();
+    const { id,storeId, purok_id, distribution_name } = await request.json();
 
-    console.log('checking distribution api data', { id, purok_id, distribution_name });
+    console.log('checking distribution api data', { id, purok_id, distribution_name, storeId });
 
     await connectToDB();
 
@@ -22,6 +22,7 @@ export async function POST(request) {
         distribution_name: distribution_name,
         voter_id: item._id,
         voter_name: item.fname +',' +item.lname,
+        storeId:storeId,
         municipality: 'Pres.Roxas',
         barangay: item.purok,
         active:'yes',

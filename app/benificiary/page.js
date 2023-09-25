@@ -177,13 +177,6 @@ const Page = () => {
 
 
 
-<div className="flex flex-col sm:flex-row w-full justify-between m-2">
-
-  {/* <Link href="/distribution/add" className="black_btn">Add Distribution</Link> */}
-  <button className="black_btn" onClick={addRecipient}>Add Recipient</button>
-
-
-</div>
 
 <div className="w-full">
 
