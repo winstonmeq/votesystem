@@ -1,7 +1,6 @@
 
 
-import Recipient from "@/models/Recipient";
-import { NextResponse } from "next/server";
+import Generate from "@/models/Generate";
 import { connectToDB } from "@/utils/database";
 
 
@@ -9,45 +8,78 @@ export async function GET(request) {
   try {
     await connectToDB();
 
-    const getdata = await Recipient.aggregate([
+    const getdata = await Generate.aggregate([
+
+     
+    
+    
       {
         $group: {
-          _id: '$distribution_name', // Group by the distribution_name field
-          count: { $sum: 1 }, // Calculate the count for each group
-          documents: { $push: '$$ROOT' }, // Store the documents in the group
+          _id: '$distribution_id',
+          count: { $sum: 1 },
+          documents: { $push: '$$ROOT' }, 
+          totalreceived: {
+            $sum: {
+              $cond: {
+                if: { $eq: ["$status", "received"] },
+                then: 1,
+                else: 0
+              }
+            }
+          }
+        }
+      },
+
+
+     
+
+
+      {
+        $lookup: {
+          from: "distributions", // Replace with the actual name of your Distribution collection
+          localField: "_id",
+          foreignField: "_id",
+          as: "distribution",
         },
       },
+
+      
+
+
       {
-        $unwind: '$documents', // Unwind the documents array
-      },
-      {
-        $match: {
-          'documents.rec_status': 'received', // Filter documents with status equal to 'good'
+        $project: {
+          _id: 1,
+          totalreceived: 1,
+          count: 1,
+          distribution_name: "$distribution.distribution_name"
         },
       },
-      {
-        $group: {
-          _id: '$_id', // Group by the distribution_name field again
-          totalreceived: { $sum: 1 }, // Calculate the count of 'good' statuses in each group
-          //count: { $first: '$count' }, // Get the original count for the group
-        },
-      },
+
+
+
     ]).exec();
 
     return new Response(
       JSON.stringify({ status: 'success', data: getdata }),
       { status: 200 } // Use 200 for success
     );
+
   } catch (error) {
 
     return new Response(JSON.stringify({ error: 'An error occurred while processing your request' }), {
-  
+
       status: 500,
 
     });
-
   }
 }
+
+
+
+
+
+
+
 
 
 

@@ -1,6 +1,6 @@
 
 
-import Recipient from "@/models/Recipient";
+import Store from "@/models/Store";
 import { connectToDB } from "@/utils/database";
 import { NextResponse } from "next/server";
 
@@ -10,91 +10,59 @@ import { NextResponse } from "next/server";
 
 export async function GET(request, {params}) {
 
- const id = params.id
-
+  const id = params.id
 
   try {
-
-
-  console.log('GET id api', {id});
-
-  // Validate the incoming data (you can add more checks as needed)
-  if (!id === undefined) {
-    return NextResponse({ error: 'Invalid data provided' }, { status: 400 });
-  }
+ 
+    console.log(id)
      
-    // Assuming connectToDB establishes a database connection
-    await connectToDB();
+   await connectToDB();
 
-
-    const getdata = await Recipient.aggregate([
-      {
-        $match: {
-          'storeId': id, // Filter documents with status equal to 'received'
-        },
-      },
-      {
-        $group: {
-          _id: '$distribution_name',
-          count: { $sum: 1 },
-          receivedCount: {
-            $sum: {
-              $cond: {
-                if: { $eq: ["$rec_status", "received"] },
-                then: 1,
-                else: 0
-              }
-            }
-          }
-        }
-      },
-
-     
-     
-    ]).exec();
-
-
+    const getdata = await Store.find({_id:id}).exec();
     
 
-        return NextResponse.json(getdata); //pag nextjs page ang gamit mao nih ang json response pag API sa mobile lahi pud.. katong isa nga response
-                                            //ang reason abih.. dile ma display sa datalist nga gamit ang datatable.. kaya mao nih dapat. pag nextjs to nextjs
-
-                                       
+    return NextResponse.json(getdata)
+     
 
   } catch (error) {
+  
+   return new Response('error');
 
-    console.error(error);
-
-    return NextResponse.json('errrorrrr')
-
-  }
+  } 
 }
 
 
 
+export async function PATCH(request, {params}) {
 
-
-// export async function GET(request, {params}) {
-
-//   const id = params.id
-
-//   try {
+  const {store_name, owner_name, mobile, barangay, municipality, active} = await request.json();
  
-//     console.log(id)
+   try {
+  
+     console.log(params.id, store_name, owner_name, mobile, barangay, municipality, active)
+      
+    await connectToDB();
+ 
+ 
+     const updateStore = await Store.findByIdAndUpdate(
+       params.id,
+       { store_name, owner_name, mobile, barangay, municipality, active },
+       { new: true }
+     );
      
-//    await connectToDB();
+     if (!updateStore) {
 
-//     const getdata = await Recipient.find({storeId:id}).exec();
-    
-//     return new Response(JSON.stringify(getdata))
-
+       return new Response('Store not found', { status: 404 });
+       
+     }
      
-
-//   } catch (error) {
-  
-//    return new Response('error');
-
-//   } 
-// }
-  
-  
+     return NextResponse.json('Store Successfully updated')      
+ 
+      
+ 
+   } catch (error) {
+   
+    return new Response('error');
+ 
+   }  
+ }

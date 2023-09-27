@@ -60,7 +60,7 @@ useEffect(() =>{
                    <Link href={'/store'} className="black_btn">Stores</Link>
 
 
-                   <Link href={'/benificiary'} className="black_btn">Benificiary</Link>
+                   <Link href={'/generate'} className="black_btn">Benificiary</Link>
 
 
                    <Link href={'/distribution'} className="black_btn">Distribution</Link>
@@ -127,7 +127,7 @@ useEffect(() =>{
                             Store
                            </Link>
 
-                           <Link href={'/benificiary'}
+                           <Link href={'/generate'}
                            className="dropdown_link"
                            onClick={() =>setToggleDropdown(false)}
                            >

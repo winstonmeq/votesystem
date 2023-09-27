@@ -107,9 +107,18 @@ const Page = () => {
     {
       name: "Action",
       selector: (row) => (
-        <div className="w-full  transform hover:text-purple-500">
-          <Link className="black_btn" href={`/store/${row._id}`}>Details</Link>
-          
+        <div className="w-full  transform hover:text-purple-500 ">
+        <div className="flex flex-col gap-2 m-2">
+          <div className="flex flex-row">
+          <Link className="black_btn" href={`/store/detail/${row._id}`}>Details</Link>
+          </div>
+          <div className="flex flex-row">
+          <Link className="black_btn" href={`/store/${row._id}`}>Edit</Link>
+          </div>
+        </div>
+         
+         
+
         </div>
         
       ),

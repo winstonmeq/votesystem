@@ -14,10 +14,13 @@ const Page = ({ params: { id } }) => {
 
   const [datalist2, setdatalist2] = useState([]);
   const [datalistStore, setdatalistStore] = useState([]);
+  const [datalistDistribution, setdatalistDistribution] = useState([]);
+
 
   const [loading, setLoading] = useState(true);
 
   const [distribution_name, setdistribution_name] = useState("");
+  const [distributionId,setdistributionId] = useState("")
   const [purok_id, setpurok_id] = useState("");
   const [storeId, setstoreId] = useState("");
 
@@ -35,15 +38,24 @@ const Page = ({ params: { id } }) => {
         if (!session || !session.user.isAdmin) {
           router.push('/');
         } else {
-          console.log('successfully logged in');
+          setLoading(true)
           FetchStore();
-          FetchData();
-          FetchData2(); 
+          FetchDistribution();
+          FetchPurok(); 
           // Fetch data after admin check
         }
       } catch (error) {
+
         console.error('Error checking admin privileges:', error);
-      }  
+
+      } finally {
+
+        setLoading(false)
+
+      }
+      
+      
+
     };
 
     fetchDataAndCheckAdmin();
@@ -51,16 +63,18 @@ const Page = ({ params: { id } }) => {
   
 
 
-   const FetchData = async () => {
+   const FetchDistribution = async () => {
     
       try {
         const { data } = await axios.get(
-          process.env.LOCAL_URL + `/api/distribution/${id}`
+          process.env.LOCAL_URL + `/api/distribution`
         );
 
    
-        if (data.length > 0 && data[0].distribution_name) {
-            setdistribution_name(data[0].distribution_name);
+        if (data.length > 0 )  {
+
+            setdatalistDistribution(data)
+           
           }
 
         
@@ -72,7 +86,7 @@ const Page = ({ params: { id } }) => {
 
     }
 
-  const FetchData2 = async () =>  {
+  const FetchPurok = async () =>  {
     
       try {
         const { data } = await axios.get(process.env.LOCAL_URL + '/api/purok');
@@ -109,11 +123,11 @@ const Page = ({ params: { id } }) => {
       setLoading(true); // Set isLoading to true when the request is initiated
     
       try {
-        const payload = { id, storeId, purok_id, distribution_name };
+        const payload = { distributionId, storeId, purok_id };
     
         // pass data to generate qrcode data
         const response = await axios.post(
-          process.env.LOCAL_URL + '/api/distribution/generate',
+          process.env.LOCAL_URL + '/api/generate',
           payload
         );
     
@@ -162,28 +176,29 @@ const Page = ({ params: { id } }) => {
     
       <div className="m-2 bg-gray-50 p-2 rounded-lg">
         <form onSubmit={''}>
-       
-          <div className="grid md:grid-cols-2 md:gap-6">
-          
-            <div className="relative z-0 w-full mb-6 group">
-              <input
-                type="text"
-                value={distribution_name}
-                onChange={(e) => setdistribution_name(e.target.value)}
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-                required
-              />
-              <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                Distribution Name
+                 <div className="grid md:grid-cols-2 md:gap-6">         
+           
+
+          <div className="relative z-0 w-full mb-6 group">
+              <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
+                Select Distribution
               </label>
+
+              <select
+                value={distributionId}
+                onChange={(e) => setdistributionId(e.target.value)}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              >
+              <option>Select</option>
+                {datalistDistribution.map((item, i) => (                 
+                  <option key={i} value={item._id}>
+                    {item.distribution_name}
+                  </option>
+                ))}
+              </select>
             </div>
 
-       
-          </div>
 
-          <div className="grid md:grid-cols-2 md:gap-6">         
-           
 
             <div className="relative z-0 w-full mb-6 group">
               <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">

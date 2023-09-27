@@ -13,7 +13,7 @@ const Page = ({ params: { id } }) => {
 
   const [datalist2, setdatalist2] = useState([]);
 
-  const [loading, setLoading] = useState(true);
+  const [Loading, setLoading] = useState(false);
 
   const [fname, setfname] = useState("");
   const [lname, setlname] = useState("");
@@ -36,8 +36,8 @@ const Page = ({ params: { id } }) => {
           router.push('/');
         } else {
           console.log('successfully logged in');
-          FetchData();
-          FetchData2(); // Fetch data after admin check
+          FetchVoter();
+          FetchPurok(); // Fetch data after admin check
         }
       } catch (error) {
         console.error('Error checking admin privileges:', error);
@@ -49,7 +49,7 @@ const Page = ({ params: { id } }) => {
   
 
 
-   const FetchData = async () => {
+   const FetchVoter = async () => {
       try {
         const { data } = await axios.get(
           process.env.LOCAL_URL + `/api/voter/${id}`
@@ -75,7 +75,7 @@ const Page = ({ params: { id } }) => {
 
     }
 
-  const FetchData2 = async () =>  {
+  const FetchPurok = async () =>  {
       try {
         const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok`);
         setdatalist2(data);
@@ -89,8 +89,12 @@ const Page = ({ params: { id } }) => {
     }
 
 
-    const updateVoter = async () => {
-      setLoading(true); // Set isLoading to true when the request is initiated
+
+
+    const updateVoter = async (e) => {
+
+      e.preventDefault()
+
     
       try {
         const payload = { fname, lname, age, position, prec_num, purok, member };
@@ -101,12 +105,24 @@ const Page = ({ params: { id } }) => {
           payload
         );
     
+        if (response.status === 200) {
+
+          alert(response.data);
+  
+          
+          router.push('/voters'); 
+          
+        }
         // After successful update, navigate back to the previous page
-        router.back();
+       
       } catch (error) {
+        setLoading(false);
+
         console.error('Error in updating data:', error);
       } finally {
-        setLoading(false); // Set isLoading to false when the request is completed or encounters an error
+
+        setLoading(false);
+
       }
     };
 
@@ -147,7 +163,7 @@ const Page = ({ params: { id } }) => {
 
 
 
-  if (loading) {
+  if (Loading) {
     
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-10">

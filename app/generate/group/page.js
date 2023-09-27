@@ -1,3 +1,6 @@
+
+
+
 "use client";
 import Link from "next/link";
 import { useState } from "react";
@@ -15,7 +18,7 @@ const Page = () => {
 
   const [datalist, setdatalist] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
 
   
@@ -28,7 +31,7 @@ const Page = () => {
           router.push('/');
         } else {
           console.log('successfully logged in');
-          fetchData(); // Fetch data after admin check
+          FetchData(); // Fetch data after admin check
         }
       } catch (error) {
         console.error('Error checking admin privileges:', error);
@@ -36,24 +39,37 @@ const Page = () => {
     };
 
     fetchDataAndCheckAdmin();
+
     
     }, [session,router]);
   
 
 
-    const fetchData = async () => {
-
-
+    const FetchData = async () => {
       try {
-        const { data } = await axios.get(process.env.LOCAL_URL + '/api/distribution');
-        setdatalist(data);
+        const { data } = await axios.get(
+          process.env.LOCAL_URL + '/api/generate/group'
+        );
+
+   
+        if (data.length > 0) {
+        
+          setdatalist(data)
+          setLoading(false);
+        }
+
+        
       } catch (error) {
-        console.error('Error fetching store data:', error);
+
+        console.error(error);
+
       } finally {
         setLoading(false);
       }
-    };
 
+     
+
+    }
 
 
   if (loading) {
@@ -80,61 +96,47 @@ const Page = () => {
     },
 
     {
-      name: "Type",
+      name: "Target",
       selector: (row) => (
-        <div className="justify-center text-sm">{row.type}</div>
+        <div className="justify-center text-sm">{row.count}</div>
       ),
-    },
-
-    {
-        name: "Target",
-        selector: (row) => row.target,
-      },
        
-
-    {
-      name: "Active",
-      selector: (row) => row.active,
     },
-     
+    {
+      name: "Received",
+      selector: (row) => (
+        <div className="justify-center text-sm">{row.totalreceived}</div>
+      ),
+       
+    },
 
-    // {
-    //   name: "Action",
-    //   selector: (row) => (
-    //     <div className="w-full transform hover:text-purple-500">
-    //     <Link className="black_btn" href={`/distribution/edit/${row._id}`}>Edit </Link>
-    //     </div>
-        
-        
-    //   ),
-    // },
+     
   ];
 
   return (
     <div className="flex-row w-full">
+    {console.log(datalist)}
 
 
+    <div className="flex flex-col sm:flex-row w-full justify-between m-2">
 
-<div className="flex flex-col sm:flex-row w-full justify-between m-2">
-
-  <Link href="/distribution/add" className="black_btn">Add Distribution</Link>
-  <Link href="/generate/add" className="black_btn">Generate Data</Link>
+<Link href="/store" className="black_btn">Back</Link>
 
 
 
 </div>
-
-
 <div className="w-full">
 
 <DataTable
             columns={columns}
             data={datalist}
-            title="Distribution Lists"
+            title="Store Details"
             defaultSortFieldId="createdAt"
             pagination
             paginationPerpage={datalist.length}
           />
+
+
 </div>
 
         

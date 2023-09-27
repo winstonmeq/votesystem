@@ -53,7 +53,7 @@ export async function PATCH(request, {params}) {
        return new Response('Voter not found', { status: 404 });
      }
      
-   return NextResponse.json('Successfully updated')      
+   return NextResponse.json('Voter Successfully updated')      
  
       
  

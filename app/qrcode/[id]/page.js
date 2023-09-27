@@ -33,7 +33,7 @@ function QRCodePage({ params: { id } }) {
     const pdf = new jsPDF({
       orientation: 'landscape',
       unit:'in',
-      format:[2.125,3.175]
+      format:[2.125,3.2]
     });
     
 
@@ -45,7 +45,7 @@ function QRCodePage({ params: { id } }) {
       // const pdfWidth = pdf.internal.pageSize.getWidth();
       // const pdfHeight = pdf.internal.pageSize.getHeight();
 
-      pdf.addImage(imgData, "JPEG", 0.2, 0.2, 2.8, 1.8);
+      pdf.addImage(imgData, "JPEG", 0.1, 0.1, 3.0, 1.95);
       pdf.save("qrcode.pdf");
 
     });
@@ -109,10 +109,11 @@ function QRCodePage({ params: { id } }) {
     >
 
 <h1>QR Code Generator</h1>
-      <div ref={componentRef}>     
-      <div className="flex flex-row border w-full border-solid border-1 border-black">
+      <div ref={componentRef}>  
 
-        <div className="flex flex-col p-4 w-1/2">
+      <div className="flex flex-row border border-solid border-1 border-black">
+
+        <div className="flex flex-col p-4">
          <div className="flex flex-row">
           {fname}
          </div>
@@ -123,7 +124,7 @@ function QRCodePage({ params: { id } }) {
          {purok}
          </div>
         </div>
-        <div className="flex flex-col p-4 m-4 w-1/2">
+        <div className="flex flex-col p-1 m-1 ">
        
         <QRCode
           value={qrCodeValue}
@@ -132,8 +133,8 @@ function QRCodePage({ params: { id } }) {
           imageSettings={{
             src: "/images/cotraceLogo.png",
             excavate: true,
-            height: 40,
-            width: 40,
+            height: 20,
+            width: 20,
           }}
           level="H"
           includeMargin={true}

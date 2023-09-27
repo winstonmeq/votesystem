@@ -15,7 +15,7 @@ const Page = () => {
 
   const [datalist, setdatalist] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { data: session, status } = useSession();
+  const { data: session} = useSession();
   const router = useRouter();
 
   
@@ -25,9 +25,9 @@ const Page = () => {
     const fetchDataAndCheckAdmin = async () => {
       try {
         if (!session || !session.user.isAdmin) {
-          router.push('/');
+         router.push('/');
         } else {
-          console.log('successfully logged in');
+          console.log(session);
           fetchData(); // Fetch data after admin check
         }
       } catch (error) {
@@ -41,11 +41,13 @@ const Page = () => {
   
 
 
+
+
     const fetchData = async () => {
 
 
       try {
-        const { data } = await axios.get(process.env.LOCAL_URL + '/api/distribution');
+        const { data } = await axios.get(process.env.LOCAL_URL + '/api/generate');
         setdatalist(data);
       } catch (error) {
         console.error('Error fetching store data:', error);
@@ -53,6 +55,7 @@ const Page = () => {
         setLoading(false);
       }
     };
+
 
 
 
@@ -80,31 +83,47 @@ const Page = () => {
     },
 
     {
-      name: "Type",
-      selector: (row) => (
-        <div className="justify-center text-sm">{row.type}</div>
-      ),
+        name: "Store",
+        selector: (row) => row.store_name,
+      },
+    
+
+    {
+        name: "Name",
+        selector: (row) => row.voter_fname,
+      },
+    
+      {
+        name: "Municipality",
+        selector: (row) => row.municipality,
+      },
+
+      {
+        name: "Barangay",
+        selector: (row) => row.barangay,
+      },
+
+   
+
+    {
+      name: "Status",
+      selector: (row) => row.status,
     },
 
     {
-        name: "Target",
-        selector: (row) => row.target,
+        name: "Active",
+        selector: (row) => row.active,
       },
        
-
-    {
-      name: "Active",
-      selector: (row) => row.active,
-    },
      
 
     // {
     //   name: "Action",
     //   selector: (row) => (
-    //     <div className="w-full transform hover:text-purple-500">
-    //     <Link className="black_btn" href={`/distribution/edit/${row._id}`}>Edit </Link>
+    //     <div className="w-100 transform hover:text-purple-500 hover:scale-110">
+    //      <button className="rounded p-2 bg-red-600"><Link href={`/distribution/${row._id}`}>Generate </Link></button> 
+          
     //     </div>
-        
         
     //   ),
     // },
@@ -115,22 +134,13 @@ const Page = () => {
 
 
 
-<div className="flex flex-col sm:flex-row w-full justify-between m-2">
-
-  <Link href="/distribution/add" className="black_btn">Add Distribution</Link>
-  <Link href="/generate/add" className="black_btn">Generate Data</Link>
-
-
-
-</div>
-
 
 <div className="w-full">
 
 <DataTable
             columns={columns}
             data={datalist}
-            title="Distribution Lists"
+            title="Benificiary Lists"
             defaultSortFieldId="createdAt"
             pagination
             paginationPerpage={datalist.length}
