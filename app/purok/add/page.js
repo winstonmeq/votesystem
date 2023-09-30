@@ -1,6 +1,11 @@
 'use client'
 import axios from "axios";
 import React, { useState } from "react";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 
 const Page = () => {
 
@@ -9,30 +14,51 @@ const Page = () => {
   const [coordinator, setcoordinator] = useState('');
   const [phone, setphone] = useState('');
   const [totalVote, settotalVote] = useState(0);
-  const [redBox, setredBox] = useState(0);
-  const [blueBox, setblueBox] = useState(0);
-  const [greenBox, setgreenBox] = useState(0);
+  const { data: session, status } = useSession();
+
+  const router = useRouter();
+
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+        window.location.href = "/"; // Redirect to homepage if user is not logged in
+    }
+  }, [status, router]);
+
+
+
 
   const addPurok = async (e) => {
 
     e.preventDefault()
 
+    setIsLoading(true);
+
     try {
-      setIsLoading(true); // Set isLoading to true when the request is initiated
+       // Set isLoading to true when the request is initiated
 
       const payload = {
         PName: pname,
         Coordinator: coordinator,
         Phone: phone,
         totalVote: totalVote,
-        RedBox:redBox,
-        BlueBox:blueBox,
-        GreenBox:greenBox
+     
       };
 
       const response = await axios.post(process.env.LOCAL_URL + '/api/purok', payload);
-      setIsLoading(false);
-      console.log(response);
+
+      if (response.status === 200) {
+
+        alert(response.data)
+
+        console.log(payload)
+
+        router.push('/purok'); 
+
+      } else {
+        // Handle unexpected response status codes
+        console.error('Unexpected response status:', response.status);
+      }
 
     } catch (error) {
       setIsLoading(false);
@@ -51,7 +77,7 @@ const Page = () => {
 
   return (
    
-    <div className="flex justify-center h-screen">
+    <div className="flex flex-row w-full justify-center h-screen">
       <div className="w-full max-w-md">
         <h1 className="text-2xl font-bold mb-6">Purok Information</h1>
         <form onSubmit={addPurok} className="space-y-4">
@@ -60,6 +86,7 @@ const Page = () => {
             <input
               type="text"
               value={pname}
+              required
               onChange={(e) => setpname(e.target.value)}
               className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
             />
@@ -92,42 +119,22 @@ const Page = () => {
             />
           </div>
          
-          <div>
-            <label className="block mb-1">RedBox</label>
-            <input
-              type="text"
-              value={redBox}
-              onChange={(e) => setredBox(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
-            />
-          </div>
-          <div>
-            <label className="block mb-1">BlueBox</label>
-            <input
-              type="text"
-              value={blueBox}
-              onChange={(e) => setblueBox(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
-            />
-          </div>
-          <div>
-            <label className="block mb-1">GreenBox</label>
-            <input
-              type="text"
-              value={greenBox}
-              onChange={(e) => setgreenBox(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:border-blue-500"
-            />
-          </div>
-
-
+        
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600"
+            className="w-full black_btn"
           >
-            Submit
+            Add
           </button>
+        
         </form>
+        <Link href="/purok">
+        <button
+            type="submit"
+            className="w-full black_btn mt-2"
+          >
+            Cancel
+          </button></Link>
       </div>
     
     

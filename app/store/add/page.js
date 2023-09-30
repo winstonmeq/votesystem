@@ -12,10 +12,9 @@ const Page = () => {
   const [owner_name, setowner_name] = useState("");
   const [mobile, setmobile] = useState("");
   const [barangay, setbarangay] = useState("");
-  const [municipality, setmunicipality] = useState("");
+  const [municipality, setmunicipality] = useState("President Roxas");
   const [active, setactive] = useState("");
-
-  const [datalist, setdatalist] = useState([]);
+  const [puroklist, setpuroklist] = useState([]);
 
   const { data: session, status } = useSession();
 
@@ -24,8 +23,30 @@ const Page = () => {
   useEffect(() => {
     if (status === "unauthenticated") {
         window.location.href = "/"; // Redirect to homepage if user is not logged in
+    } else {
+
+      FetchPurok()
     }
   }, [status, router]);
+
+
+
+
+
+  async function FetchPurok() {
+    try {
+    const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok`)
+    setpuroklist(data);
+
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+         
+}
+
 
 
 
@@ -86,9 +107,6 @@ const Page = () => {
 <Link href="/store" className="black_btn">Cancel</Link>
 
 </div>
-
-
-
       <div className=" m-4 bg-gray-50 p-4 rounded-lg">
         <form onSubmit={addStore}>
           <div className="grid md:grid-cols-2 md:gap-6">
@@ -136,7 +154,7 @@ const Page = () => {
               </label>
             </div>
 
-            <div className="relative z-0 w-full mb-6 group">
+            {/* <div className="relative z-0 w-full mb-6 group">
               <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
                 Municipality
               </label>
@@ -154,11 +172,11 @@ const Page = () => {
                 <option value={"Antipas"}>Antipas</option>
                 <option value={"Arakan"}>Arakan</option>
               </select>
-            </div>
+            </div> */}
 
             <div className="relative z-0 w-full mb-6 group">
               <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
-                Barangay
+                Purok
               </label>
 
               <select
@@ -167,17 +185,14 @@ const Page = () => {
                 onChange={(e) => setbarangay(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               >
-                <option value={""}>select</option>
+                <option value=''>Select</option>
+                   {puroklist.map((item,i)=> (
+                      <option key={i} value={item.PName}>{item.PName}</option>
+                  ))}
 
-                <option value={"Del Carmen"}>Del Carmen</option>
-                <option value={"Poblacion"}>Poblacion</option>
-                <option value={"New Cebu"}>New Cebu</option>
-                <option value={"Labuo"}>Labuo</option>
               </select>
             </div>
-          </div>
 
-          <div className="grid md:grid-cols-3 md:gap-6">
             <div className="relative z-0 w-full mb-6 group">
               <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
                 Member Type
@@ -194,7 +209,10 @@ const Page = () => {
                 <option value={"No"}>No</option>
               </select>
             </div>
+
           </div>
+
+         
           <button
             type="submit"
             className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"

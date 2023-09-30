@@ -27,9 +27,9 @@ export async function POST(request) {
 
   try {
 
-    const { PName,Coordinator , Phone, totalVote, RedBox, BlueBox, GreenBox}= await request.json();
+    const { PName,Coordinator , Phone, totalVote }= await request.json();
 
-    console.log(PName,Coordinator , Phone, totalVote, RedBox, BlueBox, GreenBox)
+    console.log(PName,Coordinator , Phone, totalVote)
 
    await connectToDB();
 

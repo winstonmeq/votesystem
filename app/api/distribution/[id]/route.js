@@ -31,29 +31,30 @@ export async function GET(request, {params}) {
 
 
 
-//update the data after query
+
+
 export async function PATCH(request, {params}) {
 
-  const {fname,lname,age,position,purok, prec_num,member} = await request.json();
+  const {distribution_name, type, target, active} = await request.json();
  
    try {
   
-     console.log(params.id, fname,lname,age,position,purok, prec_num,member)
+     console.log(params.id, distribution_name, type, target, active)
       
     await connectToDB();
  
  
-     const updatedVoter = await Voter.findByIdAndUpdate(
+     const updatedDistribution = await Distribution.findByIdAndUpdate(
        params.id,
-       { fname, lname, age, position, purok, prec_num, member },
+       { distribution_name, type, target, active },
        { new: true }
      );
      
-     if (!updatedVoter) {
-       return new Response('Voter not found', { status: 404 });
+     if (!updatedDistribution) {
+       return new Response('Distribution not found', { status: 404 });
      }
      
-   return NextResponse.json('Successfully updated')      
+   return NextResponse.json('Distribution Successfully updated')      
  
       
  

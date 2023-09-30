@@ -57,7 +57,6 @@ useEffect(() =>{
                     
                    <Link href={'/task'} className="black_btn">Task</Link>
 
-                   <Link href={'/store'} className="black_btn">Stores</Link>
 
 
                    <Link href={'/generate'} className="black_btn">Benificiary</Link>
@@ -65,7 +64,13 @@ useEffect(() =>{
 
                    <Link href={'/distribution'} className="black_btn">Distribution</Link>
 
-                    <Link href={'/voters'} className="black_btn">Voters</Link>
+                   <Link href={'/store'} className="black_btn">Stores</Link>
+
+
+                    <Link href={'/voters'} className="black_btn">Member</Link>
+
+                    <Link href={'/purok'} className="black_btn">Purok</Link>
+
 
                     <button type="button" onClick={signOut} className="outline_btn">
                         Sign Out
@@ -120,12 +125,7 @@ useEffect(() =>{
                             Task
                            </Link>
     
-                           <Link href={'/store'}
-                           className="dropdown_link"
-                           onClick={() =>setToggleDropdown(false)}
-                           >
-                            Store
-                           </Link>
+                     
 
                            <Link href={'/generate'}
                            className="dropdown_link"
@@ -143,12 +143,27 @@ useEffect(() =>{
                             Distribution
                            </Link>     
 
+                           <Link href={'/store'}
+                           className="dropdown_link"
+                           onClick={() =>setToggleDropdown(false)}
+                           >
+                            Store
+                           </Link>
+                          
+
                            <Link href={'/voters'}
                            className="dropdown_link"
                            onClick={() =>setToggleDropdown(false)}
                            >
-                            Voter
-                           </Link>                            
+                            Member
+                           </Link> 
+
+                          <Link href={'/purok'}
+                           className="dropdown_link"
+                           onClick={() =>setToggleDropdown(false)}
+                           >
+                            Purok
+                           </Link>                             
 
                            <button type="button" className="mt-5 w-full black_btn" 
                            onClick={() => {

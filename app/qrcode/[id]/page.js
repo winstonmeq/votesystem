@@ -10,13 +10,14 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useRouter } from 'next/navigation';
 import { useSession, getSession } from 'next-auth/react';
-
+import Link from "next/link";
 
 
 
 function QRCodePage({ params: { id } }) {
 
   const qrCodeValue = id;
+  const [loading, setLoading] = useState(true);
   const [fname, setfname] = useState("");
   const [lname, setlname] = useState("");
   const [purok, setpurok] = useState("");
@@ -74,6 +75,7 @@ function QRCodePage({ params: { id } }) {
 
 
    const FetchData = async () => {
+    setLoading(true)
       try {
         const { data } = await axios.get(
           process.env.LOCAL_URL + `/api/voter/${id}`
@@ -90,28 +92,40 @@ function QRCodePage({ params: { id } }) {
         
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false)
       }
      
 
     }
 
 
+    if (loading) {
+    
+      return (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-10">
+        <div className="flex flex-col items-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-opacity-75"></div>
+          <p className="mt-4">Loading...</p>
+        </div>
+        </div>
+      );
+    }
+  
+
+
+
+
+
 
 
   return (
-    <div
-      // className="p-20"
-      // style={{
-      //   width: "210mm", // A4 width in mm
-      //   height: "297mm", // A4 height in mm
-      //   margin: "0 auto", // Center the content on the page
-      // }}
-    >
+    <div>
 
-<h1>QR Code Generator</h1>
+<div className="flex flex-row justify-start m-4"><h1>Click to generate QR Code and download.</h1></div>
       <div ref={componentRef}>  
 
-      <div className="flex flex-row border border-solid border-1 border-black">
+      <div className="flex flex-row bg-white border border-solid border-1 border-gray">
 
         <div className="flex flex-col p-4">
          <div className="flex flex-row">
@@ -144,9 +158,16 @@ function QRCodePage({ params: { id } }) {
 
       </div>
       
+      <div className="flex flex-row m-4 justify-between">
+
+      <Link href={"/voters"}><button className="black_btn">Back</button></Link>
+
+      <button className="black_btn" onClick={generatePDF}>Generate PDF</button>
+      </div>
        
-      <button className="black_btn m-4" onClick={generatePDF}>Generate PDF</button>
+     
     </div>
+    
   );
 }
 

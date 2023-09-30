@@ -18,6 +18,8 @@ const Page = () => {
   const { data: session} = useSession();
   const router = useRouter();
 
+  const [filteredData, setFilteredData] = useState([]);
+  const [filterText, setFilterText] = useState('');
   
 
   useEffect(() => {
@@ -49,6 +51,7 @@ const Page = () => {
       try {
         const { data } = await axios.get(process.env.LOCAL_URL + '/api/benificiary');
         setdatalist(data);
+        setFilteredData(data);
       } catch (error) {
         console.error('Error fetching store data:', error);
       } finally {
@@ -58,54 +61,28 @@ const Page = () => {
 
 
 
-    const addRecipient = async (e) => {
-
-        e.preventDefault();
     
+    const filterData = () => {
+      const filtered = datalist.filter(item =>
+        item.distribution_name.toLowerCase().includes(filterText.toLowerCase())
+      );
+      setFilteredData(filtered);
+    };
+  
+    const clearFilter = () => {
+      setFilterText('');
+      setFilteredData(datalist);
+    };
+
+
+    const handleKeyPress = (e) => {
+      // Check if the Enter key (key code 13) was pressed
+      if (e.key === 'Enter') {
+        // Call the search function when Enter is pressed
+       filterData()
+      }
+    };
     
-        try {
-          
-        const payload = {
-          distribution_name:'sample', voter_name:'winston me', rec_status:'readyy', active:'yes',
-        };
-         
-          const response = await axios.post(
-            process.env.LOCAL_URL + '/api/benificiary',payload
-          );
-    
-          if (response.status === 200) {
-    
-            alert(response.data)
-    
-            console.log(payload)
-    
-            router.push('/benificiary'); 
-    
-          } else {
-            // Handle unexpected response status codes
-            console.error('Unexpected response status:', response.status);
-          }
-    
-         
-        } catch (error) {
-    
-          console.error('Error:', error);
-          setIsLoading(false);
-    
-        } 
-    
-      };
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -182,8 +159,36 @@ const Page = () => {
 
 <DataTable
             columns={columns}
-            data={datalist}
-            title="Benificiary Lists"
+            data={filteredData}
+            title={<div className="flex flex-row justify-end ">
+<div className="flex items-center space-x-2">
+<input
+  type="text"
+  value={filterText}
+  onChange={(e) => setFilterText(e.target.value)}
+  onKeyDown={handleKeyPress}
+  className="p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 placeholder-gray-400 text-sm"
+  placeholder="Filter by Distribution"
+/>
+      <button
+        onClick={filterData}
+        className="px-4 py-2 text-white black_btn rounded-md hover:bg-gray-100 focus:outline-none"
+      >
+        Search
+      </button>
+    </div>
+<div className="flex items-center space-x-2 ml-3">
+<button
+        onClick={clearFilter}
+        className="px-4 py-2 text-white black_btn rounded-md hover:bg-gray-100 focus:outline-none"
+      >
+        Clear
+      </button>
+</div>
+
+</div>}
+
+
             defaultSortFieldId="createdAt"
             pagination
             paginationPerpage={datalist.length}

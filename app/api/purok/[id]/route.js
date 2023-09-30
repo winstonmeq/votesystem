@@ -1,24 +1,23 @@
 
 
 import { connectToDB } from "@/utils/database";
-import Voter from "@/models/Voter";
+import Purok from "@/models/Purok";
 
 import { NextResponse } from "next/server";
 
 
 
-export async function GET(request, {params:{id}}) {
+export async function GET(request, {params}) {
 
+  const id = params.id
 
   try {
  
      
    await connectToDB();
 
-   const getdata = await Voter.find({ purok: id }).lean().exec();
+   const getdata = await Purok.find({ purok: id }).exec();
     
-    //return new Response(JSON.stringify(getdata))
-
     return NextResponse.json(getdata)
      
 
@@ -30,4 +29,41 @@ export async function GET(request, {params:{id}}) {
   } 
 }
 
+
+
+
+
+export async function PATCH(request, {params}) {
+
+  const {PName,Coordinator , Phone, totalVote } = await request.json();
+ 
+   try {
+  
+     console.log(PName,Coordinator , Phone, totalVote )
+      
+    await connectToDB();
+ 
+ 
+     const updatePurok = await Purok.findByIdAndUpdate(
+       params.id,
+       { PName,Coordinator , Phone, totalVote  },
+       { new: true }
+     );
+     
+     if (!updatePurok) {
+
+       return new Response('Purok not found', { status: 404 });
+       
+     }
+     
+     return NextResponse.json('Purok Successfully updated')      
+ 
+      
+ 
+   } catch (error) {
+   
+    return new Response('error');
+ 
+   }  
+ }
 

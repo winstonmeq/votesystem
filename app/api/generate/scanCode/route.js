@@ -13,26 +13,27 @@ export async function POST(request) {
     try {
   
       
-    const { voter_id } = await request.json();
+    const { voter_id, storeId } = await request.json();
   
-    console.log('generate voter_id api', { voter_id});
+    console.log('generate voter_id api', { voter_id, storeId});
 
     // Validate the incoming data (you can add more checks as needed)
-    if (!voter_id === undefined) {
+    if (!storeId || !voter_id === undefined) {
       return new Response(JSON.stringify({ error: 'Invalid data provided' }), { status: 400 });
     }
        
       // Assuming connectToDB establishes a database connection
       await connectToDB();
-  
-      
+       
  
       const getdata = await Generate.aggregate([
         {
           $match: {
             $and: [
-              { 'voter_id': new ObjectId(voter_id) },
-              { 'status': 'ready' }
+              { voter_id: new ObjectId(voter_id) },
+              { status: 'ready' },
+              { active: 'Yes' },
+              {storeId:new ObjectId(storeId)}
             ]
           }
         }, 
@@ -74,7 +75,10 @@ export async function POST(request) {
             distribution_name: "$distribution.distribution_name",
             voter_fname: "$voter.fname",
             voter_lname: "$voter.lname",
-            status:1
+            status:1,
+            active:1,
+            barangay:1
+            
           },
         },
   
@@ -94,8 +98,7 @@ export async function POST(request) {
     } else {
 
         return new Response(
-          JSON.stringify({ status: 'success', data: getdata }),
-          { status: 200 } // Use 200 for success
+          JSON.stringify({ status: 'success', data: getdata }) // Use 200 for success
         );
     }
 
@@ -107,7 +110,7 @@ export async function POST(request) {
 
     console.error(error);
 
-    return new Response(JSON.stringify({ error: 'An error occurred while processing your request' }), {
+    return new Response(JSON.stringify({ status: 'An error jud ' }), {
 
       status: 500,
 

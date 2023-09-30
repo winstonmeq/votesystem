@@ -10,8 +10,7 @@ export async function GET(request) {
 
     const getdata = await Generate.aggregate([
 
-     
-    
+         
     
       {
         $group: {

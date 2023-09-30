@@ -56,6 +56,12 @@ export async function GET(request) {
           barangay: 1,
           active: 1,
           status: 1,
+          createdAt: {
+            $dateToString: {
+              format: "%Y-%m-%d",
+              date: "$createdAt"
+            }
+          }
         },
       },
       
@@ -72,10 +78,6 @@ export async function GET(request) {
 
   
 
-
-
-
-
 export async function POST(request) {
   try {
     const { distributionId,storeId, purok_id } = await request.json();
@@ -84,31 +86,27 @@ export async function POST(request) {
 
     await connectToDB();
 
-    const getdata = await Voter.find({ purok: purok_id, member: 1 }).exec();
+    const getdata = await Voter.find({ purok: purok_id, member: 'Yes' }).exec();
 
     for (const item of getdata) {
+
       const addGenerate = new Generate({
         distribution_id: distributionId,
         voter_id: item._id,
         storeId:storeId,
         municipality: 'Pres.Roxas',
         barangay: item.purok,
-        active:'yes',
+        active:'Yes',
         status:'ready'
       });
 
-      try {
-        await addGenerate.save();
-
-      } catch (error) {
-
-        console.error('Error Generating Data:', error);
-        // Handle the error as needed (e.g., return an error response)
-
-      }
+    
+      await addGenerate.save();
+   
     }
 
-    return NextResponse('Success');
+    return new NextResponse('Generate add successfully')
+
 
   } catch (error) {
     return new Response('POST Error nih pre!');

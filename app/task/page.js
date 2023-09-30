@@ -86,7 +86,7 @@ const Page = () => {
               }}
             >
               <div className='text-white p-2 font-bold'>
-                <Link href={`/purok/${Pname}`}>{Pname}</Link>
+                {Pname}
               </div>
             </div>
           );
@@ -106,7 +106,7 @@ const Page = () => {
               }}
             >
               <div className='text-white p-2 font-bold'>
-                <Link href={`/purok/${Pname}`}>{Pname}</Link>
+              {Pname}
               </div>
             </div>
           );
@@ -126,7 +126,7 @@ const Page = () => {
               }}
             >
               <div className='text-white p-2 font-bold'>
-                <Link href={`/purok/${Pname}`}>{Pname}</Link>
+              {Pname}
               </div>
             </div>
           );
@@ -193,22 +193,22 @@ const Page = () => {
 
   return (
 
-    <div className='w-screen'>
+    <div ref={home} className='w-screen'>
 
-<nav className="flex justify-end mb-4 mr-20">
+<nav className="flex justify-center mb-4">
   <ul className="flex">
     <li className="mr-4">
-      <a className='hover:text-red-900' onClick={() => scrollToRef(status_bar)}>Status Bar</a>
+      <a className='hover:text-red-900 font-bold cursor-pointer' onClick={() => scrollToRef(status_bar)}>Status Bar</a>
     </li>
     <li>
-      <a onClick={() => scrollToRef(contactRef)}>Contact Us</a>
+      <a className='hover:text-red-950 font-bold cursor-pointer' onClick={() => scrollToRef(contactRef)}>Contact Us</a>
     </li>
   </ul>
 </nav>
 
 
 
-    <section ref={home} className='w-full flex-top flex-col h-screen'>
+    <section  className='w-full flex-top flex-col h-screen'>
     
     
     <div className='flex flex-wrap justify-center m-1 p-1 rounded-2xl'>
@@ -245,10 +245,13 @@ const Page = () => {
     </section>
     
     <section ref={status_bar} className="h-screen w-full bg-red-50 justify-center">
-    <button type='button' onClick={() => scrollToRef(home)}>Top</button>
+    <div className='flex flex-row justify-center'>
     <h1 className='p-4 flex justify-center'>Status Bar</h1>
+    <button type='button' onClick={() => scrollToRef(home)}>Top</button>
+
+    </div>
     <div className='flex flex-wrap justify-center p-1 rounded-2xl'>
-    
+
     <Progress />
     
     
@@ -259,7 +262,7 @@ const Page = () => {
     <section ref={contactRef} className="h-screen w-full bg-green-50">
     
     <div className='flex flex-row justify-center'>
-    <p>www.cotrace.com</p>
+    <p>Poweredby: www.alistoplus.com</p>
     </div>
     
     </section>

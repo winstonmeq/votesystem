@@ -18,8 +18,8 @@ export async function GET(request) {
 
           _id:'$purok',
           //total:{$sum: {$cond:[{$eq:['$member',1]},'$member',0]}},
-          member_yes:{$sum:'$member'},
-          total:{$push:'$member'}
+          member_yes:{$sum:'$memberYes'},
+          total:{$push:'$memberYes'}
 
           
         }

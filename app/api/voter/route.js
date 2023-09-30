@@ -35,7 +35,7 @@ export async function POST(request) {
   try {
 
 
-    const { fname, lname , age, position, prec_num, purok, member} = await request.json();
+    const { fname, lname , mobile, prec_num, purok, member, memberYes} = await request.json();
 
     console.log('check post voter data',{fname, lname})
 
@@ -45,13 +45,13 @@ export async function POST(request) {
     const addVoter = new Voter({
         fname:fname,
         lname:lname , 
-        age: age,
-        position:position, 
+        mobile: mobile,
         prec_num:prec_num, 
         purok:purok, 
-        member:member})
+        member:member,
+        memberYes:memberYes})
     
-    await addVoter.save();
+   await addVoter.save();
 
     
     console.log('Voter save')

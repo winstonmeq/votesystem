@@ -18,11 +18,11 @@ export default function Home() {
     </h1>
 
       <span className='head_text orange_gradient text-center m-2'>
-      Transforming Votes into Trusted Results</span>
+      Transforming Members into Trusted Results</span>
     
 
     <p className='desc text-center mt-2'>
-    The unwavering assurance in the accuracy and integrity of our system paves the way for a true reflection of the peoples will
+    The unwavering assurance in the accuracy and integrity of our system paves the way for a true reflection of the members will
     </p>
 
    

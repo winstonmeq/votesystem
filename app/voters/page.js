@@ -3,10 +3,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import DataTable from "react-data-table-component";
 import { useSession, getSession } from 'next-auth/react';
 import { useRouter } from "next/navigation";
-
+import DataTable from "react-data-table-component";
 
 
 
@@ -17,6 +16,12 @@ const Page = () => {
   const [loading, setLoading] = useState(true);
   const { data: session, status } = useSession();
   const router = useRouter();
+
+  const [globalFilter, setGlobalFilter] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
+  const [filterText, setFilterText] = useState('');
+  const [filterTextPurok, setFilterTextPurok] = useState('');
+
 
   
 
@@ -48,6 +53,7 @@ const Page = () => {
       try {
         const { data } = await axios.get(process.env.LOCAL_URL + '/api/voter');
         setdatalist(data);
+        setFilteredData(data)
       } catch (error) {
         console.error('Error fetching voters data:', error);
       } finally {
@@ -56,42 +62,104 @@ const Page = () => {
     };
 
 
-//   useEffect(() => {
-        
-//     const checkAdminPrivileges = async () => {
-
-//       const session = await getSession();
+   
+    
+    const filterData = () => {
+      const filtered = filteredData.filter(item =>
+        item.lname.toLowerCase().includes(filterText.toLowerCase())
+      );
+      setFilteredData(filtered);
+    };
   
-//       if (!session || !session.user || !session.user.isAdmin) {
-//         router.push('/');
-//       } else {
-//         console.log('successfully logged in');
-//       }
-//     };
+    const clearFilter = () => {
+      setFilterText('');
+      setFilteredData(datalist);
+    };
+
+
+    const filterPurok = () => {
+      const filtered = filteredData.filter(item =>
+        item.purok.toLowerCase().includes(filterTextPurok.toLowerCase())
+      );
+      setFilteredData(filtered);
+    };
   
-//     checkAdminPrivileges();
-//   }, [router]);
 
 
 
-// useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const { data } = await axios.get(process.env.LOCAL_URL + `/api/voter`);
-            
-//         setdatalist(data);
-//       } catch (error) {
-//         console.error(error);
-//       } finally {
 
-//         setLoading(false)
 
-//       }
-//     };
+
+    const handleKeyPress = (e) => {
+      // Check if the Enter key (key code 13) was pressed
+      if (e.key === 'Enter') {
+        // Call the search function when Enter is pressed
+       filterData()
+      }
+    };
+    
+
+
+    const columns = [
+      {
+        name: "Firstname",
+        selector: (row) => (
+          <div className="justify-center text-sm">{row.fname}</div>
+        ),
+         
+      },
   
-//     fetchData();
-//   }, []);
+      {
+        name: "Lastname",
+        selector: (row) => (
+          <div className="justify-center text-sm">{row.lname}</div>
+        ),
+      },
+  
+      {
+          name: "Mobile",
+          selector: (row) => row.mobile,
+        },
+         
+        {
+          name: "Purok",
+          selector: (row) => row.purok,
+        },
+  
+      {
+        name: "Member",
+        selector: (row) =>   row.member == "Yes" ? (
+          <div className="text-white flex-row w-full font-bold rounded-full bg-red-500 p-2">
+            {row.member}
+          </div>
+        ) : (
+          <div>
+            {row.member}
+          </div>
+        ),
+      },
+       
+  
+      {
+        name: "Action",
+        selector: (row) => (
+          <div className="flex flex-row w-full transform hover:text-purple-500 gap-2">
+          <Link className="flex flex-col black_btn" href={`/voters/${row._id}`}>Edit </Link>
+          <Link className="flex flex-col Orange_btn" href={`/qrcode/${row._id}`}>QR </Link>
 
+          </div>
+          
+          
+
+          
+          
+        ),
+      },
+    ];
+
+
+
+   
 
 
   if (loading) {
@@ -108,102 +176,6 @@ const Page = () => {
 
 
 
-
-  // useEffect(() => {
-
-  //  async function FetchData() {
-  //     try {
-  //       const { data } = await axios.get(process.env.LOCAL_URL + `/api/voter`);
-  //       setdatalist(data);
-  //       setLoading(false);
-  //       console.log('voters', data)
-  //     } catch (error) {
-  //       console.error(error);
-  //       setLoading(false);
-  //     }
-  //   }
-
-  //   FetchData();
-
-  // }, []);
-
-
-  // useEffect(() => {
-  //   if (status === "unauthenticated") {
-  //     router.push("/"); // Redirect to homepage if user is not logged in
-  //   }
-  // }, [status, router]);
-
-
-
-
-
-  const columns = [
-    {
-      name: "Name",
-      selector: (row) =>
-        row.member ? (
-          <div className="text-red-900 font-bold">
-            {row.fname} {row.lname}
-          </div>
-        ) : (
-          <div>
-            {row.fname} {row.lname}
-          </div>
-        ),
-    },
-
-    {
-      name: "Age",
-      selector: (row) => (
-        <div className="justify-center text-sm">{row.age}</div>
-      ),
-    },
-
-    // {
-    //   name: "Position",
-    //   selector: (row) => row.position,
-    // },
-    // {
-    //   name: "Precinct",
-    //   selector: (row) => row.prec_num,
-    // },
-
-    {
-      name: (
-        <div className=" text-white text-sm bg-slate-500 p-2 rounded-lg font-bold">
-          Purok
-        </div>
-      ),
-      selector: (row) => row.purok,
-    },
-
-    {
-      name: "Action",
-      selector: (row) => (
-        <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-          <Link href={`/voters/${row._id}`}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-              />
-            </svg>
-          </Link>
-          
-        </div>
-        
-      ),
-    },
-  ];
-
   return (
     <div className="flex-row w-full">
 
@@ -213,33 +185,62 @@ const Page = () => {
 
   <Link href="/voters/add" className="black_btn">Add Voter</Link>
   
-  {/* <div className="flex flex-row">
-    <input
-      type="text"
-      className="border rounded-lg bg-gray-100 pl-2"
-      placeholder="Search..."
-    />
-    <button className="black_btn">
-      Search
-    </button>
-  </div> */}
-
- 
-
 </div>
 
-<div className="w-full">
 
 <DataTable
             columns={columns}
-            data={datalist}
-            title="Voter Lists"
+            data={filteredData}
+            title={<div className="flex flex-row justify-end ">
+
+<div className="flex items-center space-x-2">
+<input
+  type="text"
+  value={filterTextPurok}
+  onChange={(e) => setFilterTextPurok(e.target.value)}
+  className="p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 placeholder-gray-400 text-sm"
+  placeholder="Filter by Purok"
+/>
+      <button
+        onClick={filterPurok}
+        className="px-4 py-2 text-white black_btn rounded-md hover:bg-gray-100 focus:outline-none"
+      >
+        Search
+      </button>
+    </div>
+
+<div className="flex items-center space-x-2 ml-2">
+<input
+  type="text"
+  value={filterText}
+  onChange={(e) => setFilterText(e.target.value)}
+  onKeyDown={handleKeyPress}
+  className="p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 placeholder-gray-400 text-sm"
+  placeholder="Filter by Lastname"
+/>
+      <button
+        onClick={filterData}
+        className="px-4 py-2 text-white black_btn rounded-md hover:bg-gray-100 focus:outline-none"
+      >
+        Search
+      </button>
+    </div>
+<div className="flex items-center space-x-2 ml-3">
+<button
+        onClick={clearFilter}
+        className="px-4 py-2 text-white black_btn rounded-md hover:bg-gray-100 focus:outline-none"
+      >
+        Clear
+      </button>
+</div>
+
+</div>}
+            striped
+            highlightOnHover
             defaultSortFieldId="createdAt"
             pagination
             paginationPerpage={datalist.length}
           />
-</div>
-
         
       
     </div>

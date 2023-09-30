@@ -10,11 +10,11 @@ const Page = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [fname, setfname] = useState("");
   const [lname, setlname] = useState("");
-  const [age, setage] = useState("");
-  const [position, setposition] = useState("");
+  const [mobile, setmobile] = useState("");
   const [prec_num, setprec_num] = useState("");
+  const [memberYes, setmemberYes] = useState(0);
   const [purok, setpurok] = useState("");
-  const [member, setmember] = useState(0);
+  const [member, setmember] = useState("");
   const [datalist, setdatalist] = useState([]);
   const { data: session, status } = useSession();
 
@@ -50,17 +50,45 @@ const Page = () => {
 
 
 
+function memberChange(e) {
+      e.preventDefault();
+  setmember(e.target.value)
+
+  if (e.target.value === 'Yes') {
+    setmemberYes(1)
+  } else {
+    setmemberYes(0)
+
+  }
+
+}
+
+
+
+
   const addVoter = async (e) => {
 
     e.preventDefault()
 
     try {
 
-      const payload = {fname,lname, age, position, prec_num, purok, member, };
+      const payload = {fname,lname, mobile, prec_num, purok, member,memberYes };
 
       const response = await axios.post(process.env.LOCAL_URL + '/api/voter',payload);
 
-      router.push('/voters')
+      
+      if (response.status === 200) {
+
+        alert(response.data)
+
+        console.log(payload)
+
+        router.push('/voters'); 
+
+      } else {
+        // Handle unexpected response status codes
+        console.error('Unexpected response status:', response.status);
+      }
 
     } catch (error) {
 
@@ -84,7 +112,7 @@ const Page = () => {
 
 <div className="flex flex-col sm:flex-row w-full justify-end m-2">
 
-<Link href="/distribution" className="black_btn">Cancel</Link>
+<Link href="/voters" className="black_btn">Cancel</Link>
 </div>
 
 
@@ -135,8 +163,8 @@ const Page = () => {
           <div className="relative z-0 w-full mb-6 group">
               <input
                 type="text"
-                value={age}
-                onChange={(e) => setage(e.target.value)}
+                value={mobile}
+                onChange={(e) => setmobile(e.target.value)}
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
                 required
@@ -145,30 +173,9 @@ const Page = () => {
                
                 className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
-                Age
+                Mobile
               </label>
             </div>
-            
-            <div className="relative z-0 w-full mb-6 group">
-              <input
-                type="text"
-                value={position}
-                onChange={(e) => setposition(e.target.value)}
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-                required
-              />
-              <label
-              
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                Position
-              </label>
-            </div>
-
-          </div>
-
-          <div className="grid md:grid-cols-2 md:gap-6">
 
             <div className="relative z-0 w-full mb-6 group">
               <input
@@ -177,7 +184,6 @@ const Page = () => {
                 onChange={(e) => setprec_num(e.target.value)}
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
-                required
               />
               <label               
                 className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -185,43 +191,48 @@ const Page = () => {
                 Precinct Number
               </label>
             </div>
+        
+          </div>
 
-       
+          <div className="grid md:grid-cols-2 md:gap-6">
 
-
-            <div className="relative z-0 w-full mb-6 group">
+          <div className="relative z-0 w-full mb-6 group">
              
-            <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Select Purok</label>
+             <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Select Purok</label>
+ 
+           <select value={purok} required onChange={(e) => setpurok(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+             <option value=''>Select Purok</option>
+           {datalist.map((item,i)=> (
+             <option key={i} value={item.PName}>{item.PName}</option>
+           ))}
+ 
+           </select>
+ 
+ 
+             </div>
 
-          <select value={purok} onChange={(e) => setpurok(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option value=''>Select Purok</option>
-          {datalist.map((item,i)=> (
-            <option key={i} value={item.PName}>{item.PName}</option>
-          ))}
-
-          </select>
-
-
-            </div>
-
-            </div>
-
-             <div className="grid md:grid-cols-2 md:gap-6">
-
-            <div className="relative z-0 w-full mb-6 group">
+           
+          <div className="relative z-0 w-full mb-6 group">
 
             <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Member Type</label>
 
-              <select value={member} onChange={(e) => setmember(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option value={1}>Yes</option>
-              <option value={0}>No</option>
+              <select value={member}  required onChange={memberChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+             
+              <option value=''>Select</option>
+              <option value={'Yes'}>Yes</option>
+              <option value={'No'}>No</option>
 
              </select>
              
             </div>
 
+
+
+       
+
+            </div>
+
             
-          </div>
           <button
             type="submit"
             className="text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"

@@ -13,12 +13,9 @@ const VoterSchema = mongoose.Schema({
         type:String,
     
     },
-    age: {
-        type:Number,
+    
 
-    },
-
-    position: {
+    mobile: {
         type:String,
 
     },
@@ -32,7 +29,11 @@ const VoterSchema = mongoose.Schema({
     },
     
     member:{
-        type:Number,
+        type:String,
+    },
+
+    memberYes: {
+        type:Number
     }
 
 },{

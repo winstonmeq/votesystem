@@ -26,21 +26,7 @@ const PurokSchema = mongoose.Schema({
     
     },
 
-    RedBox: {
-        type:Number,
-
-    },
-  
-    BlueBox:{
-        type:Number, 
-       
-    },
-
-    GreenBox:{
-        type:Number, 
-       
-    }
-
+   
 },{
 
     timestamps: true,

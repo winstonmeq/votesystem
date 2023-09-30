@@ -120,7 +120,7 @@ const Page = ({ params: { id } }) => {
 
       e.preventDefault();
 
-      setLoading(true); // Set isLoading to true when the request is initiated
+      // setLoading(true); // Set isLoading to true when the request is initiated
     
       try {
         const payload = { distributionId, storeId, purok_id };
@@ -131,8 +131,21 @@ const Page = ({ params: { id } }) => {
           payload
         );
     
+
+        if (response.status === 200) {
+
+          alert(response.data)
+  
+          console.log(payload)
+  
+          router.push('/generate'); 
+  
+        } else {
+          // Handle unexpected response status codes
+          console.error('Unexpected response status:', response.status);
+        }
         // After successful update, navigate back to the previous page
-        router.back();
+     
 
       } catch (error) {
 
@@ -140,7 +153,7 @@ const Page = ({ params: { id } }) => {
 
       } finally {
 
-        setLoading(false); // Set isLoading to false when the request is completed or encounters an error
+        // setLoading(false); // Set isLoading to false when the request is completed or encounters an error
 
       }
     };
@@ -167,15 +180,16 @@ const Page = ({ params: { id } }) => {
   return (
     
     <div className="flex-row w-full justify-center">
-    
-    <div className="flex  flex-col sm:flex-row w-full justify-end m-2">
-
-<Link href="/distribution" className="black_btn">Cancel</Link>
+    <div className="flex flex-row w-full justify-between m-2">
+    <div className="flex flex-col font-bold">Generate Data</div>
+    <div className="flex flex-col sm:flex-row">
+    <Link href="/distribution" className="black_btn">Cancel</Link>
+</div>
 </div>
 
     
       <div className="m-2 bg-gray-50 p-2 rounded-lg">
-        <form onSubmit={''}>
+        <form onSubmit={generateData}>
                  <div className="grid md:grid-cols-2 md:gap-6">         
            
 
@@ -185,11 +199,12 @@ const Page = ({ params: { id } }) => {
               </label>
 
               <select
-                value={distributionId}
+               value={distributionId}
+               required
                 onChange={(e) => setdistributionId(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               >
-              <option>Select</option>
+              <option value={''}>Select</option>
                 {datalistDistribution.map((item, i) => (                 
                   <option key={i} value={item._id}>
                     {item.distribution_name}
@@ -207,12 +222,12 @@ const Page = ({ params: { id } }) => {
 
               <select
                 value={purok_id}
+                required
                 onChange={(e) => setpurok_id(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               >
-              <option>Select</option>
-                {datalist2.map((item, i) => (
-                 
+              <option value={''}>Select</option>
+                {datalist2.map((item, i) => (                 
                   <option key={i} value={item.PName}>
                     {item.PName}
                   </option>
@@ -228,10 +243,11 @@ const Page = ({ params: { id } }) => {
 
               <select
                 value={storeId}
+                required
                 onChange={(e) => setstoreId(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               >
-              <option>Select</option>
+              <option value={''}>Select</option>
                 {datalistStore.map((item, i) => (
                  
                   <option key={i} value={item._id}>
@@ -244,11 +260,11 @@ const Page = ({ params: { id } }) => {
           </div>
 
         
-         
+          <button type="submit" className="black_btn">Generate Data</button>      
+
         
         </form>
 
-        <button onClick={generateData} className="black_btn">Generate Data</button>      
        
       </div>
      
