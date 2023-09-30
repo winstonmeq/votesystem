@@ -38,7 +38,6 @@ const Page = ({ params: { id } }) => {
         if (!session || !session.user.isAdmin) {
           router.push('/');
         } else {
-          setLoading(true)
           FetchStore();
           FetchDistribution();
           FetchPurok(); 
@@ -50,7 +49,6 @@ const Page = ({ params: { id } }) => {
 
       } finally {
 
-        setLoading(false)
 
       }
       
@@ -64,6 +62,9 @@ const Page = ({ params: { id } }) => {
 
 
    const FetchDistribution = async () => {
+  
+    setLoading(true)
+
     
       try {
         const { data } = await axios.get(
@@ -80,6 +81,9 @@ const Page = ({ params: { id } }) => {
         
       } catch (error) {
         console.error(error);
+      } finally {
+
+        setLoading(false)
       }
 
      
@@ -87,6 +91,9 @@ const Page = ({ params: { id } }) => {
     }
 
   const FetchPurok = async () =>  {
+
+    setLoading(true)
+
     
       try {
         const { data } = await axios.get(process.env.LOCAL_URL + '/api/purok');
@@ -101,6 +108,8 @@ const Page = ({ params: { id } }) => {
 
 
     const FetchStore = async () =>  {
+
+    setLoading(true)
 
 
       try {
@@ -153,7 +162,6 @@ const Page = ({ params: { id } }) => {
 
       } finally {
 
-        // setLoading(false); // Set isLoading to false when the request is completed or encounters an error
 
       }
     };
