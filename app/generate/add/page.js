@@ -67,7 +67,7 @@ const Page = ({ params: { id } }) => {
     
       try {
         const { data } = await axios.get(
-          process.env.LOCAL_URL + `/api/distribution`
+          process.env.LOCAL_URL + `/api/distribution/activeYes`
         );
 
    
@@ -112,7 +112,7 @@ const Page = ({ params: { id } }) => {
 
 
       try {
-        const { data } = await axios.get(process.env.LOCAL_URL + '/api/store');
+        const { data } = await axios.get(process.env.LOCAL_URL + '/api/store/activeYes');
         setdatalistStore(data);
       } catch (error) {
         console.error(error);
@@ -128,7 +128,7 @@ const Page = ({ params: { id } }) => {
 
       e.preventDefault();
 
-      // setLoading(true); // Set isLoading to true when the request is initiated
+      setLoading(true); // Set isLoading to true when the request is initiated
     
       try {
         const payload = { distributionId, storeId, purok_id };
@@ -160,7 +160,7 @@ const Page = ({ params: { id } }) => {
 
       } finally {
 
-
+        setLoading(false)
       }
     };
 

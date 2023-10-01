@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 
 const Page = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [store_name, setstore_name] = useState("");
   const [owner_name, setowner_name] = useState("");
   const [mobile, setmobile] = useState("");
@@ -43,6 +43,8 @@ const Page = () => {
 
     console.error(error);
 
+  } finally {
+    setLoading(false)
   }
          
 }
@@ -53,6 +55,8 @@ const Page = () => {
   const addStore = async (e) => {
 
     e.preventDefault();
+
+    setLoading(true)
 
     try {
       const payload = {
@@ -81,23 +85,33 @@ const Page = () => {
 
     } catch (error) {
 
-        setIsLoading(false);
+        setLoading(false);
 
     } finally {
 
-        console.log('close')
+      setLoading(false);
     }
 
 
   };
 
  
-
   if (isLoading) {
+    
     return (
-      <div classNameName="flex justify-center min-h-screen">Loading...</div>
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-10">
+      <div className="flex flex-col items-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-opacity-75"></div>
+        <p className="mt-4">Loading...</p>
+      </div>
+      </div>
     );
   }
+
+
+
+
+  
 
   return (
     <div className="flex-row w-full ">

@@ -20,7 +20,9 @@ const Page = ({ params: { id } }) => {
   const [mobile, setmobile] = useState("");
   const [prec_num, setprec_num] = useState("");
   const [purok, setpurok] = useState("");
-  const [member, setmember] = useState(0);
+  const [member, setmember] = useState('');
+  const [memberYes, setmemberYes] = useState(0);
+
   const { data: session } = useSession();
 
 
@@ -68,6 +70,7 @@ const Page = ({ params: { id } }) => {
           setprec_num(data[0].prec_num);
           setpurok(data[0].purok);
           setmember(data[0].member);
+          setmemberYes(data[0].memberYes);
         }
        
        
@@ -99,6 +102,20 @@ const Page = ({ params: { id } }) => {
     }
 
 
+    function memberChange(e) {
+      e.preventDefault();
+  setmember(e.target.value)
+
+  if (e.target.value === 'Yes') {
+    setmemberYes(1)
+  } else {
+    setmemberYes(0)
+
+  }
+
+}
+
+
 
 
     const updateVoter = async (e) => {
@@ -107,7 +124,7 @@ const Page = ({ params: { id } }) => {
 
     
       try {
-        const payload = { fname, lname, mobile, prec_num, purok, member };
+        const payload = { fname, lname, mobile, prec_num, purok, member, memberYes };
     
         // Make a PATCH request to update the voter's data
         const response = await axios.patch(
@@ -299,7 +316,7 @@ const Page = ({ params: { id } }) => {
 
             <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Member Type</label>
 
-              <select value={member}  required onChange={(e) => setmember(e.target.value)} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <select value={member}  required onChange={memberChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
              
               <option value=''>Select</option>
               <option value={'Yes'}>Yes</option>

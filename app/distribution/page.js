@@ -14,7 +14,7 @@ const Page = () => {
 
 
   const [datalist, setdatalist] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setLoading] = useState(true);
   const { data: session, status } = useSession();
   const [filteredData, setFilteredData] = useState([]);
   const [filterText, setFilterText] = useState('');
@@ -128,7 +128,7 @@ const Page = () => {
 
 
   
-  if (loading) {
+  if (isLoading) {
     
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-10">

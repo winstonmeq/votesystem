@@ -7,7 +7,7 @@ import { useSession} from 'next-auth/react';
 import Link from "next/link";
 
 const Page = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [fname, setfname] = useState("");
   const [lname, setlname] = useState("");
   const [mobile, setmobile] = useState("");
@@ -22,31 +22,37 @@ const Page = () => {
   const router = useRouter()
 
 
-  useEffect(() => {   
-
-    async function FetchData() {
-      try {
-      const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok`)
-      setdatalist(data);
-
-
-    } catch (error) {
-
-      console.error(error);
-
-    }
-           
-  }
- 
-    FetchData();
-  }, []);
-
 
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/"); // Redirect to homepage if user is not logged in
+
+    } else {
+
+        FetchData()
+
     }
+
   }, [status, router]);
+
+
+
+  async function FetchData() {
+    try {
+    const { data } = await axios.get(process.env.LOCAL_URL + `/api/purok`)
+    setdatalist(data);
+
+
+  } catch (error) {
+
+    console.error(error);
+
+  } finally {
+    setLoading(false)
+  }
+         
+}
+
 
 
 
@@ -70,6 +76,8 @@ function memberChange(e) {
 
     e.preventDefault()
 
+    setLoading(true)
+
     try {
 
       const payload = {fname,lname, mobile, prec_num, purok, member,memberYes };
@@ -92,18 +100,24 @@ function memberChange(e) {
 
     } catch (error) {
 
-      setIsLoading(false);
+      setLoading(false);
 
     } finally {
 
-      setIsLoading(false);
+      setLoading(false);
        // Set isLoading to false when the request is completed or encounters an error
     }
   };
 
   if (isLoading) {
+    
     return (
-      <div classNameName="flex justify-center min-h-screen">Loading...</div>
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-10">
+      <div className="flex flex-col items-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-opacity-75"></div>
+        <p className="mt-4">Loading...</p>
+      </div>
+      </div>
     );
   }
 

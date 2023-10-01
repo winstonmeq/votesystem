@@ -7,83 +7,81 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 
 const Page = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [distribution_name, setdistribution_name] = useState("");
   const [type, settype] = useState("");
   const [target, settarget] = useState(0);
 
   const [active, setactive] = useState("");
 
-  const [datalist, setdatalist] = useState([]);
-
   const { data: session, status } = useSession();
 
   const router = useRouter();
 
-
   useEffect(() => {
     if (status === "unauthenticated") {
-        router.push('/') // Redirect to homepage if user is not logged in
+      router.push("/"); // Redirect to homepage if user is not logged in
+    } else {
+      setLoading(false);
     }
   }, [status, router]);
 
-
-
   const addDistribution = async (e) => {
-
     e.preventDefault();
 
+    setLoading(true);
 
     try {
-      
-    const payload = {
-      distribution_name, type, target, active,
-    };
-     
+      const payload = {
+        distribution_name,
+        type,
+        target,
+        active,
+      };
+
       const response = await axios.post(
-        process.env.LOCAL_URL + '/api/distribution',payload
+        process.env.LOCAL_URL + "/api/distribution",
+        payload
       );
 
       if (response.status === 200) {
+        alert(response.data);
 
-        alert(response.data)
+        console.log(payload);
 
-        console.log(payload)
-
-        router.push('/distribution'); 
-
+        router.push("/distribution");
       } else {
         // Handle unexpected response status codes
-        console.error('Unexpected response status:', response.status);
+        console.error("Unexpected response status:", response.status);
       }
-
-     
     } catch (error) {
-
-      console.error('Error:', error);
-      setIsLoading(false);
-
-    } 
-
+      console.error("Error:", error);
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
   };
-
- 
 
   if (isLoading) {
     return (
-      <div classNameName="flex justify-center min-h-screen">Loading...</div>
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-10">
+        <div className="flex flex-col items-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-opacity-75"></div>
+          <p className="mt-4">Loading...</p>
+        </div>
+      </div>
     );
   }
 
   return (
     <div className="flex-row w-full ">
-       <div className="flex flex-col sm:flex-row w-full justify-end m-2">
+      <div className="flex flex-col sm:flex-row w-full justify-end m-2">
+        <Link href="/distribution" className="black_btn">
+          Cancel
+        </Link>
+      </div>
 
-<Link href="/distribution" className="black_btn">Cancel</Link>
-
-</div>
-
- <div className=" m-4 bg-gray-50 p-4 rounded-lg">
+      <div className=" m-4 bg-gray-50 p-4 rounded-lg">
         <form onSubmit={addDistribution}>
           <div className="grid md:grid-cols-2 md:gap-6">
             <div className="relative z-0 w-full mb-6 group">
@@ -113,17 +111,9 @@ const Page = () => {
                 Type
               </label>
             </div>
-
-            
-          
-
           </div>
 
-          
-        
           <div className="grid md:grid-cols-3 md:gap-6">
-
-         
             <div className="relative z-0 w-full mb-6 group">
               <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
                 Target
@@ -140,10 +130,8 @@ const Page = () => {
                 <option value={"100"}>100</option>
                 <option value={"200"}>200</option>
                 <option value={"300"}>300</option>
-
               </select>
             </div>
-
 
             <div className="relative z-0 w-full mb-6 group">
               <label className="block mb-2 text-sm font-medium text-gray-500 dark:text-white">
@@ -161,8 +149,6 @@ const Page = () => {
                 <option value={"No"}>No</option>
               </select>
             </div>
-
-
           </div>
           <button
             type="submit"
@@ -170,10 +156,6 @@ const Page = () => {
           >
             Submit
           </button>
-
-       
-
-     
         </form>
       </div>
     </div>

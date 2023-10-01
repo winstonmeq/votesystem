@@ -34,18 +34,18 @@ export async function GET(request, {params}) {
 
 export async function PATCH(request, {params}) {
 
-  const {fname,lname,age,position,purok, prec_num,member} = await request.json();
+  const {fname,lname,age,position,purok, prec_num,member, memberYes} = await request.json();
  
    try {
   
-     console.log(params.id, fname,lname,age,position,purok, prec_num,member)
+     console.log(params.id, fname,lname,age,position,purok, prec_num,member, memberYes)
       
     await connectToDB();
  
  
      const updatedVoter = await Voter.findByIdAndUpdate(
        params.id,
-       { fname, lname, age, position, purok, prec_num, member },
+       { fname, lname, age, position, purok, prec_num, member, memberYes },
        { new: true }
      );
      
