@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useState } from 'react';
-import Link from "next/link";
 import Progress from '../progress/page';
 import { useSession, getSession } from 'next-auth/react';
 
@@ -134,19 +133,19 @@ const Page = () => {
       };
  
 
-    //   if (loading) {
-    //     return (
+      if (loading) {
+        return (
 
-    //       <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-10">
-    //       <div class="flex flex-col items-center">
-    //         <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-opacity-75"></div>
-    //         <p class="mt-4">Loading...</p>
-    //       </div>
-    //     </div>
+          <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-10">
+          <div class="flex flex-col items-center">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-opacity-75"></div>
+            <p class="mt-4">Loading...</p>
+          </div>
+        </div>
 
-    //       )     
+          )     
        
-    //  }
+     }
 
      //this code for opening a modal page
 
