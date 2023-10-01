@@ -105,10 +105,10 @@ export async function POST(request) {
    
     }
 
-    return new NextResponse('Generate add successfully')
+    return NextResponse.json('Generate add successfully')
 
 
   } catch (error) {
-    return new Response('POST Error nih pre!');
+    return NextResponse.json('POST Error nih pre!');
   }
 }

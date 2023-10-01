@@ -19,7 +19,6 @@ const Page = ({ params: { id } }) => {
 
   const [loading, setLoading] = useState(true);
 
-  const [distribution_name, setdistribution_name] = useState("");
   const [distributionId,setdistributionId] = useState("")
   const [purok_id, setpurok_id] = useState("");
   const [storeId, setstoreId] = useState("");
@@ -145,7 +144,6 @@ const Page = ({ params: { id } }) => {
 
           alert(response.data)
   
-          console.log(payload)
   
           router.push('/generate'); 
   
