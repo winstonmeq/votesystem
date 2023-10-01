@@ -38,9 +38,7 @@ export async function POST(request) {
         Coordinator:Coordinator , 
         Phone:Phone, 
         totalVote:totalVote, 
-        RedBox:RedBox, 
-        BlueBox:BlueBox, 
-        GreenBox:GreenBox})
+        })
     
     await addPurok.save();
 
