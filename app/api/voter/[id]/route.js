@@ -34,32 +34,34 @@ export async function GET(request, {params}) {
 
 export async function PATCH(request, {params}) {
 
-  const {fname,lname,age,position,purok, prec_num,member, memberYes} = await request.json();
+  const {fname, lname , mobile, prec_num, purok, member, memberYes} = await request.json();
  
    try {
   
-     console.log(params.id, fname,lname,age,position,purok, prec_num,member, memberYes)
+     console.log(params.id, fname, lname , mobile, prec_num, purok, member, memberYes)
       
     await connectToDB();
  
  
      const updatedVoter = await Voter.findByIdAndUpdate(
        params.id,
-       { fname, lname, age, position, purok, prec_num, member, memberYes },
+       { fname, lname , mobile, prec_num, purok, member, memberYes },
        { new: true }
      );
      
      if (!updatedVoter) {
-       return new Response('Voter not found', { status: 404 });
+
+       return NextResponse.json('Member not found', { status: 404 });
+
      }
      
-   return NextResponse.json('Voter Successfully updated')      
+   return NextResponse.json('Member Successfully updated')      
  
       
  
    } catch (error) {
    
-    return new Response('error');
+    return NextResponse.json('error');
  
    }  
  }
