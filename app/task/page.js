@@ -65,6 +65,8 @@ const Page = () => {
           console.error('Error fetching task data:', error);
 
         } 
+
+        setLoading(false)
       };
 
 
