@@ -53,4 +53,40 @@ export async function GET(request) {
 }
 
 
+export async function POST(request) {
+
+ 
+  try {
+
+    const { task } = await request.json();
+
+    // Validate the incoming data (you can add more checks as needed)
+    if (!task === undefined) {
+     return new Response(JSON.stringify({ error: 'Invalid data provided' }), { status: 400 });
+   }
+ 
+
+
+    await connectToDB();
+
+    // const addDistribution = Distribution({
+    //     distribution_name:distribution_name,
+    //     target:target,
+    //     type:type,        
+    //     active:active, 
+    //     })
+    
+    // await addDistribution.save();
+
+    return NextResponse.json('task add successfully')
+    
+
+  } catch (error) {
+  
+   return NextResponse.json('POST Error nih pre!');
+
+  } 
+}
+
+
 
