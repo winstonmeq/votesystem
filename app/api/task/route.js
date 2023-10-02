@@ -26,12 +26,7 @@ export async function GET(request) {
             
           }
         },
-        {
-          $sort: {
-            createdAt: 1, // Sort by the _id field in ascending order
-          },
-        },
-        
+            
       ]).exec();
 
 

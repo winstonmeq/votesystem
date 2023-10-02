@@ -7,6 +7,7 @@ import { useEffect, useRef } from "react";
 import { useState } from 'react';
 import Progress from '../progress/page';
 import { useSession, getSession } from 'next-auth/react';
+import next from 'next';
 
 
 
@@ -41,7 +42,7 @@ const Page = () => {
           if (!session || !session.user.isAdmin) {
             router.push('/');
           } else {
-            fetchData(); // Fetch data after admin check
+            fetchTask(); // Fetch data after admin check
           }
         } catch (error) {
           console.error('Error checking admin privileges:', error);
@@ -54,9 +55,9 @@ const Page = () => {
     
 
 
-      const fetchData = async () => {
+      const fetchTask = async () => {
         try {
-          const { data } = await axios.get(process.env.LOCAL_URL + '/api/task');
+          const { data } = await axios.get(process.env.LOCAL_URL + '/api/task', { next: { revalidate: 10 } });
 
           setdatalist(data);
 
