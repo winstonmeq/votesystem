@@ -41,7 +41,6 @@ const Page = () => {
           if (!session || !session.user.isAdmin) {
             router.push('/');
           } else {
-            console.log('successfully logged in');
             fetchData(); // Fetch data after admin check
           }
         } catch (error) {
@@ -58,13 +57,22 @@ const Page = () => {
       const fetchData = async () => {
         try {
           const { data } = await axios.get(process.env.LOCAL_URL + '/api/task');
+
           setdatalist(data);
+
         } catch (error) {
+
           console.error('Error fetching task data:', error);
+
         } finally {
+
           setLoading(false);
+
         }
+
       };
+
+
 
 
       const p1 = (Pname, x, y, z) => {
