@@ -7,7 +7,6 @@ import { useEffect, useRef } from "react";
 import { useState } from 'react';
 import Progress from '../progress/page';
 import { useSession, getSession } from 'next-auth/react';
-import next from 'next';
 
 
 
@@ -57,7 +56,7 @@ const Page = () => {
 
       const fetchTask = async () => {
         try {
-          const { data } = await axios.get(process.env.LOCAL_URL + '/api/task', { next: { revalidate: 10 } });
+          const { data } = await axios.get(process.env.LOCAL_URL + '/api/task');
 
           setdatalist(data);
 
@@ -65,12 +64,7 @@ const Page = () => {
 
           console.error('Error fetching task data:', error);
 
-        } finally {
-
-          setLoading(false);
-
-        }
-
+        } 
       };
 
 
@@ -240,9 +234,13 @@ const Page = () => {
      
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-2">
     {console.log('data2 nih', datalist)}
+
     {datalist && datalist.length
+
         ? datalist.map((item, i) => (
+
             <div key={i}>{p1(item._id, item.member_yes, item.total.length - item.member_yes, 0)}</div>
+
           ))
         : null}
     </div>
