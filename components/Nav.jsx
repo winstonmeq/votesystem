@@ -39,13 +39,13 @@ useEffect(() =>{
   return (
     <nav className="flex-between w-full mb-16 pt-3">
         <Link href={'/'} className="flex gap-2 flex-center">
-            <Image src='/images/cotraceLogo.png' 
-            width={50}
-            height={50} 
+            <Image src='/images/alistoLogo2.png' 
+            width={75}
+            height={75} 
             alt="Cotrace Logo"
             className="objec-contain"
             />
-         <p className="logo_text">CoTrace</p>
+         <p className="logo_text">Alisto+</p>
         </Link>
 
 {/* 

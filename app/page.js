@@ -17,7 +17,7 @@ export default function Home() {
     Count with Confidence
     </h1>
 
-      <span className='head_text orange_gradient text-center m-2'>
+      <span className='head_text green_gradient text-center m-2'>
       Transforming Members into Trusted Results</span>
     
 

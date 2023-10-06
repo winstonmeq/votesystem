@@ -24,3 +24,23 @@ export async function GET(request) {
 
   } 
 }
+
+export async function POST(request) {
+
+  try {
+
+
+    await connectToDB();
+
+    const getdata = await Distribution.find({active:'Yes'}).exec();
+
+    return NextResponse.json(getdata)
+    
+    
+
+  } catch (error) {
+  
+   return new Response('GET Error nih pre!');
+
+  } 
+}
