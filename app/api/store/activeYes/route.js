@@ -22,3 +22,21 @@ export async function GET(request) {
 
   } 
 }
+
+
+
+export async function POST(request) {
+
+  try {
+
+
+    await connectToDB();
+
+    
+
+  } catch (error) {
+  
+   return new Response('GET Error nih pre!');
+
+  } 
+}
