@@ -36,6 +36,11 @@ export async function GET(request) {
           as: "store",
         },
       },
+      {
+        $sort: {
+          createdAt: -1
+        }
+      },
     //   {
     //     $project: {
     //       distribution: { $arrayElemAt: ["$distribution", 0] },
@@ -67,7 +72,15 @@ export async function GET(request) {
       
     ]).exec();
 
-    return NextResponse.json(getdata);
+
+    const dataWithRowIndex = getdata.map((item, index) => ({
+      rowNum: index + 1, // Add 1 to start indexing from 1
+      ...item, // Convert Mongoose document to a plain object
+    }));
+
+
+
+    return NextResponse.json(dataWithRowIndex);
 
   } catch (error) {
 

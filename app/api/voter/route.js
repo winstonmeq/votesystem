@@ -1,6 +1,5 @@
 
 
-import dbConnect from "@/conn/dbconnect";
 import Voter from "@/models/Voter";
 import { NextResponse } from "next/server";
 import { connectToDB } from "@/utils/database";
@@ -10,13 +9,20 @@ export async function GET(request) {
 
   try {
 
-    //await dbConnect();
 
     await connectToDB();
 
-    const getdata = await Voter.find({}).exec();
+    const getdata = await Voter.find({}).sort({ createdAt: -1 }).exec();
 
-    return NextResponse.json(getdata)
+    const dataWithRowIndex = getdata.map((item, index) => ({
+      rowNum: index + 1, // Add 1 to start indexing from 1
+      ...item.toObject(), // pag dot find gamit same sa taas dapat naa jud ang toObject() to convert pag aggregate eh remove ang toObject()
+    }));
+
+
+
+
+    return NextResponse.json(dataWithRowIndex)
     
     //return new Response(JSON.stringify(getdata))
      

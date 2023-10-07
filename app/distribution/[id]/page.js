@@ -35,7 +35,7 @@ const Page = ({ params: { id } }) => {
           router.push('/');
         } else {
           console.log('successfully logged in');
-          FetchData();
+          FetchData(id);
           FetchData2(); 
           // Fetch data after admin check
         }
@@ -45,11 +45,11 @@ const Page = ({ params: { id } }) => {
     };
 
     fetchDataAndCheckAdmin();
-    }, [session,router]);
+    }, [session,router,id]);
   
 
 
-   const FetchData = async () => {
+   const FetchData = async (id) => {
     
       try {
         const { data } = await axios.get(
@@ -68,9 +68,7 @@ const Page = ({ params: { id } }) => {
         
       } catch (error) {
         console.error(error);
-      }
-
-     
+      }     
 
     }
 

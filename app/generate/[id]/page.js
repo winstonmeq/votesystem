@@ -38,7 +38,7 @@ const Page = ({ params: { id } }) => {
           router.push('/');
         } else {
           console.log('successfully logged in');
-          FetchGenerate();
+          FetchGenerate(id);
         }
       } catch (error) {
         console.error('Error checking admin privileges:', error);
@@ -46,13 +46,13 @@ const Page = ({ params: { id } }) => {
     };
 
     fetchDataAndCheckAdmin();
-    }, [session,router]);
+    }, [session,router,id]);
   
 
 
 
 
-  const FetchGenerate = async () => {
+  const FetchGenerate = async (id) => {
     try {
       const { data } = await axios.get(
         process.env.LOCAL_URL + `/api/generate/${id}`

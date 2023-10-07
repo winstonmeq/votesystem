@@ -128,6 +128,13 @@ const Page = () => {
  
   const columns = [
    
+    {
+      name: "#",
+      maxWidth: "15px",
+        wrap: true,
+        width: "4rem",
+      selector: (row) => row.rowNum,
+    },
 
     {
         name: "Store Name",

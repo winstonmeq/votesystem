@@ -38,7 +38,7 @@ const Page = ({ params: { id } }) => {
           router.push('/');
         } else {
           console.log('successfully logged in');
-          FetchVoter();
+          FetchVoter(id);
           FetchPurok(); // Fetch data after admin check
         }
       } catch (error) {
@@ -49,11 +49,11 @@ const Page = ({ params: { id } }) => {
     };
 
     fetchDataAndCheckAdmin();
-    }, [session,router]);
+    }, [session,router,id]);
   
 
 
-   const FetchVoter = async () => {
+   const FetchVoter = async (id) => {
 
     setLoading(true)
 

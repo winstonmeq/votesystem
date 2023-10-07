@@ -27,7 +27,7 @@ const Page = ({ params: { id } }) => {
         if (!session || !session.user.isAdmin) {
           router.push('/');
         } else {
-          FetchData(); // Fetch data after admin check
+          FetchData(id); // Fetch data after admin check
         }
       } catch (error) {
         console.error('Error checking admin privileges:', error);
@@ -37,11 +37,11 @@ const Page = ({ params: { id } }) => {
     fetchDataAndCheckAdmin();
 
     
-    }, [session,router]);
+    }, [session,router,id]);
   
 
 
-    const FetchData = async () => {
+    const FetchData = async (id) => {
       try {
         const { data } = await axios.get(
           process.env.LOCAL_URL + `/api/store/detail/${id}`

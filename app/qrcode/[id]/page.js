@@ -59,10 +59,10 @@ function QRCodePage({ params: { id } }) {
     const fetchDataAndCheckAdmin = async () => {
       try {
         if (!session || !session.user.isAdmin) {
-          router.push('/');
+          //router.push('/');
         } else {
           console.log('successfully logged in');
-          FetchData();
+          FetchData(id);
         }
       } catch (error) {
         console.error('Error checking admin privileges:', error);
@@ -70,11 +70,11 @@ function QRCodePage({ params: { id } }) {
     };
 
     fetchDataAndCheckAdmin();
-    }, [session,router]);
+    }, [session,router,id]);
   
 
 
-   const FetchData = async () => {
+   const FetchData = async (id) => {
     setLoading(true)
       try {
         const { data } = await axios.get(

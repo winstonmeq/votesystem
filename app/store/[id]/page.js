@@ -33,7 +33,7 @@ const Page = ({ params: { id } }) => {
         if (!session || !session.user.isAdmin) {
           router.push('/');
         } else {
-          FetchStore();
+          FetchStore(id);
           FetchPurok();
         }
       } catch (error) {
@@ -44,7 +44,7 @@ const Page = ({ params: { id } }) => {
     };
 
     fetchDataAndCheckAdmin();
-    }, [session,router]);
+    }, [session,router,id]);
   
 
     async function FetchPurok() {
@@ -67,7 +67,7 @@ const Page = ({ params: { id } }) => {
   
 
 
-  const FetchStore = async () => {
+  const FetchStore = async (id) => {
     try {
       setLoading(true)
 

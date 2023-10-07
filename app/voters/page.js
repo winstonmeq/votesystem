@@ -101,6 +101,21 @@ const Page = () => {
 
 
     const columns = [
+
+      {
+        name: "#",
+        selector: (row) => (
+          <div className="justify-center text-sm">{row.rowNum}</div>
+        ),
+        maxWidth: "15px",
+        wrap: true,
+        width: "4rem"   
+        // cell: (d) => (
+        //   <div>
+        //     {d.rowNum}
+        //   </div>
+        // ),
+      },
       {
         name: "Firstname",
         selector: (row) => (
@@ -145,7 +160,7 @@ const Page = () => {
         selector: (row) => (
           <div className="flex flex-row w-full transform hover:text-purple-500 gap-2">
           <Link className="flex flex-col black_btn" href={`/voters/${row._id}`}>Edit </Link>
-          <Link className="flex flex-col Orange_btn" href={`/qrcode/${row._id}`}>QR </Link>
+          <Link className="flex flex-col Orange_btn" href={`/qrcode/${row._id}`} target="_blank" >QR </Link>
 
           </div>
           
@@ -183,7 +198,7 @@ const Page = () => {
 
 <div className="flex flex-col sm:flex-row w-full justify-between m-2">
 
-  <Link href="/voters/add" className="black_btn">Add Voter</Link>
+  <Link href="/voters/add" className="black_btn">Add Member</Link>
   
 </div>
 
@@ -238,8 +253,8 @@ const Page = () => {
             striped
             highlightOnHover
             defaultSortFieldId="createdAt"
-            pagination
-            paginationPerpage={datalist.length}
+            pagination={true}
+            paginationPerpage={30}
           />
         
       
