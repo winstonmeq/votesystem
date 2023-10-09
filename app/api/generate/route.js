@@ -93,7 +93,7 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
-    const { distributionId, storeId, purok_id, batchSize = 20 } = await request.json();
+    const { distributionId, storeId, purok_id, batchSize = 10 } = await request.json();
 
     console.log('post Generate api data', { distributionId, storeId, purok_id });
 
