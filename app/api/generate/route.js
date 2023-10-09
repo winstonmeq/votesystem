@@ -92,49 +92,46 @@ export async function GET(request) {
 
 
 export async function POST(request) {
+
   try {
-    const { distributionId, storeId, purok_id, batchSize = 50 } = await request.json();
+
+    const { distributionId,storeId, purok_id } = await request.json();
+
 
     console.log('post Generate api data', { distributionId, storeId, purok_id });
 
     await connectToDB();
 
-    const totalCount = await Voter.countDocuments({ purok: purok_id, member: 'Yes' });
+    const getdata = await Voter.find({ purok: purok_id, member: 'Yes' }).exec();
 
-    console.log('Total rows to process:', totalCount);
+    console.log(getdata.length)
 
-    let processedCount = 0;
-    let currentPage = 1;
+    for (i == 0; i <= getdata.length; i++ ) {
 
-    while (processedCount < totalCount) {
-      const getdata = await Voter.find({ purok: purok_id, member: 'Yes' })
-        .skip((currentPage - 1) * batchSize)
-        .limit(batchSize)
-        .exec();
+      console.log('Processing item:', item);
 
-      console.log(`Processing page ${currentPage}, ${getdata.length} items`);
+      const addGenerate = new Generate({
+        distribution_id: distributionId,
+        voter_id: item._id,
+        storeId:storeId,
+        municipality: 'Pres.Roxas',
+        barangay: item.purok,
+        active:'Yes',
+        status:'ready'
+      });
 
-      for (const item of getdata) {
-        const addGenerate = new Generate({
-          distribution_id: distributionId,
-          voter_id: item._id,
-          storeId: storeId,
-          municipality: 'Pres.Roxas',
-          barangay: item.purok,
-          active: 'Yes',
-          status: 'ready'
-        });
-
-        await addGenerate.save();
-        processedCount++;
-      }
-
-      currentPage++;
+    
+      await addGenerate.save();
+   
     }
 
-    return NextResponse.json('Generate add successfully');
+    return NextResponse.json('Generate add successfully')
+
+
   } catch (error) {
+
     console.error('Error:', error);
+
     return NextResponse.json('POST Error nih pre!');
   }
 }
@@ -142,11 +139,85 @@ export async function POST(request) {
 
 
 
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // export async function POST(request) {
 //   try {
+//     const { distributionId, storeId, purok_id, batchSize = 50 } = await request.json();
+
+//     console.log('post Generate api data', { distributionId, storeId, purok_id });
+
+//     await connectToDB();
+
+//     const totalCount = await Voter.countDocuments({ purok: purok_id, member: 'Yes' });
+
+//     console.log('Total rows to process:', totalCount);
+
+//     let processedCount = 0;
+//     let currentPage = 1;
+
+//     while (processedCount < totalCount) {
+//       const getdata = await Voter.find({ purok: purok_id, member: 'Yes' })
+//         .skip((currentPage - 1) * batchSize)
+//         .limit(batchSize)
+//         .exec();
+
+//       console.log(`Processing page ${currentPage}, ${getdata.length} items`);
+
+//       for (const item of getdata) {
+//         const addGenerate = new Generate({
+//           distribution_id: distributionId,
+//           voter_id: item._id,
+//           storeId: storeId,
+//           municipality: 'Pres.Roxas',
+//           barangay: item.purok,
+//           active: 'Yes',
+//           status: 'ready'
+//         });
+
+//         await addGenerate.save();
+//         processedCount++;
+//       }
+
+//       currentPage++;
+//     }
+
+//     return NextResponse.json('Generate add successfully');
+//   } catch (error) {
+//     console.error('Error:', error);
+//     return NextResponse.json('POST Error nih pre!');
+//   }
+// }
+
+
+
+
+  
+
+// export async function POST(request) {
+
+//   try {
+
 //     const { distributionId,storeId, purok_id } = await request.json();
+    
 
 //     console.log('post Generate api data', { distributionId, storeId, purok_id });
 
@@ -186,3 +257,24 @@ export async function POST(request) {
 //     return NextResponse.json('POST Error nih pre!');
 //   }
 // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
