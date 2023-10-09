@@ -91,47 +91,37 @@ export async function GET(request) {
 
 
 
+
 export async function POST(request) {
-
   try {
-
-    const { distributionId,storeId, purok_id } = await request.json();
-
-
+    const { distributionId, storeId, purok_id } = await request.json();
     console.log('post Generate api data', { distributionId, storeId, purok_id });
 
     await connectToDB();
 
     const getdata = await Voter.find({ purok: purok_id, member: 'Yes' }).exec();
+    console.log(getdata.length);
 
-    console.log(getdata.length)
-
-    for (i == 0; i <= getdata.length; i++ ) {
-
+    for (let i = 0; i < getdata.length; i++) {
+      const item = getdata[i];
       console.log('Processing item:', item);
 
       const addGenerate = new Generate({
         distribution_id: distributionId,
         voter_id: item._id,
-        storeId:storeId,
+        storeId: storeId,
         municipality: 'Pres.Roxas',
         barangay: item.purok,
-        active:'Yes',
-        status:'ready'
+        active: 'Yes',
+        status: 'ready'
       });
 
-    
       await addGenerate.save();
-   
     }
 
-    return NextResponse.json('Generate add successfully')
-
-
+    return NextResponse.json('Generate add successfully');
   } catch (error) {
-
     console.error('Error:', error);
-
     return NextResponse.json('POST Error nih pre!');
   }
 }
