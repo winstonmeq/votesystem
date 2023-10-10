@@ -6,8 +6,7 @@ const nextConfig = {
        
         //LOCAL_URL: 'http://localhost:3000',
         //LOCAL_URL: 'https://vms-green.vercel.app',
-          LOCAL_URL: 'http://ec2-43-207-89-154.ap-northeast-1.compute.amazonaws.com'  
-
+        LOCAL_URL=https://alisto.d2i7xmexdeps67.amplifyapp.com
      },
 
 
