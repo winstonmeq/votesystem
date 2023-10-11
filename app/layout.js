@@ -8,8 +8,8 @@ import Provider from '@/components/Provider'
 // const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'VMS',
-  description: 'Vote Monitoring System',
+  title: 'Alisto+',
+  description: 'Alisto+ member monitoring system using mobile app and qrcode',
 }
 
 export default function RootLayout({ children }) {
