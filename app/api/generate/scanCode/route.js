@@ -13,9 +13,9 @@ export async function POST(request) {
     try {
   
       
-    const { voter_id, storeId } = await request.json();
+    const { voter_id, storeId, distId } = await request.json();
   
-    console.log('generate voter_id api', { voter_id, storeId});
+    console.log('generate voter_id, storeId, distId api', { voter_id, storeId, distId});
 
     // Validate the incoming data (you can add more checks as needed)
     if (!storeId || !voter_id === undefined) {
@@ -33,7 +33,9 @@ export async function POST(request) {
               { voter_id: new ObjectId(voter_id) },
               { status: 'ready' },
               { active: 'Yes' },
-              {storeId:new ObjectId(storeId)}
+              {storeId:new ObjectId(storeId)},
+              {distribution_id:new ObjectId(distId)}
+
             ]
           }
         }, 
