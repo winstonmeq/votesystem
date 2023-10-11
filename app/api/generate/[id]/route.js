@@ -119,3 +119,36 @@ export async function PATCH(request, { params }) {
     return new Response("error");
   }
 }
+
+
+
+
+
+
+//delete data after query
+export async function DELETE(request, { params }) {
+
+  console.log(params.id);
+
+  try {
+
+    await connectToDB();
+
+    const deleteResult = await Generate.findByIdAndDelete(params.id);
+
+    if (deleteResult.deletedCount === 0) {
+
+      return new Response('Benificiary not found', { status: 404 });
+
+    }
+
+    return new Response('Successfully deleted', { status: 200 });
+
+  } catch (error) {
+
+    return new Response('Error deleting voter', { status: 500 });
+
+  }
+}
+
+

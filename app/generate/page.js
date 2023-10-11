@@ -107,6 +107,45 @@ const Page = () => {
     
 
 
+    const deleteGenerate = async (id) => {
+   
+      setLoading(true); // Set isLoading to true when the request is initiated
+  
+      try {
+  
+        const response = await axios.delete(process.env.LOCAL_URL + `/api/generate/${id}`);
+  
+        if (response.status === 200) {
+
+          fetchData()
+  
+        } else {
+          // Handle unexpected response status codes
+          console.error('Unexpected response status:', response.status);
+        }
+        // A
+          
+  
+      } catch (error) {
+        console.error('unable to delete data')
+      } finally {
+        setLoading(false); // Set isLoading to false when the request is completed or encounters an error
+      }
+  
+    };
+  
+  
+    function deleteVoter2(id) {
+      var result = window.confirm("Are you sure you want to delete?")
+  
+      if(result) {
+          deleteGenerate(id)
+      }else {
+        alert('Delete canceled')
+      }
+    }
+  
+
 
 
 
@@ -185,7 +224,7 @@ const Page = () => {
       selector: (row) => (
         <div className="w-100 transform hover:text-purple-500 hover:scale-110">
         <Link href={`/generate/${row._id}`}> <button className="rounded p-2 bg-red-600 font-bold text-white">Edit</button></Link>
-          
+        <button onClick={(e)=>{deleteVoter2(row._id)}} className="ml-2 rounded p-2 bg-red-900 font-bold text-white">Delete</button>
         </div>
         
       ),
