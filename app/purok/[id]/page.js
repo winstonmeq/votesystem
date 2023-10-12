@@ -21,12 +21,26 @@ const Page = ({ params: { id } }) => {
 
 
 
+  
   useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/"); // Redirect to homepage if user is not logged in
-    }
-  }, [status, router]);
+        
+    const fetchDataAndCheckAdmin = async () => {
+      try {
+        if (!session || !session.user.isAdmin) {
+          router.push('/');
+        } else {
+          console.log('successfully logged in');
+          fetchData(); // Fetch data after admin check
+        }
+      } catch (error) {
+        console.error('Error checking admin privileges:', error);
+      }  
+    };
 
+    fetchDataAndCheckAdmin();
+    
+    }, [session,router]);
+  
 
 
   useEffect(() => {
