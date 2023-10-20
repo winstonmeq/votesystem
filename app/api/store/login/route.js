@@ -28,7 +28,7 @@ export async function POST(request) {
       // Assuming connectToDB establishes a database connection
       await connectToDB();
   
-      const getdata = await Store.find({mobile: mobile}).exec();
+      const getdata = await Store.find({mobile: removemobile}).exec();
   
       if (getdata.length === 0) {
 
